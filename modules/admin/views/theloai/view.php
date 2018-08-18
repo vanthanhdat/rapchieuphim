@@ -18,6 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
     </p>
     <p>
-        <?= Html::a('Thêm phim', ['/admin/phim/create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Thêm phim', ['/admin/theloai/create-phim','id' => $model->id], ['class' => 'btn btn-success']) ?>
     </p>
 </div>

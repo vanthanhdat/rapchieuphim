@@ -4,6 +4,8 @@ namespace app\modules\admin\controllers;
 
 use Yii;
 use app\models\Theloai;
+use app\models\Phim;
+use app\models\Daodien;
 use app\models\search\TheloaiSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -37,7 +39,6 @@ class TheloaiController extends Controller
     {
         $searchModel = new TheloaiSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -119,6 +120,7 @@ class TheloaiController extends Controller
      * @return Theloai the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
+    
     protected function findModel($id)
     {
         if (($model = Theloai::findOne($id)) !== null) {
@@ -126,5 +128,28 @@ class TheloaiController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionCreatePhim($id)
+    {
+        $theloai = $this->findModel($id);
+        $model = new Phim();
+        $dsDaodien = Daodien::find()->all();
+        if ($model->load(Yii::$app->request->post()) ) {
+            $model->start = date('Y-m-d', strtotime($model->start));
+            $model->id_tl = $id;
+            var_dump($model);exit;
+            if ($model->save()) {
+                $session = Yii::$app->session;
+                $session->addFlash('flashMessage');
+                $session->setFlash('flashMessage', 'Thêm thành công !');
+                return $this->redirect(['index']);
+            }
+        }
+        return $this->render('create-phim',[
+            'theloai' => $theloai,
+            'model' => $model,
+            'listDaoDien' => $dsDaodien,
+        ]);
     }
 }
