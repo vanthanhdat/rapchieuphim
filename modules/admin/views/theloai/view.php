@@ -7,7 +7,8 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Country */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Danh sách các thể loại', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Danh mục phim',]; 
+$this->params['breadcrumbs'][] = ['label' => 'Danh sách các thể loại',];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="country-view container">

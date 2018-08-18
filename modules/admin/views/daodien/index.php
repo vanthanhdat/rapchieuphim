@@ -11,7 +11,8 @@ use yii\widgets\LinkPager;
 $this->title = 'Danh sách đạo diễn';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="daodien-index">
+<div class="container">
+    <h1><?= Html::encode($this->title) ?></h1>
     <p>
         <?= Html::a('Thêm đạo diễn', ['create'], ['class' => 'btn btn-success']) ?>
     </p>

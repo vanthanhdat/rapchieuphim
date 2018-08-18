@@ -3,8 +3,10 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 use yii\bootstrap\ActiveForm;
-$this->title = 'Danh sách thể loại'; 
+$this->title = 'Danh sách thể loại';
+$this->params['breadcrumbs'][] = ['label' => 'Danh mục phim',]; 
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 
 <div class="container">

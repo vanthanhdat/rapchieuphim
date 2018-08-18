@@ -37,17 +37,10 @@ AppAsset::register($this);
         ],
     ]);
     
-     $query = (new \yii\db\Query())
-            ->select(['id', 'attributes','quoctich'])
-            ->from('daodien')
-            ->where(['id' => 1])
-            ->one();
-     $testjson = json_decode($query['attributes']);
-
     $navItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'City', 'url' => ['/city/index']],
-        ['label' =>'signup'/*.$testjson->name*/, 'url' => ['/site/signup'],'visible' => Yii::$app->user->isGuest],
+        ['label' =>'signup', 'url' => ['/site/signup'],'visible' => Yii::$app->user->isGuest],
         ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
     ];
       if (!Yii::$app->user->isGuest) {
