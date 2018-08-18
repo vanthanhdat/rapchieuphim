@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Theloai;
+use yii\data\Pagination;
 
 /**
  * TheloaiSearch represents the model behind the search form of `app\models\Theloai`.
@@ -43,10 +44,17 @@ class TheloaiSearch extends Theloai
     {
         $query = Theloai::find();
 
-        // add conditions that should always apply here
-
+        $pagination = new Pagination([
+            'totalCount' => $query->count(),
+        ]);
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query->orderBy('name')
+            ->offset($pagination->offset)
+            ->limit(5),
+            'pagination' => [
+                'pageSize'=> 5,
+                'totalCount' => $query->count()
+            ],
         ]);
 
         $this->load($params);

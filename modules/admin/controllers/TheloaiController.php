@@ -67,6 +67,9 @@ class TheloaiController extends Controller
         $model = new Theloai();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $session = Yii::$app->session;
+            $session->addFlash('flashMessage');
+            $session->setFlash('flashMessage', 'Thêm thành công !');
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

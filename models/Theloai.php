@@ -29,6 +29,7 @@ class Theloai extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'string', 'max' => 50],
+            ['name', 'unique','message' => 'Thể loại này đã có, vui lòng kiểm tra lại!']
         ];
     }
 
