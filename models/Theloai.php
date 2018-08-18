@@ -38,7 +38,7 @@ class Theloai extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'Id' => 'ID',
+            'Id' => 'Id',
             'name' => 'Tên thể loại',
         ];
     }
