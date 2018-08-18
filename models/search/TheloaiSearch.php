@@ -18,7 +18,7 @@ class TheloaiSearch extends Theloai
     public function rules()
     {
         return [
-            [['Id'], 'integer'],
+            [['id'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -59,7 +59,7 @@ class TheloaiSearch extends Theloai
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'Id' => $this->Id,
+            'id' => $this->id,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);

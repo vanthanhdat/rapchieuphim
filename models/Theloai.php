@@ -38,7 +38,7 @@ class Theloai extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'Id' => 'Id',
+            'id' => 'Id',
             'name' => 'Tên thể loại',
         ];
     }
@@ -48,6 +48,6 @@ class Theloai extends \yii\db\ActiveRecord
      */
     public function getPhims()
     {
-        return $this->hasMany(Phim::className(), ['id_tl' => 'Id']);
+        return $this->hasMany(Phim::className(), ['id_tl' => 'id']);
     }
 }

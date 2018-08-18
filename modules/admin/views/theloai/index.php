@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' =>$searchModel, 
         'columns' => [
         ['class' => 'yii\grid\SerialColumn','header'=>"Số thứ tự"],
-        'Id',
+        'id',
         'name',
         ['class' => 'yii\grid\ActionColumn','header'=>"Hành động"],
     ],       
