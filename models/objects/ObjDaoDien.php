@@ -115,6 +115,7 @@ class ObjDaoDien extends Model
         }
         return $allAttributes;
     }
+    
     public function createDaoDien()
     {
         $id = 0;

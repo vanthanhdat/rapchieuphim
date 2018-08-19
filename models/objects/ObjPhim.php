@@ -23,6 +23,7 @@ class ObjPhim extends Model
     public $id_tl;
     public $id_dd;
     public $start;
+    public $trailerUrl;
     public $created_at;
     public $updated_at;
 
@@ -31,7 +32,7 @@ class ObjPhim extends Model
     public function rules()
     {
         return [
-            [['title', 'tomTat', 'nhaSanXuat','image','thoiLuong', 'quocGia', 'dienVien', 'id_tl', 'id_dd', 'start'], 'required','message' => '{attribute} không thể để trống !'],
+            [['title', 'tomTat', 'nhaSanXuat','image','thoiLuong', 'quocGia', 'dienVien', 'id_tl', 'id_dd', 'start','trailerUrl'], 'required','message' => '{attribute} không thể để trống !'],
             [['tomTat'], 'string'],
             [['thoiLuong', 'id_tl', 'id_dd', 'created_at', 'updated_at'], 'integer'],
             [['start'], 'safe'],
@@ -58,6 +59,7 @@ class ObjPhim extends Model
             'created_at' => 'Đã thêm lúc',
             'updated_at' => 'Cập nhật lúc',
             'start' => 'Bắt đầu chiếu',
+            'trailerUrl' => 'Đường dẫn video trailer'
         ];
     }
 
@@ -89,7 +91,8 @@ class ObjPhim extends Model
             'thoiluong' => $this->thoiLuong,
             'quocgia' => $this->quocGia,
             'dienvien' => $this->dienVien,
-            'start' => $this->start
+            'start' => $this->start,
+            'trailerurl' => $this->trailerUrl
         );
         $phim->attributes = json_encode($attributes);
         if ($phim->save()) {

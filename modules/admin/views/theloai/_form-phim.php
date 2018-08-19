@@ -24,6 +24,8 @@ use dosamigos\datepicker\DatePicker;
     <?= $form->field($model,'nhaSanXuat') ?>
 
     <?= $form->field($model, 'thoiLuong') ?>
+	
+	<?= $form->field($model, 'trailerUrl') ?> 
 
     <?= $form->field($model,'quocGia') ?>
 
@@ -55,7 +57,7 @@ use dosamigos\datepicker\DatePicker;
 		            'startDate' => '+15d',
 		        ]
 		]); ?>
- 
+ 	
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

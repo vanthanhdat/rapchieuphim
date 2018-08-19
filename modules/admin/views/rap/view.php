@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </p>
             <?php foreach ($listPhong as $phong): ?>
                 <div class="list-group">
-                    <a href="<?= '/admin/rap/index-phong/?id='.$phong->id.'' ?>" title="<?= $phong->name ?>" class="list-group-item list-group-item-action list-group-item-info">
+                    <a href="<?= '/admin/rap/view-phong/?id='.$phong->id.'' ?>" title="<?= $phong->name ?>" class="list-group-item list-group-item-action list-group-item-info">
                         <?= Html::beginForm(['/admin/rap/delete-phong/?id='.$phong->id.''],
                          'post',
                         ['onsubmit' => 'return confirm("Bạn có muốn xóa phòng này ?");']);?>

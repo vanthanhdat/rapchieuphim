@@ -53,7 +53,7 @@ class Phim extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'Id' => 'ID',
+            'id' => 'ID',
             'title' => 'Tựa phim',
             'tomtat' => 'Tóm tắt phim',
             'nhasanxuat' => 'Nhà sản xuất',
@@ -87,7 +87,7 @@ class Phim extends ActiveRecord
      */
     public function getLichchieus()
     {
-        return $this->hasMany(Lichchieu::className(), ['idphim' => 'Id']);
+        return $this->hasMany(Lichchieu::className(), ['idphim' => 'id']);
     }
 
     /**
@@ -103,7 +103,7 @@ class Phim extends ActiveRecord
      */
     public function getTl()
     {
-        return $this->hasOne(Theloai::className(), ['Id' => 'id_tl']);
+        return $this->hasOne(Theloai::className(), ['id' => 'id_tl']);
     }
 
 }

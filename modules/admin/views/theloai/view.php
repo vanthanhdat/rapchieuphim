@@ -20,4 +20,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Thêm phim', ['/admin/theloai/create-phim','id' => $model->id], ['class' => 'btn btn-success']) ?>
     </p>
+    <div class="col-md-6">
+            <h2>Danh sách các phim: <?php echo $model->name; ?></h2>
+            <?php foreach ($model->phims as $key => $value): ?>
+            	<?php $attributes = json_decode($value->attributes); ?>
+            	 <div class="list-group">
+                    <a href="<?= '/admin/theloai/view-phim/?id='.$value->id.'' ?>" title="<?= $attributes->title ?>" class="list-group-item list-group-item-action list-group-item-info">
+                        <?= Html::beginForm(['/admin/theloai/delete-phim/?id='.$value->id.''],
+                         'post',
+                        ['onsubmit' => 'return confirm("Bạn có muốn xóa phim này ?");']);?>
+                        <?= Html::submitButton('x',['class' => 'close',])?>
+                        <?= Html::endForm(); ?>
+                        <?= Html::encode($attributes->title) ?>
+                    </a>  
+                </div>    
+            <?php endforeach ?>
+    </div>
 </div>

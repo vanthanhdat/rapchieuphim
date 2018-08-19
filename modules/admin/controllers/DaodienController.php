@@ -60,7 +60,7 @@ class DaodienController extends Controller
 
         $query = Daodien::find();
         $pagination = new Pagination([
-            'defaultPageSize' => 1,
+            'defaultPageSize' => 2,
             'totalCount' => $query->count(),
         ]);
 

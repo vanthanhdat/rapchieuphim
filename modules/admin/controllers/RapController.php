@@ -42,7 +42,7 @@ class RapController extends Controller
                 'rules' => [
                         [
                             // Allow full if user is admin
-                           'actions' => ['index','create', 'update', 'delete','view','delete-phong','index-phong','create-phong'],
+                           'actions' => ['index','create', 'update', 'delete','view','delete-phong','view-phong','create-phong'],
                            'allow' => true,
                            'roles' => [
                                User::ROLE_ADMIN
@@ -127,7 +127,7 @@ class RapController extends Controller
         ]);
     }
 
-    public function actionIndexPhong($id)
+    public function actionViewPhong($id)
     {   
         $model = Phongchieu::findOne($id);
         $rap = Rap::findOne($model->idrap);
@@ -143,10 +143,10 @@ class RapController extends Controller
                 $session = Yii::$app->session;
                 $session->addFlash('flashMessage');
                 $session->setFlash('flashMessage', 'Cập nhật thành công !');
-                return $this->redirect(['index-phong',  'id' => $model->id]);
+                return $this->redirect(['view-phong',  'id' => $model->id]);
             }
         }
-        return $this->render('index-phong',[
+        return $this->render('view-phong',[
             'model' => $model,
             'rap' => $rap]);
     }
