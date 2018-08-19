@@ -66,10 +66,9 @@ class ObjPhim extends Model
 
     public function uploadImagePhim()
     {
-        $fileName =  implode("-",explode(" ",$this->title));  
         if ($this->validate()) {
             $path = Yii::getAlias('@img');
-            $this->image->saveAs($path.'/phim'.'/'. $fileName . '.' . $this->image->extension);
+            $this->image->saveAs($path.'/phim'.'/'. $this->image->name . '.' . $this->image->extension);
             return true;
         } else {
             return false;
@@ -87,7 +86,7 @@ class ObjPhim extends Model
             'title' => $this->title,
             'tomtat' => $this->tomTat,
             'nhasanxuat' => $this->nhaSanXuat,
-            'image' => implode("-",explode(" ",$this->title)). '.' .$this->image->extension,
+            'image' => $this->image->name. '.' .$this->image->extension,
             'thoiluong' => $this->thoiLuong,
             'quocgia' => $this->quocGia,
             'dienvien' => $this->dienVien,
