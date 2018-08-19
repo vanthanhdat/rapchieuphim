@@ -2,10 +2,16 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dosamigos\datepicker\DatePicker;
+
 	$this->title = 'Thêm phim';
 	$this->params['breadcrumbs'][] = ['label' => 'Danh mục phim'];
-	$this->params['breadcrumbs'][] = ['label' => 'Thể loại','url' => ['index']];
-	$this->params['breadcrumbs'][] = ['label' => $theloai->name, 'url' => ['view','id' => $theloai->id]];
+	if ($theloai->name !== null) {
+		$this->params['breadcrumbs'][] = ['label' => 'Thể loại','url' => ['index']];
+		$this->params['breadcrumbs'][] = ['label' => $theloai->name, 'url' => ['view','id' => $theloai->id]];
+	}
+	else{
+
+	}
 	$this->params['breadcrumbs'][] = $this->title;
  ?>
 

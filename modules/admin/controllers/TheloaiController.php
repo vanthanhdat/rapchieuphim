@@ -5,7 +5,7 @@ namespace app\modules\admin\controllers;
 use Yii;
 use app\models\Theloai;
 use app\models\Phim;
-use app\models\form\CreatePhimForm;
+use app\models\objects\ObjPhim;
 use app\models\Daodien;
 use app\models\search\TheloaiSearch;
 use yii\web\Controller;
@@ -152,10 +152,10 @@ class TheloaiController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionCreatePhim($id)
+    public function actionCreatePhim($id = 0)
     {
         $theloai = new Theloai();
-        $model = new CreatePhimForm();
+        $model = new ObjPhim();
         $listDaoDien = Daodien::find()->all();
         $listTheLoai = [];
         if ($id == 0) {

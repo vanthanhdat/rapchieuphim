@@ -1,12 +1,12 @@
 <?php 
-namespace app\models\form;
+namespace app\models\objects;
 use Yii;
 use yii\base\Model;
 use app\models\Phim;
 /**
  * summary
  */
-class CreatePhimForm extends Model
+class ObjPhim extends Model
 {
     /**
      * summary
@@ -73,22 +73,27 @@ class CreatePhimForm extends Model
             return false;
         }
     }
+
+
+
     public function createPhim()
     {
     	$phim = new Phim();
-    	$phim->title = $this->title;
-    	$phim->tomtat = json_encode($this->tomTat);
-    	$phim->nhasanxuat = $this->nhaSanXuat;
-    	if ($this->uploadImagePhim()) {
-    		$phim->image = implode("-",explode(" ",$this->title)). '.' .$this->image->extension;
-    	}
-    	$phim->thoiluong = $this->thoiLuong;
-    	$phim->quocgia = $this->quocGia;
-    	$phim->dienvien = $this->dienVien;
         $phim->id_tl = $this->id_tl;
         $phim->id_dd = $this->id_dd;
-        $phim->start = date('Y-m-d', strtotime($this->start));
+        $attributes = array(
+            'title' => $this->title,
+            'tomtat' => $this->tomTat,
+            'nhasanxuat' => $this->nhaSanXuat,
+            'image' => implode("-",explode(" ",$this->title)). '.' .$this->image->extension,
+            'thoiluong' => $this->thoiLuong,
+            'quocgia' => $this->quocGia,
+            'dienvien' => $this->dienVien,
+            'start' => $this->start
+        );
+        $phim->attributes = json_encode($attributes);
         if ($phim->save()) {
+            $this->uploadImagePhim();
           	return true;
         }
         return false;    
