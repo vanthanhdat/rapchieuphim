@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <a href="<?= '/admin/rap/view-phong/?id='.$phong->id.'' ?>" title="<?= $phong->name ?>" class="list-group-item list-group-item-action list-group-item-info">
                         <?= Html::beginForm(['/admin/rap/delete-phong/?id='.$phong->id.''],
                          'post',
-                        ['onsubmit' => 'return confirm("Bạn có muốn xóa phòng này ?");']);?>
+                        ['onsubmit' => 'return confirm("Bạn có muốn xóa phòng này,sau khi xóa mọi dữ liệu liên quan đến phòng này sẽ bị mất, lưu ý ?");']);?>
                         <?= Html::submitButton('x',['class' => 'close',])?>
                         <?= Html::endForm(); ?>
                         <?= Html::encode($phong->name) ?>

@@ -26,7 +26,7 @@ class ObjPhim extends Model
     public $trailerUrl;
     public $created_at;
     public $updated_at;
-
+    public $status;
 
 
     public function rules()
@@ -59,7 +59,8 @@ class ObjPhim extends Model
             'created_at' => 'Đã thêm lúc',
             'updated_at' => 'Cập nhật lúc',
             'start' => 'Bắt đầu chiếu',
-            'trailerUrl' => 'Đường dẫn video trailer'
+            'trailerUrl' => 'Đường dẫn video trailer',
+            'status' => 'Trạng thái'
         ];
     }
 
@@ -75,7 +76,15 @@ class ObjPhim extends Model
         }
     }
 
-    
+    public function deleteFile($path)
+    {
+        if (file_exists($path)) {
+            unlink($path);
+            return true;
+        }
+        return false;
+    }
+
 
     public function createPhim()
     {
@@ -99,6 +108,28 @@ class ObjPhim extends Model
           	return true;
         }
         return false;    
+    }
+
+    public function getObject($id)
+    {
+        $phim = Phim::findOne($id);
+        $this->id = $phim->id;
+        $this->created_at = $phim->created_at;
+        $this->updated_at = $phim->updated_at;
+        $this->status = $phim->status;
+        $this->id_dd = $phim->id_dd;
+        $this->id_tl = $phim->id_tl;
+        $attributes = json_decode($phim->attributes);
+        $this->title = $attributes->title;
+        $this->tomTat = $attributes->tomtat;
+        $this->nhaSanXuat = $attributes->nhasanxuat;
+        $this->image = $attributes->image;
+        $this->thoiLuong = $attributes->thoiluong;
+        $this->quocGia = $attributes->quocgia;
+        $this->dienVien = $attributes->dienvien;
+        $this->start = $attributes->start;
+        $this->trailerUrl = $attributes->trailerurl;
+        return $this;
     }
 
 }

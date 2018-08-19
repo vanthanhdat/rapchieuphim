@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Arrayhelper;
 use dosamigos\datepicker\DatePicker;
+use app\models\Phim;
  ?>
 
 <div class='col-md-6'>
@@ -11,7 +12,7 @@ use dosamigos\datepicker\DatePicker;
     ]); ?>
 	<?php $urlImage = Yii::getAlias('@web/uploads/image/phim'); ?>
 
-	<img class="img-responsive" src="" id="imgPhim" alt="" style="width:254px;height:150px;">
+	<img class="img-responsive" src="<?= $urlImage.'/'.$model->image ?>" id="imgPhim" alt="" style="width:254px;height:150px;">
 
 	<?= $form->field($model, 'image')->fileInput([
 		'onchange' => 'readURL(this, "imgPhim")'
@@ -37,16 +38,17 @@ use dosamigos\datepicker\DatePicker;
 	 ?>
 	<?php
 		$authors = [];
-		foreach ($listDaoDien as $key) {
-			$attributes = json_decode($key->attributes);
+		foreach ($listDaoDien as $key => $value) {
+			$attributes = json_decode($value->attributes);
 			$author = [
-				'id' => $key->id,
+				'id' => $value->id,
 				'name' => $attributes->name,
 			];
 			array_push($authors,$author);
 		}
 	 ?>	
 	<?= $form->field($model, 'id_dd')->dropDownList(Arrayhelper::map($authors,'id','name'),['prompt' => '-Chọn đạo diễn-']); ?>
+
 	<?= $form->field($model,'start')->widget(
 		    DatePicker::className(), [
 		    'options' => ['autocomplete' => 'off',],		    		   			    			    		      	
@@ -57,10 +59,11 @@ use dosamigos\datepicker\DatePicker;
 		            'startDate' => '+15d',
 		        ]
 		]); ?>
- 	
+	<?php if (Yii::$app->controller->action->id === 'view-phim') {
+		echo $form->field($model, 'status')->dropDownList(Arrayhelper::map(Phim::STATUS,'key','value'),['prompt' => '-Trạng thái-']); 
+	} ?>	
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
-
     <?php ActiveForm::end(); ?>
 </div>

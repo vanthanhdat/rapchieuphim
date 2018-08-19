@@ -200,7 +200,6 @@ class RapController extends Controller
         $objGia = new ObjGia($model->gia);
         $city = City::find()->asArray()->all();
         if ($model->load(Yii::$app->request->post())) {
-            //var_dump(json_encode(Yii::$app->request->post('ObjGia')));exit;
             if ($model->save(json_encode(Yii::$app->request->post('ObjGia')))) {
                 $session = Yii::$app->session;
                 $session->addFlash('flashMessage');

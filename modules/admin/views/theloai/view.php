@@ -26,9 +26,9 @@ $this->params['breadcrumbs'][] = $this->title;
             	<?php $attributes = json_decode($value->attributes); ?>
             	 <div class="list-group">
                     <a href="<?= '/admin/theloai/view-phim/?id='.$value->id.'' ?>" title="<?= $attributes->title ?>" class="list-group-item list-group-item-action list-group-item-info">
-                        <?= Html::beginForm(['/admin/theloai/delete-phim/?id='.$value->id.''],
+                        <?= Html::beginForm(['/admin/theloai/delete-phim/?id='.$value->id.'&id_tl='.$model->id.''],
                          'post',
-                        ['onsubmit' => 'return confirm("Bạn có muốn xóa phim này ?");']);?>
+                        ['onsubmit' => 'return confirm("Bạn có muốn xóa phim này, sau khi xóa mọi dữ liệu liên quan đến bộ phim này sẽ bị mất, lưu ý ?");']);?>
                         <?= Html::submitButton('x',['class' => 'close',])?>
                         <?= Html::endForm(); ?>
                         <?= Html::encode($attributes->title) ?>

@@ -28,6 +28,11 @@ use yii\db\ActiveRecord;
  */
 class Phim extends ActiveRecord
 {
+    const STATUS = [
+        ['key' => 0,'value' => 'Ngưng chiếu'],
+        ['key' => 1,'value' => 'Sắp chiếu'],
+        ['key' => 2,'value' => 'Đang chiếu'],
+    ];
     /**
      * {@inheritdoc}
      */

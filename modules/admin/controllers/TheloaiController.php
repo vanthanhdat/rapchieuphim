@@ -41,7 +41,7 @@ class TheloaiController extends Controller
                 'rules' => [
                         [
                             // Allow full if user is admin
-                           'actions' => ['index','create', 'update', 'delete','view','create-phim'],
+                           'actions' => ['index','create', 'update', 'delete','view','create-phim','delete-phim','view-phim'],
                            'allow' => true,
                            'roles' => [
                                User::ROLE_ADMIN
@@ -74,7 +74,7 @@ class TheloaiController extends Controller
      */
     public function actionView($id)
     {
-        
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -181,5 +181,37 @@ class TheloaiController extends Controller
             'listDaoDien' => $listDaoDien,
             'listTheLoai' => $listTheLoai,
         ]);
+    }
+
+    public function actionDeletePhim($id,$id_tl)
+    {
+        $objPhim = new ObjPhim();
+        $phim = Phim::findOne($id);
+        $attributes = json_decode($phim->attributes);
+        $imagePhim = $attributes->image;
+        if ($imagePhim !== '') {
+            $pathFile = Yii::getAlias('@img').'/phim'.'/'.$imagePhim;
+            $objPhim->deleteFile($pathFile);
+        }
+        if ($phim->delete()) {
+            $session = Yii::$app->session;
+            $session->addFlash('flashMessage');
+            $session->setFlash('flashMessage', 'Đã xóa thành công phim "'.$attributes->title.'" !');
+        }
+        return $this->redirect(['view', 'id' => $id_tl]);
+    }
+
+    public function actionViewPhim($id)
+    {
+        $obj = new ObjPhim();
+        $obj = $obj->getObject($id);
+        $listDaoDien = Daodien::find()->all();
+        $listTheLoai = Theloai::find()->asArray()->all();
+        return $this->render('view-phim', [
+            'model' => $obj,
+            'listDaoDien' => $listDaoDien,
+            'listTheLoai' => $listTheLoai,
+        ]);
+       // var_dump($obj);exit;
     }
 }
