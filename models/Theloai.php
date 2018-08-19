@@ -28,6 +28,7 @@ class Theloai extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'required','message' => '{attribute} không thể để trống !'],
             [['name'], 'string', 'max' => 50],
             ['name', 'unique','message' => 'Thể loại này đã có, vui lòng kiểm tra lại!']
         ];

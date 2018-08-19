@@ -7,13 +7,11 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Country */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
-<div class="country-form">
-    <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+	<div class='col-md-6'>
+	    <?php $form = ActiveForm::begin(); ?>
+	    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+	    <div class="form-group">
+	        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+	    </div>
+	    <?php ActiveForm::end(); ?>
     </div>
-    <?php ActiveForm::end(); ?>
-
-</div>

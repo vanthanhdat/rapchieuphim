@@ -5,11 +5,16 @@ namespace app\modules\admin\controllers;
 use Yii;
 use app\models\Theloai;
 use app\models\Phim;
+use app\models\form\CreatePhimForm;
 use app\models\Daodien;
 use app\models\search\TheloaiSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use yii\filters\AccessControl;
+use app\components\AccessRule;
+use app\models\User;
 
 /**
  * TheloaiController implements the CRUD actions for Theloai model.
@@ -27,6 +32,22 @@ class TheloaiController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                 ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                       'class' => AccessRule::className(),
+                   ],
+                'rules' => [
+                        [
+                            // Allow full if user is admin
+                           'actions' => ['index','create', 'update', 'delete','view','create-phim'],
+                           'allow' => true,
+                           'roles' => [
+                               User::ROLE_ADMIN
+                           ],
+                       ],
+                ],   
             ],
         ];
     }
@@ -89,11 +110,12 @@ class TheloaiController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+                $session = Yii::$app->session;
+                $session->addFlash('flashMessage');
+                $session->setFlash('flashMessage', 'Cập nhật thành công !');
+                return $this->redirect(['view', 'id' => $model->id]);
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -132,24 +154,31 @@ class TheloaiController extends Controller
 
     public function actionCreatePhim($id)
     {
-        $theloai = $this->findModel($id);
-        $model = new Phim();
-        $dsDaodien = Daodien::find()->all();
-        if ($model->load(Yii::$app->request->post()) ) {
-            $model->start = date('Y-m-d', strtotime($model->start));
+        $theloai = new Theloai();
+        $model = new CreatePhimForm();
+        $listDaoDien = Daodien::find()->all();
+        $listTheLoai = [];
+        if ($id == 0) {
+            $listTheLoai = Theloai::find()->asArray()->all();
+        }
+        else{
+            $theloai = $this->findModel($id);
             $model->id_tl = $id;
-            var_dump($model);exit;
-            if ($model->save()) {
+        }
+        if ($model->load(Yii::$app->request->post()) ) {
+            $model->image = UploadedFile::getInstance($model, 'image');
+            if ($model->createPhim()) {
                 $session = Yii::$app->session;
                 $session->addFlash('flashMessage');
                 $session->setFlash('flashMessage', 'Thêm thành công !');
-                return $this->redirect(['index']);
+                return $this->redirect(['view', 'id' => $model->id_tl]);
             }
         }
         return $this->render('create-phim',[
             'theloai' => $theloai,
             'model' => $model,
-            'listDaoDien' => $dsDaodien,
+            'listDaoDien' => $listDaoDien,
+            'listTheLoai' => $listTheLoai,
         ]);
     }
 }

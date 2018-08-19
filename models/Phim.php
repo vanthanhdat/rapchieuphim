@@ -42,11 +42,6 @@ class Phim extends ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'tomtat', 'nhasanxuat', 'thoiluong', 'quocgia', 'dienvien', 'id_tl', 'id_dd', 'created_at', 'updated_at', 'start'], 'required','message' => '{attribute} không thể để trống !'],
-            [['tomtat'], 'string'],
-            [['thoiluong', 'id_tl', 'id_dd', 'created_at', 'updated_at'], 'integer'],
-            [['start'], 'safe'],
-            [['title', 'nhasanxuat', 'image', 'quocgia', 'dienvien'], 'string', 'max' => 50],
             [['id_dd'], 'exist', 'skipOnError' => true, 'targetClass' => Daodien::className(), 'targetAttribute' => ['id_dd' => 'id']],
             [['id_tl'], 'exist', 'skipOnError' => true, 'targetClass' => Theloai::className(), 'targetAttribute' => ['id_tl' => 'Id']],
         ];
@@ -111,11 +106,4 @@ class Phim extends ActiveRecord
         return $this->hasOne(Theloai::className(), ['Id' => 'id_tl']);
     }
 
-    public function createPhim()
-    {
-        if ($this->save()) {
-            return true;
-        }
-        return false;
-    }
 }
