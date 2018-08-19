@@ -207,6 +207,10 @@ class TheloaiController extends Controller
         $obj = $obj->getObject($id);
         $listDaoDien = Daodien::find()->all();
         $listTheLoai = Theloai::find()->asArray()->all();
+        if ($obj->load(Yii::$app->request->post()) ) {
+            $obj->image = UploadedFile::getInstance($obj, 'image');
+            ///////////
+        }
         return $this->render('view-phim', [
             'model' => $obj,
             'listDaoDien' => $listDaoDien,
