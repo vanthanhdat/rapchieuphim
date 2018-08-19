@@ -5,7 +5,7 @@ namespace app\modules\admin\controllers;
 use Yii;
 use app\models\Daodien;
 use app\models\objects\ObjDaoDien;
-use app\models\DaodienSearch;
+use app\models\form\DaodienSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

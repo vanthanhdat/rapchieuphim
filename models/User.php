@@ -141,16 +141,4 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     {
         $this->password = Yii::$app->security->generatePasswordHash($password);
     }
-
-    public static function isUserAdmin($username)
-    {
-        if (static::findOne(['email' => $username, 'role' => self::ROLE_ADMIN])){
-                        
-             return true;
-      } else {
-                        
-             return false;
-      }
-    }
-
 }
