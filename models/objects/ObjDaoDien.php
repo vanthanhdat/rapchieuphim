@@ -88,7 +88,7 @@ class ObjDaoDien extends Model
         } else {
             $obj = Daodien::findOne($this->id);
             $attributes = json_decode($obj->attributes);
-            $oldImage = $attributes->image;
+            $oldImage = $attributes->image; 
             if ($image === null) {
                 $array = array('name' => $this->name,
                  'description' => $this->description,
@@ -98,17 +98,19 @@ class ObjDaoDien extends Model
                   $allAttributes = json_encode($array);
             }
             else {
-                $pathFile = Yii::getAlias('@img').'/daodien'.'/'.$oldImage; 
-                if ($this->deleteFile($pathFile)) {
+                $pathFile ='';
+                if ($oldImage !== '') {
+                    $pathFile = Yii::getAlias('@img').'/daodien'.'/'.$oldImage;
+                    $this->deleteFile($pathFile);
                     $this->uploadImageDaoDien();
-                    $array = array(
-                    'name' => $this->name,
-                    'description' => $this->description,
-                    'birthdate' => $this->birthdate,
-                    'image' => implode("-",explode(" ",$this->name)) . '.' . $this->image->extension,
-                    'tieusu' => $this->tieusu);
-                    $allAttributes = json_encode($array);
                 }
+                $array = array(
+                'name' => $this->name,
+                'description' => $this->description,
+                'birthdate' => $this->birthdate,
+                'image' => implode("-",explode(" ",$this->name)) . '.' . $this->image->extension,
+                'tieusu' => $this->tieusu);
+                $allAttributes = json_encode($array);
             }
         }
         return $allAttributes;
