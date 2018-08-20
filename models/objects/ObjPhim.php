@@ -32,7 +32,7 @@ class ObjPhim extends Model
     public function rules()
     {
         return [
-            [['title', 'tomTat', 'nhaSanXuat','image','thoiLuong', 'quocGia', 'dienVien', 'id_tl', 'id_dd', 'start','trailerUrl'], 'required','message' => '{attribute} không thể để trống !'],
+            [['title', 'tomTat', 'nhaSanXuat','thoiLuong', 'quocGia', 'dienVien', 'id_tl', 'id_dd', 'start','trailerUrl'], 'required','message' => '{attribute} không thể để trống !'],
             [['tomTat'], 'string'],
             [['thoiLuong', 'id_tl', 'id_dd', 'created_at', 'updated_at'], 'integer'],
             [['start'], 'safe'],
@@ -69,7 +69,7 @@ class ObjPhim extends Model
     {
         if ($this->validate()) {
             $path = Yii::getAlias('@img');
-            $this->image->saveAs($path.'/phim'.'/'. $this->image->name . '.' . $this->image->extension);
+            $this->image->saveAs($path.'/phim'.'/'. $this->image->name);
             return true;
         } else {
             return false;
@@ -95,7 +95,7 @@ class ObjPhim extends Model
             'title' => $this->title,
             'tomtat' => $this->tomTat,
             'nhasanxuat' => $this->nhaSanXuat,
-            'image' => $this->image->name. '.' .$this->image->extension,
+            'image' => $this->image->name,
             'thoiluong' => $this->thoiLuong,
             'quocgia' => $this->quocGia,
             'dienvien' => $this->dienVien,
@@ -108,6 +108,42 @@ class ObjPhim extends Model
           	return true;
         }
         return false;    
+    }
+
+    public function updatePhim($id)
+    {
+        $phim = Phim::findOne($id);
+        $phim->id_tl = $this->id_tl;
+        $phim->id_dd = $this->id_dd;
+        $phim->status = $this->status;
+        $oldAttributes = json_decode($phim->attributes);
+        $newAttributes = array(
+            'title' => $this->title,
+            'tomtat' => $this->tomTat,
+            'nhasanxuat' => $this->nhaSanXuat,
+            'image' => '',
+            'thoiluong' => $this->thoiLuong,
+            'quocgia' => $this->quocGia,
+            'dienvien' => $this->dienVien,
+            'start' => $this->start,
+            'trailerurl' => $this->trailerUrl
+        );
+        if ($this->image === null) {
+            $newAttributes['image'] = $oldAttributes->image;
+        }else{
+            $pathFile ='';
+            if ($oldAttributes->image !== '') {
+                $pathFile = Yii::getAlias('@img').'/phim'.'/'.$oldAttributes->image;
+                $this->deleteFile($pathFile);
+                $this->uploadImagePhim();
+            }
+            $newAttributes['image'] = $this->image->name;
+        }
+        $phim->attributes = json_encode($newAttributes);
+        if ($phim->save()) {
+            return true;
+        }
+        return false;
     }
 
     public function getObject($id)
@@ -131,6 +167,5 @@ class ObjPhim extends Model
         $this->trailerUrl = $attributes->trailerurl;
         return $this;
     }
-
 }
 ?>

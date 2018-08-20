@@ -15,7 +15,8 @@ use app\models\Phim;
 	<img class="img-responsive" src="<?= $urlImage.'/'.$model->image ?>" id="imgPhim" alt="" style="width:254px;height:150px;">
 
 	<?= $form->field($model, 'image')->fileInput([
-		'onchange' => 'readURL(this, "imgPhim")'
+		'onchange' => 'readURL(this, "imgPhim")',
+		'value' => $urlImage.'/'.$model->image
 	]) ?>
 
     <?= $form->field($model, 'title') ?>

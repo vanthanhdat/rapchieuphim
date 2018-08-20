@@ -209,13 +209,14 @@ class TheloaiController extends Controller
         $listTheLoai = Theloai::find()->asArray()->all();
         if ($obj->load(Yii::$app->request->post()) ) {
             $obj->image = UploadedFile::getInstance($obj, 'image');
-            ///////////
+            if ($obj->updatePhim($id)) {
+                return $this->redirect(['view-phim', 'id' => $id]);
+            }
         }
         return $this->render('view-phim', [
             'model' => $obj,
             'listDaoDien' => $listDaoDien,
             'listTheLoai' => $listTheLoai,
         ]);
-       // var_dump($obj);exit;
     }
 }

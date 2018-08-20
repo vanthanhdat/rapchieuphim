@@ -51,10 +51,20 @@ class ObjDaoDien extends Model
 
     public function uploadImageDaoDien()
     {
-        $fileName =  implode("-",explode(" ",$this->name));  
         if ($this->validate()) {
             $path = Yii::getAlias('@img');
-            $this->image->saveAs($path.'/daodien'.'/'. $fileName . '.' . $this->image->extension);
+            $this->image->saveAs($path.'/daodien'.'/'. $this->image);
+            $src = imagecreatefromjpeg($path.'/daodien'.'/'. $this->image);
+          //  var_dump(getimagesize($path.'/daodien'.'/'. $this->image));exit;
+            list($width,$height) = getimagesize($path.'/daodien'.'/'. $this->image);
+            $newWidth = 400;
+            $newHeight = 400;
+            $resizedImage = imagecreatetruecolor($newWidth, $newHeight);
+            //change image of src as resizedImage size by call imagecopyresampled()
+            imagecopyresampled($resizedImage,$src,0,0,0,0,$newWidth,$newHeight,$width,$height);
+            imagejpeg($resizedImage,$path.'/daodien'.'/'. $this->image,100);
+            imagedestroy($src);
+            imagedestroy($resizedImage);
             return true;
         } else {
             return false;
@@ -75,13 +85,12 @@ class ObjDaoDien extends Model
                 $allAttributes = json_encode($array);
             }
             else {
-                $pathFile = Yii::getAlias('@img').'/daodien'.'/'.$image; 
                 $this->uploadImageDaoDien();
                 $array = array(
                         'name' => $this->name,
                         'description' => $this->description,
                         'birthdate' => $this->birthdate,
-                        'image' => implode("-",explode(" ",$this->name)) . '.' . $this->image->extension,
+                        'image' => $this->image->name,
                         'tieusu' => $this->tieusu);
                 $allAttributes = json_encode($array);
             }
@@ -102,13 +111,13 @@ class ObjDaoDien extends Model
                 if ($oldImage !== '') {
                     $pathFile = Yii::getAlias('@img').'/daodien'.'/'.$oldImage;
                     $this->deleteFile($pathFile);
-                    $this->uploadImageDaoDien();
                 }
+                $this->uploadImageDaoDien();
                 $array = array(
                 'name' => $this->name,
                 'description' => $this->description,
                 'birthdate' => $this->birthdate,
-                'image' => implode("-",explode(" ",$this->name)) . '.' . $this->image->extension,
+                'image' => $this->image->name,
                 'tieusu' => $this->tieusu);
                 $allAttributes = json_encode($array);
             }
