@@ -18,6 +18,7 @@ use app\models\Phim;
 		'onchange' => 'readURL(this, "imgPhim")',
 		'value' => $urlImage.'/'.$model->image,
 	]) ?>
+	
 
     <?= $form->field($model, 'title') ?>
 

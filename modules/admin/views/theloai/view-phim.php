@@ -6,6 +6,7 @@ use yii\helpers\Html;
 	//$this->params['breadcrumbs'][] = ['label' => $model->theloai];
 ?>
 <div class="phim-form container">
+	
 	<h1><?= Html::encode($this->title) ?></h1>
     <?= $this->render('_form-phim', [
         'model' => $model,
