@@ -53,16 +53,16 @@ class ObjDaoDien extends Model
     {
         if ($this->validate()) {
             $path = Yii::getAlias('@img');
-            $this->image->saveAs($path.'/daodien'.'/'. $this->image);
-            $src = imagecreatefromjpeg($path.'/daodien'.'/'. $this->image);
-            list($width,$height) = getimagesize($path.'/daodien'.'/'. $this->image);
+            $this->image->saveAs($path.'/daodien'.'/'. $this->image->name);
+            $src = imagecreatefromjpeg($path.'/daodien'.'/'. $this->image->name);
+            list($width,$height) = getimagesize($path.'/daodien'.'/'. $this->image->name);
             $newWidth = 400;
             $newHeight = 400;
-            $resizedImage = imagecreatetruecolor($newWidth, $newHeight);
-            imagecopyresampled($resizedImage,$src,0,0,0,0,$newWidth,$newHeight,$width,$height);
-            imagejpeg($resizedImage,$path.'/daodien'.'/'. $this->image,100);
+            $newImage = imagecreatetruecolor($newWidth, $newHeight);
+            imagecopyresampled($newImage,$src,0,0,0,0,$newWidth,$newHeight,$width,$height);
+            imagejpeg($newImage,$path.'/daodien'.'/'. $this->image->name,100);
             imagedestroy($src);
-            imagedestroy($resizedImage);
+            imagedestroy($newImage);
             return true;
         } else {
             return false;

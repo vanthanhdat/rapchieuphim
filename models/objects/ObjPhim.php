@@ -70,6 +70,15 @@ class ObjPhim extends Model
         if ($this->validate()) {
             $path = Yii::getAlias('@img');
             $this->image->saveAs($path.'/phim'.'/'. $this->image->name);
+            $src = imagecreatefromjpeg($path.'/phim'.'/'. $this->image->name);
+            list($width,$height) = getimagesize($path.'/phim'.'/'. $this->image->name);
+            $newWidth = 300;
+            $newHeight = 450;
+            $newImage = imagecreatetruecolor($newWidth, $newHeight);
+            imagecopyresampled($newImage,$src,0,0,0,0,$newWidth,$newHeight,$width,$height);
+            imagejpeg($newImage,$path.'/phim'.'/'. $this->image->name,100);
+            imagedestroy($src);
+            imagedestroy($newImage);
             return true;
         } else {
             return false;
