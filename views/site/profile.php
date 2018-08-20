@@ -1,6 +1,7 @@
 <?php 
 use yii\helpers\Html;
 $this->title='THÔNG TIN KHÁCH HÀNG';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="update-user">

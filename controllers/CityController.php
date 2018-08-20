@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\City;
-use app\models\CitySearch;
+use app\models\search\CitySearch;
 use app\components\EventComponent;
 use yii\web\Controller;
 use yii\data\Pagination;
