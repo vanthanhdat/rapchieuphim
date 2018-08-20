@@ -12,11 +12,11 @@ use app\models\Phim;
     ]); ?>
 	<?php $urlImage = Yii::getAlias('@web/uploads/image/phim'); ?>
 
-	<img class="img-responsive" src="<?= $urlImage.'/'.$model->image ?>" id="imgPhim" alt="" style="width:254px;height:150px;">
+	<img class="img-responsive" src="<?= $urlImage.'/'.$model->image ?>" id="imgPhim" alt="<?= $model->title ?>">
 
 	<?= $form->field($model, 'image')->fileInput([
 		'onchange' => 'readURL(this, "imgPhim")',
-		'value' => $urlImage.'/'.$model->image
+		'value' => $urlImage.'/'.$model->image,
 	]) ?>
 
     <?= $form->field($model, 'title') ?>

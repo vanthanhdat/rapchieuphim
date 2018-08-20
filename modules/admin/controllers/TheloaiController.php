@@ -210,6 +210,10 @@ class TheloaiController extends Controller
         if ($obj->load(Yii::$app->request->post()) ) {
             $obj->image = UploadedFile::getInstance($obj, 'image');
             if ($obj->updatePhim($id)) {
+                $session = Yii::$app->session;
+                $session = Yii::$app->session;
+                $session->addFlash('flashMessage');
+                $session->setFlash('flashMessage', 'Cập nhật thành công !');
                 return $this->redirect(['view-phim', 'id' => $id]);
             }
         }

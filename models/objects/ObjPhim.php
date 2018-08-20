@@ -144,8 +144,8 @@ class ObjPhim extends Model
             if ($oldAttributes->image !== '') {
                 $pathFile = Yii::getAlias('@img').'/phim'.'/'.$oldAttributes->image;
                 $this->deleteFile($pathFile);
-                $this->uploadImagePhim();
             }
+            $this->uploadImagePhim();
             $newAttributes['image'] = $this->image->name;
         }
         $phim->attributes = json_encode($newAttributes);
