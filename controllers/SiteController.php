@@ -70,7 +70,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $query = new Query();
+        $sapChieu = $query->select(['id','attributes','status'])->from('phim')->where(['status' => 1])->limit(6)->all();
+        //var_dump($sapChieu);exit;
+        return $this->render('index',[
+            'sapChieu' => $sapChieu
+        ]);
     }
 
     /**

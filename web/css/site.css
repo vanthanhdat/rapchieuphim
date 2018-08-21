@@ -171,6 +171,20 @@ a.desc:after {
     margin: 20px -15px 10px -15px;
 }
 
+.movies-group .title-movie {
+    margin-top: 8px;
+}
+
+.movies-group .title-movie h4 {
+    font-size: 16px;
+    color: #43464b;
+    text-transform: capitalize;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 .movies-group .movie-item {
     margin-bottom: 20px;
 }
@@ -211,4 +225,45 @@ a.desc:after {
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center;
+}
+
+.btn.secondary-white {
+    display: inline-block;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #ffffff;
+    font-weight: 400;
+    border: 1px solid #ffffff;
+    padding: 15px 30px;
+    text-decoration: none;
+    line-height: 1;
+}
+
+.btn.secondary-white:hover {
+    color: #ffffff;
+    background-color: #f26b38;
+    border-color: #f26b38;
+}
+
+.btn.secondary {
+    display: inline-block;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #f26b38;
+    border: 1px solid #f26b38;
+    padding: 15px 20px;
+    text-decoration: none;
+    line-height: 1;
+}
+
+.btn.secondary:hover{
+    color: #ffffff;
+    background-color: #f26b38;
+    border-color: #f26b38;
+}
+
+.fl-right{
+    float: right;
 }

@@ -42,49 +42,34 @@ $urlImage = Yii::getAlias('@web/uploads/img');
     <div class="col-md-12">
         <?php
         $urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
-
-        $dangChieu = [];
-        $sapChieu = [];
-        for ($i = 0; $i < 6; $i++) {
-            $contentDangChieu = '<div class="col-md-4 col-sm-4 col-xs-6 movie-item">
-                          <div class = "article-movie-home">
-                            <img class="img-thumbnail img-responsive" src="'.$urlImagePhim."/"."the-meg-sieu-bao-chua.jpg".'">
-                            <a href="/dat-ve/alpha">
-                              <div class="decription-hover overlay">
-                                <div class="movies-content">
-                                  <div class="group">
-                                    <div class="btn btn-warning">mua vé</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </a>
-                          </div>    
-                        </div>';
-            array_push($dangChieu, $contentDangChieu); 
-
+        $phimDangChieu = [];
+        $phimSapChieu = [];
+        foreach ($sapChieu as $key => $value) {
+            $attributes = json_decode($value['attributes']);
             $contentSapChieu = '<div class="col-md-4 col-sm-4 col-xs-6 movie-item">
                                   <div class = "article-movie-home">
-                                    <img class="img-thumbnail img-responsive" src="'.$urlImagePhim."/"."alpha1_1531975894329.jpg".'">
-                                    <a href="/dat-ve/alpha">
+                                    <img class="img-thumbnail img-responsive" src="'.$urlImagePhim."/".$attributes->image.'" style ="width:396px;height:264px;">
+                                    <a href="/dat-ve/'.$value['id'].'">
                                       <div class="decription-hover overlay">
                                           <div class="movies-content">
                                             <div class="group">
-                                                <div class="btn btn-warning">mua vé</div>
+                                                <div class="btn secondary-white">mua vé</div>
                                             </div>
                                           </div>
                                       </div>
                                     </a>
-                                  </div>    
+                                  </div>
+                                  <div class="title-movie"><h4 class="vn">'.$attributes->title.'</h4></div>    
                                 </div>';  
-            array_push($sapChieu, $contentSapChieu);           
+            array_push($phimSapChieu, $contentSapChieu);
         }
         echo Tabs::widget([
           'items' => [
               [
                   'label' => 'Phim đang chiếu',
                   'content' => '  
-                              <div class="row movies-group">
-                                  '.implode(' ',$dangChieu).'
+                              <div class="movies-group">
+                                  '.implode(' ',$phimDangChieu).'
                               </div>
                               <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
@@ -97,15 +82,15 @@ $urlImage = Yii::getAlias('@web/uploads/img');
               ],
               [
                   'label' => 'Phim sắp chiếu',
-                  'content' => '<div class="row movies-group ">
-                                     '.implode(' ',$sapChieu).'
+                  'content' => '<div class="movies-group ">
+                                     '.implode(' ',$phimSapChieu).'
                                 </div>
                               <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
                                   <a href="/phim-dang-chieu" class="btn secondary fl-right">Xem thêm</a>
                                 </div>
                               </div>',
-                //  'headerOptions' => [''],
+                  //'headerOptions' => ['color' => 'yellow'],
                   'options' => ['class' => 'animated fadeInUp','data-animate' => 'fadeInUp']
               ],
           ],

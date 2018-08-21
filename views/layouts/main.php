@@ -48,7 +48,7 @@ $urlImage = Yii::getAlias('@web/uploads/img');
                 </li>
         <?php else: ?>
                 <li>
-                    <a href="/site/profile" style="text-transform: uppercase;"><?= Yii::$app->user->identity->hoten ?></a>
+                    <a href="/site/profile" style="text-transform: uppercase;"><?= Yii::$app->controller->id //Yii::$app->user->identity->hoten ?></a>
                 </li>
                 <span>|</span>
                 <?= '<li style= "padding-top:5px;">'
