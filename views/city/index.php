@@ -8,7 +8,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
-<div class="city-index">
+<div class="container">
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
         <?= Html::a('Add', ['create'], ['class' => 'btn btn-success']) ?>

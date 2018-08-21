@@ -33,9 +33,7 @@ h1 {
     font-size: 14px;
   } 
 }
-#top a {
-  color: #fff;
-}
+
 #top ul.menu {
   margin: 0;
   text-align: right;
@@ -48,8 +46,13 @@ h1 {
 }
 #top ul.menu > li a {
   text-decoration: none;
-  color: #322e2e;
 }
+
+#top ul.menu > li a:hover {
+  text-decoration: none;
+  color: #f26b38;
+}
+
 #top ul.menu > .active {
   color: #999999;
 }
@@ -100,10 +103,16 @@ h1 {
 .navbar .yamm-content .banner {
   margin-bottom: 10px;
 }
+
 .navbar ul.nav > li > a {
   text-transform: uppercase;
-  font-weight: bold;
+  color: white;
 }
+
+.navbar ul.nav > li > a:hover {
+    color: #f26b38;
+}
+
 .navbar #search {
   clear: both;
   border-top: solid 1px #9adacd;
@@ -1061,10 +1070,6 @@ h1 {
 /* navbar */
 .navbar {
   font-family: "Roboto", Helvetica, Arial, sans-serif;
-  min-height: 70px;
-  margin-bottom: 30px;
-  border: none;
-  border-bottom: 1px solid transparent;
 }
 @media (min-width: 768px) {
   .navbar {
@@ -1308,13 +1313,13 @@ h1 {
 }
 /* scaffolding */
 a {
-  color: #4fbfa8;
+  color: #a0a3a7;
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: #348e7b;
-  text-decoration: underline;
+  color: #f26b38;
+  text-decoration: none;
 }
 a:focus {
   outline: thin dotted;
@@ -1421,10 +1426,7 @@ fieldset[disabled] .btn-primary.active {
   line-height: 1.5;
   border-radius: 3px;
 }
-/* dropdowns */
-.dropdown-menu > li > a {
-  padding: 5px 20px;
-}
+
 /* forms.less */
 label {
   font-weight: normal;

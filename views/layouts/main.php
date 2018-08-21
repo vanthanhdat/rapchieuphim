@@ -10,7 +10,6 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
-use yii\jui\Menu;
 
 AppAsset::register($this);
 $urlImage = Yii::getAlias('@web/uploads/img'); 
@@ -36,17 +35,20 @@ $urlImage = Yii::getAlias('@web/uploads/img');
                 <img src="<?= $urlImage.'/'.'galaxy-logo.png' ?>" alt="Galaxy Cinema" >  
             </a>
         </div>
+
         <div class="col-sm-4 col-md-4" >
             <ul class="menu">
         <?php if (Yii::$app->user->isGuest): ?> 
-                <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+                <?php //data-toggle="modal" data-target="#login-modal" ?>
+                <li>
+                    <a href="/site/login" >Login</a>
                 </li>
                 <span>|</span>
                 <li><a href="/site/signup">Register</a>
                 </li>
         <?php else: ?>
                 <li>
-                    <a href="/site/profile" class="btn btn-primary" style="text-transform: uppercase;"><?= Yii::$app->user->identity->hoten ?></a>
+                    <a href="/site/profile" style="text-transform: uppercase;"><?= Yii::$app->user->identity->hoten ?></a>
                 </li>
                 <span>|</span>
                 <?= '<li style= "padding-top:5px;">'
@@ -60,7 +62,9 @@ $urlImage = Yii::getAlias('@web/uploads/img');
         <?php endif ?>
              </ul>
         </div>
+
     </div>
+
     <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -89,7 +93,39 @@ $urlImage = Yii::getAlias('@web/uploads/img');
     </div>
 </div>
 
-<?php $urlImage = Yii::getAlias('@web/uploads/img'); ?>
+<?php $urlImage = Yii::getAlias('@web/uploads/img'); ?> 
+<?php NavBar::begin([
+                'options' => ['class' =>'navbar-inverse','style'=>['margin-bottom' => 0]],
+            ]);
+            $navItems = [
+                ['label' => 'Mua vé', 'url' => ['/site/index']],
+                ['label' => 'City', 'url' => ['/city/index']],
+                ['label' => 'Phim', 'url' => ['#'],'items' => [
+                        ['label' => 'Thể loại phim', 'url' => '#'],
+                        ['label' => 'Đạo diễn', 'url' => '#'],
+                        ],'options' => ['class' => 'dropdown-submenu'] ],
+                ['label' => 'GÓC ĐIỆN ẢNH','url' => '#','items' => [
+                         ['label' => 'Thể loại phim', 'url' => '#'],
+                         ['label' => 'Đạo diễn', 'url' => '#'],
+                        ],'options' => ['class' => 'dropdown-submenu']],
+                        ['label' => 'Rạp', 'url' => ['/site/about']],
+                '<div class="navbar-collapse collapse in col-sm-4 col-md-4">
+                    <form class="navbar-form">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
+                </div>'
+            ];
+            echo Nav::widget([
+                'activateItems' => false,
+                'options' => ['class' => 'navbar-nav navbar-inverse'],
+                'items' => $navItems,
+            ]);
+        NavBar::end();?>
     <div class="container">
             <?php     
              if (Yii::$app->session->getFlash('flashMessage') != null) {
@@ -99,37 +135,10 @@ $urlImage = Yii::getAlias('@web/uploads/img');
                 ]);
             }
             ?>  
-            <div class="navbar-collapse collapse right in">
-                    <form class="navbar-form">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                            <span class="input-group-btn">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                            </span>
-                        </div>
-                    </form>
-            </div>
-            <?php
-            NavBar::begin([
-            ]);
-            $navItems = [
-                ['label' => 'Home', 'url' => ['/site/index']],
-                ['label' => 'City', 'url' => ['/city/index']],
-                ['label' => 'About', 'url' => ['/site/about']],
-            ];
-            echo Nav::widget([
-              //  'activateItems' => false,
-                'options' => ['class' => 'navbar-nav'],
-                'items' => $navItems,
-            ]);
-
-            NavBar::end();
-            ?>
-            
             <!--Breadcrumbs-->
             <?php echo Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?>   
+            ]) ?>             
     </div> 
     <?= $content ?>
     <br>
