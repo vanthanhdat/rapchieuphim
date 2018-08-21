@@ -136,6 +136,7 @@ a.desc:after {
 }
 
 .dropdown-submenu>.dropdown-menu {
+    text-transform: uppercase;
     background: #222;
     margin-left: -1px;
     -webkit-border-radius: 0 6px 6px 6px;
@@ -162,4 +163,52 @@ a.desc:after {
         color: #f26b38;
         background-color: transparent;
     }
+}
+
+/*tab movies*/
+
+.movies-group {
+    margin: 20px -15px 10px -15px;
+}
+
+.movies-group .movie-item {
+    margin-bottom: 20px;
+}
+
+.movies-group .article-movie-home {
+    position: relative;
+    -webkit-transition: all 300ms;
+    transition: all 300ms;
+    display: table;
+}
+
+
+.movies-group .article-movie-home .overlay {
+   
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all 300ms;
+    transition: all 300ms;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.movies-group .article-movie-home .decription-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.movies-group .article-movie-home:hover .overlay {
+    opacity: 1;
+}
+
+.movies-group .article-movie-home .movies-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
 }

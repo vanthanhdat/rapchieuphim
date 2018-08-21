@@ -114,7 +114,7 @@ $urlImage = Yii::getAlias('@web/uploads/img');
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search">
                             <span class="input-group-btn">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                            <button type="submit" class="btn"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
                     </form>
@@ -140,8 +140,9 @@ $urlImage = Yii::getAlias('@web/uploads/img');
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>             
     </div> 
-    <?= $content ?>
-    <br>
+    <div class="wrap">
+        <?= $content ?>
+    </div>
 <div class="container" id = "footer">  
      <div id="footer" class="animated fadeInUp" data-animate="fadeInUp">
         <div class="container">
