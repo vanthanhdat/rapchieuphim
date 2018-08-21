@@ -12,8 +12,6 @@ $urlImage = Yii::getAlias('@web/uploads/img');
       <li data-target="#main-carousel" data-slide-to="1"></li>
       <li data-target="#main-carousel" data-slide-to="2"></li>
     </ol>
-
-    <!-- Wrapper for slides -->
     <div class="carousel-inner">
       <div class="item active">
         <img src="<?= $urlImage.'/'.'slider1.jpg' ?>" alt="Los Angeles" style="width:100%;">
@@ -27,7 +25,6 @@ $urlImage = Yii::getAlias('@web/uploads/img');
         <img src="<?= $urlImage.'/'.'slider3.jpg' ?>" alt="New york" style="width:100%;">
       </div>
     </div>
-
     <a class="left carousel-control" href="#main-carousel" data-slide="prev">
       <span class="glyphicon glyphicon-chevron-left"></span>
       <span class="sr-only">Previous</span>

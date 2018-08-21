@@ -19,7 +19,6 @@ h1 {
   font-size: 40px;
 }
 #top {
-  background: #555555;
   padding: 10px 0;
 }
 #top .offer {
@@ -49,7 +48,7 @@ h1 {
 }
 #top ul.menu > li a {
   text-decoration: none;
-  color: #eeeeee;
+  color: #322e2e;
 }
 #top ul.menu > .active {
   color: #999999;
@@ -1228,10 +1227,7 @@ h1 {
     margin-right: 0;
   }
 }
-.navbar-default {
-  background-color: #ffffff;
-  border-bottom-color: #e6e6e6;
-}
+
 .navbar-default .navbar-brand {
   color: #777777;
 }

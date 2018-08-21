@@ -10,9 +10,10 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
-
+use yii\jui\Menu;
 
 AppAsset::register($this);
+$urlImage = Yii::getAlias('@web/uploads/img'); 
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -30,22 +31,24 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 <div id="top">
     <div class="container animated fadeInDown" data-animate="fadeInDown" style="opacity: 0;">
-        <div class="col-xs-6 col-sm-8 col-md-8 offer">
-            <a href="/" class="btn btn-success" data-animate-hover="shake">Khiêm Chô galaxy</a>
+        <div class="col-sm-8 col-md-8">
+            <a href="/">
+                <img src="<?= $urlImage.'/'.'galaxy-logo.png' ?>" alt="Galaxy Cinema" >  
+            </a>
         </div>
-        <div class=" col-xs-6 col-sm-4 col-md-4" >
+        <div class="col-sm-4 col-md-4" >
             <ul class="menu">
         <?php if (Yii::$app->user->isGuest): ?> 
                 <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
                 </li>
-                <span style="color: white;">|</span>
+                <span>|</span>
                 <li><a href="/site/signup">Register</a>
                 </li>
         <?php else: ?>
                 <li>
                     <a href="/site/profile" class="btn btn-primary" style="text-transform: uppercase;"><?= Yii::$app->user->identity->hoten ?></a>
                 </li>
-                <span style="color: white;">|</span>
+                <span>|</span>
                 <?= '<li style= "padding-top:5px;">'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
@@ -105,7 +108,7 @@ AppAsset::register($this);
                             </span>
                         </div>
                     </form>
-                </div>
+            </div>
             <?php
             NavBar::begin([
             ]);
@@ -119,13 +122,14 @@ AppAsset::register($this);
                 'options' => ['class' => 'navbar-nav'],
                 'items' => $navItems,
             ]);
+
             NavBar::end();
             ?>
-            <div class="row">
-                <?php echo Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            
+            <!--Breadcrumbs-->
+            <?php echo Breadcrumbs::widget([
+            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>   
-            </div>  
     </div> 
     <?= $content ?>
     <br>

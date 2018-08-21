@@ -11,7 +11,8 @@ $this->title = 'Đăng nhập';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="row">
+<div class="container">
+    <div class="row">
     <div class="col-lg-12 col-lg-offset-1">
         <h1><?= Html::encode($this->title)?></h1>  
         <?php $form = ActiveForm::begin([
@@ -37,4 +38,5 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     <?php ActiveForm::end(); ?>
     </div>
+</div>
 </div>
