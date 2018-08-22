@@ -6,7 +6,7 @@ $urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
 ?>
 
 <section class="hidden-xs">
-  <h3 style="text-transform: uppercase;">phim đang chiếu</h3>
+  <h3 class="text-uppercase">phim đang chiếu</h3>
   <div class="row movies-group">
     <?php foreach ($arr as $key => $value): ?>
       <?php  $attributes = json_decode($value['attributes']); ?>

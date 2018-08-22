@@ -12,7 +12,7 @@ $this->title = 'Danh sách đạo diễn';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php $urlImage = Yii::getAlias('@web/uploads/image/daodien'); ?>
-<h3><?= $this->title ?></h3>
+<h3 class="text-uppercase"><?= $this->title ?></h3>
 <?php foreach($listDaoDien as $value): ?>
     <article class="blog-post">
         <div class="col-md-4 col-xs-4"> 

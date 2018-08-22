@@ -281,3 +281,7 @@ h3:after {
     content: '';
     background-color: #f26b38;
 }
+
+.text-uppercase{
+    text-transform: uppercase;
+}
