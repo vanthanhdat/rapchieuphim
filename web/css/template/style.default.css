@@ -110,7 +110,7 @@ h1 {
 }
 
 .navbar ul.nav > li > a:hover {
-    color: #f26b38;
+  color: #f26b38;
 }
 
 .navbar #search {
@@ -967,10 +967,10 @@ h1 {
  * 
  * http://geedmo.github.com/yamm3
  */
-.yamm .nav,
-.yamm .collapse,
-.yamm .dropup,
-.yamm .dropdown {
+ .yamm .nav,
+ .yamm .collapse,
+ .yamm .dropup,
+ .yamm .dropdown {
   position: static;
 }
 .yamm .container {
@@ -1483,7 +1483,7 @@ label {
   padding: 6px 12px;
   line-height: 1.42857143;
   text-decoration: none;
-  color: #4fbfa8;
+  color: #a0a3a7;
   background-color: #ffffff;
   border: 1px solid #dddddd;
 }
@@ -1491,7 +1491,7 @@ label {
 .pagination > li > span:hover,
 .pagination > li > a:focus,
 .pagination > li > span:focus {
-  color: #348e7b;
+  color: #f26b38;
   background-color: #eeeeee;
   border-color: #dddddd;
 }
@@ -1503,8 +1503,8 @@ label {
 .pagination > .active > span:focus {
   z-index: 2;
   color: #ffffff;
-  background-color: #4fbfa8;
-  border-color: #4fbfa8;
+  background-color: #f26b38;
+  border-color: #f26b38;
 }
 .pagination > .disabled > span,
 .pagination > .disabled > span:hover,

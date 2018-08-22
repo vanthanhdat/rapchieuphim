@@ -3,7 +3,7 @@ namespace app\models\objects;
 use Yii;
 use yii\base\Model;
 use app\models\Daodien;
-
+use yii\helpers\StringHelper;
 /**
  * summary
  */
@@ -176,6 +176,15 @@ class ObjDaoDien extends Model
             array_push($listObj, $objDaoDien);            
         }
         return $listObj;
+    }
+
+    public function getPreview()
+    {
+        $words = 40;
+        if (StringHelper::countWords($this->description) > $words) {
+            return StringHelper::truncateWords($this->description,$words);
+        }
+        return $this->description;
     }
 }
 

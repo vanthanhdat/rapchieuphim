@@ -11,7 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\data\Pagination;
-
+use yii\helpers\Url;
 /**
  * DaodienController implements the CRUD actions for Daodien model.
  */
@@ -42,7 +42,7 @@ class DaodienController extends Controller
        // $day = date('l', $timestamp);
         $query = Daodien::find();
         $pagination = new Pagination([
-            'defaultPageSize' => 1,
+            'defaultPageSize' => 6,
             'totalCount' => $query->count(),
         ]);
 

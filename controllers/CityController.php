@@ -60,22 +60,8 @@ class CityController extends Controller
      */
     public function actionIndex()
     {
-       // $post = Yii::$app->db->createCommand('SELECT COUNT(*) FROM country')
-         //  ->queryScalar();
-       // $session = Yii::$app->session;
-       // $session->set('Name','abc');
-       
-       // component event test 
-       // Yii::$app->eventCustom->trigger(EventComponent::EVENT_DEMO);
-
-       // $this->on(self::DEMO_EV,'testEvent','Hahahahaha');
-       // $this->trigger(self::DEMO_EV);
-       // $this->off(self::DEMO_EV);
-
         $searchModel = new CitySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-       // $userHost = Yii::$app->request->userHost;
-        //$userIP = Yii::$app->request->userIP;        
         return $this->render('index', [         
            'dataProvider' => $dataProvider,'searchModel' => $searchModel,//'session' => $session,
         ]);       

@@ -10,6 +10,14 @@ $_rules = [
     'number_of_rooms_in_a_theater' => 5,
     'number_of_cinemas_in_a_city' => 5,
 ];
+
+$_custom = [
+    '12' => ['site'],
+    '8-4' =>['']
+];
+
+$_notLeft = [];
+
 //$db = require __DIR__ . '/db.php';
 $container = new \yii\di\Container;
 
@@ -30,7 +38,7 @@ $config = [
             'yii\widgets\LinkPager' => ['maxButtonCount' => 7],
         ],
          */
-       
+        
     ],
     'bootstrap' => ['log'],
     'aliases' => [
@@ -38,6 +46,7 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+
         /*
         'view' => [
              'theme' => [
@@ -50,7 +59,7 @@ $config = [
         'eventCustom' => [
             'class' => 'app\components\EventComponent',
             'on demoEvent' => ['app\components\EventComponent','testEvent'],
-             'on demoEvent1' => ['app\components\EventComponent','testEvent1'],    
+            'on demoEvent1' => ['app\components\EventComponent','testEvent1'],    
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -87,13 +96,31 @@ $config = [
 
         'urlManager' => [
            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-                '' => 'site/index',
-            ],
+           'showScriptName' => false,
+           'normalizer' =>[
+            'class' => 'yii\web\UrlNormalizer',
+            'collapseSlashes' => true,
+            
         ],
-        'assetManager' => [
-            'appendTimestamp' => true,
+        'rules' => [
+            '' => 'site/index',
+
+                //site
+            ['pattern' => 'profile','route' => '/site/profile',],
+            ['pattern' => 'login','route' => '/site/login',],
+            ['pattern' => 'register','route' => '/site/signup',],
+            ['pattern' => 'thanh-pho/<page:\d+>/<tag>','route' => 'city/index','defaults' => ['page' => 1, 'tag' => '']],
+                //end site
+                //
+                //dao diễn
+               // 'dao-dien' => '/daodien/index',
+            ['pattern' => 'dao-dien','route' => 'daodien/index'],
+            ['pattern' => 'dao-dien/<id:\d+>','route' => 'daodien/view'],
+               // end dao diễn
+        ],
+    ],
+    'assetManager' => [
+        'appendTimestamp' => true,
             /* test 
                 'bundles' => [
                 'yii\web\JqueryAsset' => [
@@ -105,18 +132,17 @@ $config = [
             ],
              */           
         ],
-        
     ],
     'modules' => [
-          'redactor' => 'yii\redactor\RedactorModule',
-          'admin' => [
-                'class' => 'app\modules\admin\Module',
-                'layout' => '@vendor/dmstr/yii2-adminlte-asset/example-views/yiisoft/yii2-app/layouts/main',
-            ]
-      ],
-    'params' => [
-        'thumbnail.size' => [128, 128],    
-    ],
+      'redactor' => 'yii\redactor\RedactorModule',
+      'admin' => [
+        'class' => 'app\modules\admin\Module',
+        'layout' => '@vendor/dmstr/yii2-adminlte-asset/example-views/yiisoft/yii2-app/layouts/main',
+    ]
+],
+'params' => [
+    'thumbnail.size' => [128, 128],    
+],
 ];
 
 if (YII_ENV_DEV) {
