@@ -16,8 +16,6 @@ $_custom = [
     '8-4' =>['']
 ];
 
-$_notLeft = [];
-
 //$db = require __DIR__ . '/db.php';
 $container = new \yii\di\Container;
 
@@ -38,7 +36,7 @@ $config = [
             'yii\widgets\LinkPager' => ['maxButtonCount' => 7],
         ],
          */
-        
+
     ],
     'bootstrap' => ['log'],
     'aliases' => [
@@ -100,7 +98,7 @@ $config = [
            'normalizer' =>[
             'class' => 'yii\web\UrlNormalizer',
             'collapseSlashes' => true,
-            
+
         ],
         'rules' => [
             '' => 'site/index',
