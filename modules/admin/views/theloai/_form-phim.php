@@ -57,7 +57,7 @@ use app\models\Phim;
 		        'clientOptions' => [
 		            'autoclose' => true,
 		          	'format' => 'd-mm-yyyy',		  		         				
-		            'endDate' => '+30d',
+		            'endDate' => '+60d',
 		            'startDate' => '+15d',
 		        ]
 		]); ?>

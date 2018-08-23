@@ -32,7 +32,8 @@ $urlImage = Yii::getAlias('@web/uploads/img');
         <div class="container animated fadeInDown" data-animate="fadeInDown" style="opacity: 0;">
             <div class="col-sm-8 col-md-8">
                 <a href="/">
-                    <img src="<?= $urlImage.'/'.'galaxy-logo.png' ?>" alt="Galaxy Cinema" >  
+                    <img src="<?= $urlImage.'/'.'galaxy-logo.png' ?>" alt="Galaxy Cinema" class ="hidden-xs hidden-sm">
+                    <img src="<?= $urlImage.'/'.'galaxy-logo-mobile.png' ?>" alt="Galaxy Cinema" class ="hidden-lg hidden-md">  
                 </a>
             </div>
 

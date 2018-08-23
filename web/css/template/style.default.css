@@ -1032,6 +1032,7 @@ h1 {
 .nav-tabs > li > a:hover {
   border-color: #eeeeee #eeeeee #dddddd;
 }
+
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
@@ -1039,6 +1040,8 @@ h1 {
   background-color: #f0f0f0;
   border: 1px solid #dddddd;
 }
+
+
 .nav-pills > li > a {
   border-radius: 0;
 }

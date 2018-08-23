@@ -1,7 +1,7 @@
 <?php 
 use yii\db\Query;
 $query = new Query();
-$arr = $query->select(['id','attributes','status'])->from('phim')->where(['status' => 1])->limit(6)->all();
+$arr = $query->select(['id','attributes','status'])->from('phim')->where(['status' => 2])->limit(6)->all();
 $urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
 ?>
 
@@ -31,7 +31,7 @@ $urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
   </div>
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
-      <a href="/phim-dang-chieu" class="btn secondary fl-right">Xem thêm</a>
+      <a href="/phim-dang-chieu" class="btn secondary fl-right">Xem thêm <span class="glyphicon glyphicon-arrow-right"></span></a>
     </div>
   </div>
 </section>

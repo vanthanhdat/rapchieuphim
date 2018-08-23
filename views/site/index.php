@@ -43,6 +43,27 @@ $urlImage = Yii::getAlias('@web/uploads/img');
       <?php
       $urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
       $phimDangChieu = [];
+
+      foreach ($dangChieu as $key => $value) {
+        $attributes = json_decode($value['attributes']);
+        $contentSapChieu = '<div class="col-md-4 col-sm-4 col-xs-6 movie-item">
+        <div class = "article-movie-home">
+        <img class="img-thumbnail img-responsive" src="'.$urlImagePhim."/".$attributes->image.'" style ="width:396px;height:264px;">
+        <a href="/dat-ve/'.$value['id'].'">
+        <div class="decription-hover overlay">
+        <div class="movies-content">
+        <div class="group">
+        <div class="btn secondary-white">mua vé</div>
+        </div>
+        </div>
+        </div>
+        </a>
+        </div>
+        <div class="title-movie"><h4>'.$attributes->title.'</h4></div>    
+        </div>';  
+        array_push($phimDangChieu, $contentSapChieu);
+      }
+
       $phimSapChieu = [];
       foreach ($sapChieu as $key => $value) {
         $attributes = json_decode($value['attributes']);

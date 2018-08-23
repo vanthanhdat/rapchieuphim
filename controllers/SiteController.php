@@ -74,9 +74,10 @@ class SiteController extends Controller
     {
         $query = new Query();
         $sapChieu = $query->select(['id','attributes','status'])->from('phim')->where(['status' => 1])->limit(6)->all();
-        //var_dump($sapChieu);exit;
+        $dangChieu = $query->select(['id','attributes','status'])->from('phim')->where(['status' => 2])->limit(6)->all();
         return $this->render('index',[
-            'sapChieu' => $sapChieu
+            'sapChieu' => $sapChieu,
+            'dangChieu' => $dangChieu
         ]);
     }
 
@@ -148,5 +149,5 @@ class SiteController extends Controller
     }
 
     
-   
+
 }
