@@ -112,7 +112,7 @@ $config = [
                 //
                 //dao diễn
                // 'dao-dien' => '/daodien/index',
-            ['pattern' => 'dao-dien','route' => 'daodien/index'],
+            ['pattern' => 'dao-dien','route' => 'daodien/index',],
             ['pattern' => 'dao-dien/<id:\d+>','route' => 'daodien/view'],
                // end dao diễn
         ],

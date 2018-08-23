@@ -35,6 +35,7 @@ class ObjPhim extends Model
             [['title', 'tomTat', 'nhaSanXuat','thoiLuong', 'quocGia', 'dienVien', 'id_tl', 'id_dd', 'start','trailerUrl'], 'required','message' => '{attribute} không thể để trống !'],
             [['tomTat'], 'string'],
             [['thoiLuong', 'id_tl', 'id_dd', 'created_at', 'updated_at'], 'integer'],
+            [['thoiLuong'], 'integer', 'max' => 150],
             [['start'], 'safe'],
             [['title', 'nhaSanXuat', 'quocGia', 'dienVien'], 'string', 'max' => 50],
         ];
@@ -67,7 +68,7 @@ class ObjPhim extends Model
 
     public function uploadImagePhim()
     {
-        if ($this->validate()) {
+        if ($this->validate() && $this->image!=null) {
             $path = Yii::getAlias('@img');
             $this->image->saveAs($path.'/phim'.'/'. $this->image->name);
             $src = imagecreatefromjpeg($path.'/phim'.'/'. $this->image->name);
@@ -104,7 +105,7 @@ class ObjPhim extends Model
             'title' => $this->title,
             'tomtat' => $this->tomTat,
             'nhasanxuat' => $this->nhaSanXuat,
-            'image' => $this->image->name,
+            'image' => $this->image != null ? $this->image->name : '',
             'thoiluong' => $this->thoiLuong,
             'quocgia' => $this->quocGia,
             'dienvien' => $this->dienVien,
