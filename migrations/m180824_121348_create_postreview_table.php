@@ -39,6 +39,7 @@ class m180824_121348_create_postreview_table extends Migration
             'id',
             'CASCADE'
         );
+        
     }
 
     /**
@@ -60,4 +61,6 @@ class m180824_121348_create_postreview_table extends Migration
 
         $this->dropTable('postreview');
     }
+
+
 }

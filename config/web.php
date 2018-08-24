@@ -135,7 +135,7 @@ $config = [
       'redactor' => 'yii\redactor\RedactorModule',
       'admin' => [
         'class' => 'app\modules\admin\Module',
-        'layout' => '@vendor/dmstr/yii2-adminlte-asset/example-views/yiisoft/yii2-app/layouts/main',
+        'layout' => 'main',
     ]
 ],
 'params' => [
