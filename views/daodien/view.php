@@ -21,13 +21,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-md-8 col-sm-8 col-xs-8">
                 <h2 class="detail-title"><?= Html::encode($this->title) ?></h2>
                 <div class="detail-info">
-                     <p><?= $model->description ?></p>
-                     <p>Ngày sinh: <?= $model->birthdate  ?></p>
-                     <p>Quốc tịch: <?= $model->quoctich  ?></p>
-                </div>
-            </div>
-        </div>
-    </article>
+                   <p><?= $model->description ?></p>
+                   <p>Ngày sinh: <?= $model->birthdate  ?></p>
+                   <p>Quốc tịch: <?= $model->quoctich  ?></p>
+               </div>
+           </div>
+       </div>
+   </article>
 </section>
 
 <section style="margin: 15px 0;">
@@ -42,30 +42,21 @@ $this->params['breadcrumbs'][] = $this->title;
     }
     echo Tabs::widget([
         'items' => [
-          [
-            'label' => 'Phim đã tham gia',
-            'content' => '<div class="list-group">
-                    '.implode('',$phims).'
-            </div>',
-            'active' => true,
-          ],
+            [
+                'label' => 'Tiểu sử',
+                'content' => '<div class="content-text">
+                '.$model->tieusu.'
+                </div>',
+                'active' => true,
+            ],[
+                'label' => 'Phim đã tham gia',
+                'content' => '<div class="list-group">
+                '.implode('',$phims).'
+                </div>',
+            ]
         ],
-      ]); 
+    ]); 
 
-?>
+    ?>
 </section> 
 
-<section>
-    <?=  Tabs::widget([
-        'items' => [
-          [
-            'label' => 'Tiểu sử',
-            'content' => '<div class="content-text">
-                        '.$model->tieusu.'
-                        </div>',
-            'active' => true,
-          ],
-        ],
-      ]) ?>
-
-</section>
