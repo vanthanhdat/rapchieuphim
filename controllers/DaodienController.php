@@ -12,6 +12,7 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\data\Pagination;
 use yii\helpers\Url;
+use app\models\Phim;
 /**
  * DaodienController implements the CRUD actions for Daodien model.
  */
@@ -81,8 +82,11 @@ class DaodienController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $listPhim = Phim::find()->where(['id_dd' => $id])->orderBy(['created_at' => SORT_DESC])
+        ->limit(4)->all();
         return $this->render('view', [
             'model' => $model,
+            'listPhim' => $listPhim
         ]);
     }
 

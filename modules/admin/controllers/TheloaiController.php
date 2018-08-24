@@ -15,7 +15,8 @@ use yii\web\UploadedFile;
 use yii\filters\AccessControl;
 use app\components\AccessRule;
 use app\models\User;
-
+use yii\db\Query;
+use yii\data\Pagination;
 /**
  * TheloaiController implements the CRUD actions for Theloai model.
  */
@@ -36,21 +37,21 @@ class TheloaiController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'ruleConfig' => [
-                       'class' => AccessRule::className(),
-                   ],
-                'rules' => [
-                        [
+                   'class' => AccessRule::className(),
+               ],
+               'rules' => [
+                [
                             // Allow full if user is admin
-                           'actions' => ['index','create', 'update', 'delete','view','create-phim','delete-phim','view-phim'],
-                           'allow' => true,
-                           'roles' => [
-                               User::ROLE_ADMIN
-                           ],
-                       ],
-                ],   
-            ],
-        ];
-    }
+                   'actions' => ['index','create', 'update', 'delete','view','create-phim','delete-phim','view-phim'],
+                   'allow' => true,
+                   'roles' => [
+                       User::ROLE_ADMIN
+                   ],
+               ],
+           ],   
+       ],
+   ];
+}
 
     /**
      * Lists all Theloai models.
@@ -74,9 +75,19 @@ class TheloaiController extends Controller
      */
     public function actionView($id)
     {
-
+        $model = $this->findModel($id);
+        $pagination = new Pagination([
+            'defaultPageSize' => 2,
+            'totalCount' => count($model->phims),
+        ]);    
+        $listPhim = Phim::find()->where(['id_tl' => $id])
+        ->orderBy(['created_at' => SORT_DESC])
+        ->offset($pagination->offset)
+        ->limit($pagination->limit)->all();
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'listPhim' => $listPhim,
+            'pagination' => $pagination,
         ]);
     }
 
@@ -112,10 +123,10 @@ class TheloaiController extends Controller
     {
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                $session = Yii::$app->session;
-                $session->addFlash('flashMessage');
-                $session->setFlash('flashMessage', 'Cập nhật thành công !');
-                return $this->redirect(['view', 'id' => $model->id]);
+            $session = Yii::$app->session;
+            $session->addFlash('flashMessage');
+            $session->setFlash('flashMessage', 'Cập nhật thành công !');
+            return $this->redirect(['view', 'id' => $model->id]);
         }
         return $this->render('update', [
             'model' => $model,
@@ -149,7 +160,6 @@ class TheloaiController extends Controller
         if (($model = Theloai::findOne($id)) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 

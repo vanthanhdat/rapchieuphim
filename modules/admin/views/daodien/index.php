@@ -17,15 +17,15 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Thêm đạo diễn', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?php $urlImage = Yii::getAlias('@web/uploads/image/daodien'); ?>
-     <?php foreach($listDaoDien as $value): ?>
+    <?php foreach($listDaoDien as $value): ?>
         <article class="row blog-post">
-                <div class="col-md-3">
-                    <a href='/admin/daodien/view/?id=<?= $value->id ?>'>
-                        <?= Html::img($urlImage.'/'. $value->image, [
-                            'alt' => Html::encode($value->name),
-                            'class' => 'img-rounded img-responsive img-thumbnail',
-                            'title' => Html::encode($value->name),
-                            'width' => '100%'])
+            <div class="col-md-3">
+                <a href='/admin/daodien/view/?id=<?= $value->id ?>'>
+                    <?= Html::img($urlImage.'/'. $value->image, [
+                        'alt' => Html::encode($value->name),
+                        'class' => 'img-rounded img-responsive img-thumbnail',
+                        'title' => Html::encode($value->name),
+                        'width' => '100%'])
                         ?>
                         <span class="hover-zoom"></span>
                     </a>
@@ -43,35 +43,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             <b>Đã thêm:</b> <?= gmdate('d-m-Y H:i:s',$value->created_at + 3600*($timezone)) .'.'  ?> <br>
                             <b>Cập nhật lúc:</b> <?= gmdate('d-m-Y H:i:s',$value->updated_at + 3600*($timezone)) .'.'  ?>
                         </div>
-                        <!--
-                        <div class="meta-info meta-info-created">
-                            <b>Ngày sinh <i class="glyphicon glyphicon-calendar"></i> :</b> <?= $value->birthdate  ?>
-                        </div> -->         
                     </div>
-                    <!--
-                    <div class="article-description">
-                        <div class="article-introtext">
-                           <b>Sơ lược:</b>
-                        </div>
-                        <div class="article-fulltext">
-                            <?= $value->description ?>
-                        </div>
-                    </div>
-                    <div class="article-description">
-                        <div class="article-introtext">
-                           <b>Tiểu sử:</b>
-                        </div>
-                        <div class="article-fulltext">
-                            <?= $value->tieusu ?>
-                        </div>
-                    </div>
-                    -->
-                </div>
-        </article>
-        <br>
-     <?php endforeach ?>
-        
-    <?= LinkPager::widget([
-        'pagination' => $pagination,
-    ]) ?>
-</div>
+                </article>
+                <br>
+            <?php endforeach ?>
+            
+            <?= LinkPager::widget([
+                'pagination' => $pagination,
+            ]) ?>
+        </div>

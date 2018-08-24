@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use yii\data\Pagination;
 /**
  * This is the model class for table "theloai".
  *
@@ -49,7 +49,7 @@ class Theloai extends \yii\db\ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     public function getPhims()
-    {
+    {   
         return $this->hasMany(Phim::className(), ['id_tl' => 'id']);
     }
 }

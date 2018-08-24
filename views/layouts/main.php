@@ -112,6 +112,7 @@ $urlImage = Yii::getAlias('@web/uploads/img');
              ['label' => 'blog điện ảnh', 'url' => '#'],
          ],'options' => ['class' => 'dropdown-submenu']],
          ['label' => 'Rạp', 'url' => ['/site/about']],
+         ['label' => 'phim hay trong tháng', 'url' => ['/site/about']],
          '<div class="navbar-collapse collapse in col-sm-4 col-md-4">
          <form class="navbar-form">
          <div class="input-group">
@@ -159,11 +160,14 @@ $urlImage = Yii::getAlias('@web/uploads/img');
             <?php else: ?>
                 <?= $content ?>
             <?php endif ?>
-            <div class="container">
+            
+            <?php if (Yii::$app->controller->action->id =='index'): ?>
+                <div class="container">
                 <div class="row">
                     introduce....
                 </div>
             </div>
+            <?php endif ?>
         </div>
         <div class="container" id = "footer">  
          <div id="footer" class="animated fadeInUp" data-animate="fadeInUp">
