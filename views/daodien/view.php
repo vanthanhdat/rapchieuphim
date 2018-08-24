@@ -56,7 +56,28 @@ $this->params['breadcrumbs'][] = $this->title;
             ]
         ],
     ]); 
-
     ?>
-</section> 
+</section>
+
+<?= $this->render(
+    '//layouts//relatedpost.php'
+) ?>
+
+<!--<section id="relatedpost">
+    <a href="#" style="color: #43464b;" class="text-uppercase"><h3>Bài viết liên quan</h3></a>
+    <div class="related">
+        <ul class="related-post">
+            <?php foreach ($relatedPost as $key => $value): ?>
+                <?php $attributes = json_decode($value->attributes) ?>
+                <div class="col-md-3 col-sm-6 col-xs-6">
+                       <?= Html::a(Html::img($urlImageDaoDien.'/'. $attributes->image, [
+                        'alt' => Html::encode($attributes->name),
+                        'class' => 'img-responsive',
+                        'title' => Html::encode($attributes->name),
+                    ]), ['daodien/view', 'id' => $value->id,]) ?>
+                </div>
+        <?php endforeach ?>
+    </ul>
+</div>
+</section> -->
 

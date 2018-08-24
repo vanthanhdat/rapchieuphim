@@ -14,8 +14,7 @@ class m180824_061119_create_postphimhay_table extends Migration
     {
         $this->createTable('postphimhay', [
             'id' => $this->primaryKey(),
-            'title' => $this->string(),
-            'content' => 'LONGTEXT',
+            'attributes' => 'LONGTEXT',
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
         ]);

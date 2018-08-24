@@ -84,9 +84,13 @@ class DaodienController extends Controller
         $model = $this->findModel($id);
         $listPhim = Phim::find()->where(['id_dd' => $id])->orderBy(['created_at' => SORT_DESC])
         ->limit(4)->all();
+        $relatedPost = Daodien::find()->orderBy(['created_at' => SORT_DESC])
+        ->limit(4)->all();
+        //var_dump($relatedPost);exit;
         return $this->render('view', [
             'model' => $model,
-            'listPhim' => $listPhim
+            'listPhim' => $listPhim,
+            'relatedPost' => $relatedPost
         ]);
     }
 
