@@ -15,7 +15,7 @@ use yii\bootstrap\Tabs;
             <li><i class="fa fa-arrow-right"></i>&nbsp;<a href="/binh-luan-phim/preview-the-nun-khoi-nguon-moi-toi-ac">[Preview] The Nun: Khởi Nguồn Mọi Tội Ác</a></li>
             
             <li><i class="fa fa-arrow-right"></i>&nbsp;<a href="/binh-luan-phim/preview-the-nun-khoi-nguon-moi-toi-ac">[Preview] The Nun: Khởi Nguồn Mọi Tội Ác</a></li>
-            <li><i class="fa fa-arrow-right"></i>&nbsp;<a href="/binh-luan-phim/preview-the-nun-khoi-nguon-moi-toi-ac">[Preview] The Nun: Khởi Nguồn Mọi Tội Ác</a></li>
+           
         </ul>
     </div>
 </section>
