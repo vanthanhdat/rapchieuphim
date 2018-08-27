@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Danh sách các thể loại','url
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container">
-   <div class="col-md-6">
+ <div class="col-md-6">
     <h1><?= Html::encode($this->title) ?></h1>
     <h3>Mã thể loại: <?= Html::encode($model->id) ?></h3>
     <p>
@@ -24,11 +24,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h2>Danh sách các phim: <?php echo $model->name; ?></h2>
 
     <?php foreach ($listPhim as $key => $value): ?>
-       <?php $attributes = json_decode($value->attributes); ?>
-       <div class="list-group">
+     <?php $attributes = json_decode($value->attributes); ?>
+     <div class="list-group">
         <a href="<?= '/admin/theloai/view-phim/?id='.$value->id.'' ?>" title="<?= $attributes->title ?>" class="list-group-item list-group-item-action list-group-item-info">
-           <?= Html::encode($attributes->title) ?> 
-           [<?php foreach ($value::STATUS as $status => $value1): ?>
+         <?= Html::encode($attributes->title) ?> 
+         [<?php foreach ($value::STATUS as $status => $value1): ?>
             <?= Html::encode($value1['key'] == $value->status ? $value1['value']:'') ?>
             <?php endforeach ?>]
         </a>

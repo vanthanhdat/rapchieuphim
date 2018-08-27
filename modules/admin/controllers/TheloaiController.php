@@ -39,20 +39,20 @@ class TheloaiController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'ruleConfig' => [
-                   'class' => AccessRule::className(),
-               ],
-               'rules' => [
+                 'class' => AccessRule::className(),
+             ],
+             'rules' => [
                 [
                             // Allow full if user is admin
-                   'actions' => ['index','create', 'update', 'delete','view','create-phim','delete-phim','view-phim','disable-phim'],
-                   'allow' => true,
-                   'roles' => [
-                       User::ROLE_ADMIN
-                   ],
-               ],
-           ],   
-       ],
-   ];
+                 'actions' => ['index','create', 'update', 'delete','view','create-phim','delete-phim','view-phim','disable-phim'],
+                 'allow' => true,
+                 'roles' => [
+                     User::ROLE_ADMIN
+                 ],
+             ],
+         ],   
+     ],
+ ];
 }
 
     /**
