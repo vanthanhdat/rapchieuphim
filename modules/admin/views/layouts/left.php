@@ -45,8 +45,8 @@
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Logo', 'icon' => 'reddit', 'url' => ['/admin/theloai/index']],
-                            ['label' => 'Slide', 'icon' => 'sliders', 'url' => ['/gii']],
+                            ['label' => 'Logo', 'icon' => 'reddit', 'url' => ['#']],
+                            ['label' => 'Slide', 'icon' => 'sliders', 'url' => ['#']],
                         ],
                     ],
                 ],
