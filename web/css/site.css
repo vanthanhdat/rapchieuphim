@@ -114,57 +114,6 @@ a.desc:after {
     outline: none;
 }
 
-
-
-.dropdown-menu > li > a {
-    display: block;
-    padding: 3px 20px;
-    clear: both;
-    font-weight: normal;
-    line-height: 3.428571;
-    color: white;
-    white-space: nowrap;
-}
-
-.dropdown-menu > li > a:hover {
-    background-color: transparent;
-    color:#f26b38;
-}
-
-.dropdown-submenu {
-    position: relative;
-}
-
-.dropdown-submenu>.dropdown-menu {
-    text-transform: uppercase;
-    background: #222;
-    margin-left: -1px;
-    -webkit-border-radius: 0 6px 6px 6px;
-    -moz-border-radius: 0 6px 6px;
-    border-radius: 0 6px 6px 6px;
-}
-
-.dropdown-submenu:hover>.dropdown-menu {
-    display: block;
-}
-
-.dropdown-submenu>a:after {
-    display: block;
-    float: right;
-    width: 0;
-    height: 0;
-    margin-top: 5px;
-    margin-right: -10px;
-
-}
-
-@media (max-width: 767px){
-    .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
-        color: #f26b38;
-        background-color: transparent;
-    }
-}
-
 /*tab movies*/
 
 .movies-group {

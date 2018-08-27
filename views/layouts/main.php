@@ -30,14 +30,14 @@ $urlImage = Yii::getAlias('@web/uploads/img');
     <?php $this->beginBody() ?>
     <div id="top">
         <div class="container animated fadeInDown" data-animate="fadeInDown" style="opacity: 0;">
-            <div class="col-sm-8 col-md-8">
+            <div class="col-xs-6 col-sm-8 col-md-8">
                 <a href="/">
                     <img src="<?= $urlImage.'/'.'galaxy-logo.png' ?>" alt="Galaxy Cinema" class ="hidden-xs hidden-sm">
                     <img src="<?= $urlImage.'/'.'galaxy-logo-mobile.png' ?>" alt="Galaxy Cinema" class ="hidden-lg hidden-md">  
                 </a>
             </div>
 
-            <div class="col-sm-4 col-md-4" >
+            <div class="col-xs-6 col-sm-4 col-md-4" >
                 <ul class="menu">
                     <?php if (Yii::$app->user->isGuest): ?> 
                         <?php //data-toggle="modal" data-target="#login-modal" ?>
@@ -104,13 +104,13 @@ $urlImage = Yii::getAlias('@web/uploads/img');
             ['label' => 'Phim', 'url' => ['#'],'items' => [
                 ['label' => 'ABC', 'url' => '#'],
                 ['label' => 'DEF', 'url' => '#'],
-            ],'options' => ['class' => 'dropdown-submenu'] ],
+            ],],
             ['label' => 'GÓC ĐIỆN ẢNH','url' => '#','items' => [
              ['label' => 'Thể loại phim', 'url' => '#'],
              ['label' => 'Đạo diễn', 'url' => '/dao-dien'],
              ['label' => 'bình luận phim', 'url' => '#'],
              ['label' => 'blog điện ảnh', 'url' => '#'],
-         ],'options' => ['class' => 'dropdown-submenu']],
+         ],],
          ['label' => 'Rạp', 'url' => ['/site/about']],
          ['label' => 'phim hay trong tháng', 'url' => ['/site/about']],
          '<div class="navbar-collapse collapse in col-sm-4 col-md-4">
@@ -126,7 +126,10 @@ $urlImage = Yii::getAlias('@web/uploads/img');
      ];
      echo Nav::widget([
         'activateItems' => false,
-        'options' => ['class' => 'navbar-nav navbar-inverse'],
+        'options' => [
+            'class' => 'navbar-nav navbar-inverse',
+            'data-hover' => 'dropdown',
+            'data-animations' => 'fadeInDown'],
         'items' => $navItems,
     ]);
     NavBar::end();?>

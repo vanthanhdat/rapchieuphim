@@ -9,22 +9,22 @@ $urlImage = Yii::getAlias('@web/uploads/img');
 ?>
 
 <div id="main-carousel" class="carousel slide" data-ride = "carousel">
-  <ol class="carousel-indicators">
+  <ol class="carousel-indicators hidden-sm hidden-xs">
     <li data-target="#main-carousel" data-slide-to="0" class="active"></li>
     <li data-target="#main-carousel" data-slide-to="1"></li>
     <li data-target="#main-carousel" data-slide-to="2"></li>
   </ol>
   <div class="carousel-inner">
     <div class="item active">
-      <img src="<?= $urlImage.'/'.'slider1.jpg' ?>" alt="Los Angeles" style="width:100%;">
+      <img src="<?= $urlImage.'/'.'main-slider1.jpg' ?>" alt="Los Angeles" style="width:100%;">
     </div>
 
     <div class="item">
-      <img src="<?= $urlImage.'/'.'slider2.jpg' ?>" alt="Chicago" style="width:100%;">
+      <img src="<?= $urlImage.'/'.'main-slider2.jpg' ?>" alt="Chicago" style="width:100%;">
     </div>
 
     <div class="item">
-      <img src="<?= $urlImage.'/'.'slider3.jpg' ?>" alt="New york" style="width:100%;">
+      <img src="<?= $urlImage.'/'.'main-slider3.jpg' ?>" alt="New york" style="width:100%;">
     </div>
   </div>
   <a class="left carousel-control" href="#main-carousel" data-slide="prev">
