@@ -114,6 +114,8 @@ a.desc:after {
     outline: none;
 }
 
+
+
 /*tab movies*/
 
 .movies-group {
@@ -174,6 +176,10 @@ a.desc:after {
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center;
+}
+
+.article-movie-home > img {
+    width:396px;height:264px;
 }
 
 .btn.secondary-white {
@@ -279,4 +285,12 @@ ul.related-post {
     list-style: none;
     list-style-position: outside;
     clear: both;
+}
+
+
+@media (max-width: 575px){
+    .article-movie-home > img {
+        width: 128px;
+        height: 128px;
+    }
 }

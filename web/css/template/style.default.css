@@ -1120,6 +1120,7 @@ h1 {
 .container-fluid > .navbar-collapse {
   margin-right: -15px;
   margin-left: -15px;
+  overflow: hidden;
 }
 @media (min-width: 768px) {
   .container > .navbar-header,
