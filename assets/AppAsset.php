@@ -23,12 +23,13 @@ class AppAsset extends AssetBundle
         'css/template/font-awesome.css',
         'css/template/animate.min.css',
         'css/template/style.default.css',
-       // 'css/template/custom.css',
+        'css/bootstrap-dropdownhover.css',
     ];
     public $js = [
         'js/template/respond.min.js',
         'js/main.js',
         'js/jquery.seat-charts.js',
+        'js/bootstrap-dropdownhover.js',
     ];
     public $depends = [
         //'yii\web\YiiAsset',

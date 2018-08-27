@@ -195,31 +195,6 @@ class TheloaiController extends Controller
         ]);
     }
 
-    public function actionDeletePhim($id,$id_tl)
-    {
-        $objPhim = new ObjPhim();
-        $phim = Phim::findOne($id);
-        $attributes = json_decode($phim->attributes);
-        $imagePhim = $attributes->image;
-        if ($phim->status === 0) {
-            if ($imagePhim !== '') {
-                $pathFile = Yii::getAlias('@img').'/phim'.'/'.$imagePhim;
-                $objPhim->deleteFile($pathFile);
-            }
-            if ($phim->delete()) {
-                $session = Yii::$app->session;
-                $session->addFlash('flashMessage');
-                $session->setFlash('flashMessage', 'Đã xóa thành công phim "'.$attributes->title.'" !');
-            }
-        }
-        else{
-            $session = Yii::$app->session;
-            $session->addFlash('errorMessage');
-            $session->setFlash('errorMessage', 'Phim "'.$attributes->title.'" sắp chiếu hoặc đang được chiếu không thể xóa !');
-        }              
-        return $this->redirect(['view', 'id' => $id_tl]);
-    }
-
     public function actionViewPhim($id)
     {
         $obj = new ObjPhim();
@@ -242,6 +217,32 @@ class TheloaiController extends Controller
         ]);
     }
 
+    public function actionDeletePhim($id,$id_tl)
+    {
+        $objPhim = new ObjPhim();
+        $phim = Phim::findOne($id);
+        $attributes = json_decode($phim->attributes);
+        $imagePhim = $attributes->image;
+        $page = explode('page=',Yii::$app->request->referrer);
+        if ($phim->status === 0) {
+            if ($imagePhim !== '') {
+                $pathFile = Yii::getAlias('@img').'/phim'.'/'.$imagePhim;
+                $objPhim->deleteFile($pathFile);
+            }
+            if ($phim->delete()) {
+                $session = Yii::$app->session;
+                $session->addFlash('flashMessage');
+                $session->setFlash('flashMessage', 'Đã xóa thành công phim "'.$attributes->title.'" !');
+            }
+        }
+        else{
+            $session = Yii::$app->session;
+            $session->addFlash('errorMessage');
+            $session->setFlash('errorMessage', 'Phim "'.$attributes->title.'" sắp chiếu hoặc đang được chiếu, không thể xóa !');
+        }              
+        return $this->redirect(['view', 'id' => $id_tl,'page' => $page[1]]);
+    }
+
     public function actionDisablePhim($id,$id_tl)
     {
         $query = new Query();
@@ -261,7 +262,7 @@ class TheloaiController extends Controller
         }else{
             $session = Yii::$app->session;
             $session->addFlash('errorMessage');
-            $session->setFlash('errorMessage', 'Phim "'.$attributes->title.'" thuộc phim sắp chiếu hoặc đang có lịch chiếu không thể xóa !');
+            $session->setFlash('errorMessage', 'Phim "'.$attributes->title.'" thuộc phim sắp chiếu hoặc đang có lịch chiếu, không thể xóa !');
         }
         return $this->redirect(['view', 'id' => $id_tl,'page' => $page[1]]);
     }
