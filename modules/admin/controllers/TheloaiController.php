@@ -32,6 +32,8 @@ class TheloaiController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'delete-phim' => ['POST'],
+                    'disable-phim' => ['POST'],
                 ],
             ],
             'access' => [
@@ -42,7 +44,7 @@ class TheloaiController extends Controller
                'rules' => [
                 [
                             // Allow full if user is admin
-                   'actions' => ['index','create', 'update', 'delete','view','create-phim','delete-phim','view-phim'],
+                   'actions' => ['index','create', 'update', 'delete','view','create-phim','delete-phim','view-phim','disable-phim'],
                    'allow' => true,
                    'roles' => [
                        User::ROLE_ADMIN
@@ -81,7 +83,7 @@ class TheloaiController extends Controller
             'totalCount' => count($model->phims),
         ]);    
         $listPhim = Phim::find()->where(['id_tl' => $id])
-        ->orderBy(['created_at' => SORT_DESC])
+        ->orderBy(['status' => SORT_DESC])
         ->offset($pagination->offset)
         ->limit($pagination->limit)->all();
         return $this->render('view', [
@@ -199,15 +201,22 @@ class TheloaiController extends Controller
         $phim = Phim::findOne($id);
         $attributes = json_decode($phim->attributes);
         $imagePhim = $attributes->image;
-        if ($imagePhim !== '') {
-            $pathFile = Yii::getAlias('@img').'/phim'.'/'.$imagePhim;
-            $objPhim->deleteFile($pathFile);
+        if ($phim->status === 0) {
+            if ($imagePhim !== '') {
+                $pathFile = Yii::getAlias('@img').'/phim'.'/'.$imagePhim;
+                $objPhim->deleteFile($pathFile);
+            }
+            if ($phim->delete()) {
+                $session = Yii::$app->session;
+                $session->addFlash('flashMessage');
+                $session->setFlash('flashMessage', 'Đã xóa thành công phim "'.$attributes->title.'" !');
+            }
         }
-        if ($phim->delete()) {
+        else{
             $session = Yii::$app->session;
-            $session->addFlash('flashMessage');
-            $session->setFlash('flashMessage', 'Đã xóa thành công phim "'.$attributes->title.'" !');
-        }
+            $session->addFlash('errorMessage');
+            $session->setFlash('errorMessage', 'Phim "'.$attributes->title.'" sắp chiếu hoặc đang được chiếu không thể xóa !');
+        }              
         return $this->redirect(['view', 'id' => $id_tl]);
     }
 
@@ -221,7 +230,6 @@ class TheloaiController extends Controller
             $obj->image = UploadedFile::getInstance($obj, 'image');
             if ($obj->updatePhim($id)) {
                 $session = Yii::$app->session;
-                $session = Yii::$app->session;
                 $session->addFlash('flashMessage');
                 $session->setFlash('flashMessage', 'Cập nhật thành công !');
                 return $this->redirect(['view-phim', 'id' => $id]);
@@ -232,5 +240,29 @@ class TheloaiController extends Controller
             'listDaoDien' => $listDaoDien,
             'listTheLoai' => $listTheLoai,
         ]);
+    }
+
+    public function actionDisablePhim($id,$id_tl)
+    {
+        $query = new Query();
+        $phim = Phim::findOne($id);
+        $attributes = json_decode($phim->attributes);
+        $check = $query->select(['id'])->from('lichchieu')->
+        where(['>=','ngaychieu',date('Y-m-d')])->
+        andWhere(['lichchieu.idphim' => $id])->all();
+        $page = explode('page=',Yii::$app->request->referrer);
+        if (empty($check) && $phim->status !== 1) {
+            $phim->status = 0;
+            if ($phim->save()) {
+                $session = Yii::$app->session;
+                $session->addFlash('flashMessage');
+                $session->setFlash('flashMessage', 'Cập nhật ngưng chiếu phim "'.$attributes->title.'" thành công !');
+            }
+        }else{
+            $session = Yii::$app->session;
+            $session->addFlash('errorMessage');
+            $session->setFlash('errorMessage', 'Phim "'.$attributes->title.'" thuộc phim sắp chiếu hoặc đang có lịch chiếu không thể xóa !');
+        }
+        return $this->redirect(['view', 'id' => $id_tl,'page' => $page[1]]);
     }
 }

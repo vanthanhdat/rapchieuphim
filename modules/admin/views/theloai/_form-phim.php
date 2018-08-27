@@ -62,7 +62,7 @@ use app\models\Phim;
 		        ]
 		]); ?>
 	<?php if (Yii::$app->controller->action->id === 'view-phim') {
-		echo $form->field($model, 'status')->dropDownList(Arrayhelper::map(Phim::STATUS,'key','value'),['prompt' => '-Trạng thái-']); 
+		//echo $form->field($model, 'status')->dropDownList(Arrayhelper::map(Phim::STATUS,'key','value'),['prompt' => '-Trạng thái-']); 
 	} ?>	
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

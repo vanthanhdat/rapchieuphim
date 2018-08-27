@@ -13,6 +13,7 @@ use app\models\form\SignupForm;
 use app\models\User;
 use yii\db\Query;
 use yii\helpers\Url;
+use app\models\Phim;
 
 class SiteController extends Controller
 {
@@ -61,7 +62,6 @@ class SiteController extends Controller
 
     public function actionTestWeb()
     {
-        //var_dump(Url::to(['post/index']));
         print_r('abc abc');
     }
 
