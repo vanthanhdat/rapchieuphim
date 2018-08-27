@@ -252,6 +252,7 @@ class TheloaiController extends Controller
         andWhere(['lichchieu.idphim' => $id])->all();
         $page = explode('page=',Yii::$app->request->referrer);
         $test = '';
+        $test1 = '';
         if (empty($check) && $phim->status !== 1) {
             $phim->status = 0;
             if ($phim->save()) {
