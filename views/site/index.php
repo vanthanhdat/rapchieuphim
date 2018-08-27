@@ -16,7 +16,7 @@ $urlImage = Yii::getAlias('@web/uploads/img');
   </ol>
   <div class="carousel-inner">
     <div class="item active">
-      <img src="<?= $urlImage.'/'.'main-slider1.jpg' ?>" alt="Los Angeles" style="width:100%;">
+      <img src="<?= $urlImage.'/'.'getinspired1.jpg' ?>" alt="Los Angeles" style="width:100%;">
     </div>
 
     <div class="item">
@@ -24,7 +24,7 @@ $urlImage = Yii::getAlias('@web/uploads/img');
     </div>
 
     <div class="item">
-      <img src="<?= $urlImage.'/'.'main-slider3.jpg' ?>" alt="New york" style="width:100%;">
+      <img src="<?= $urlImage.'/'.'getinspired2.jpg' ?>" alt="New york" style="width:100%;">
     </div>
   </div>
   <a class="left carousel-control" href="#main-carousel" data-slide="prev">
@@ -43,12 +43,13 @@ $urlImage = Yii::getAlias('@web/uploads/img');
       <?php
       $urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
       $phimDangChieu = [];
-
+      $size = \Yii::$app->params['thumbnail.size'];
+      $width = \Yii::$app->params['thumbnail.size'][0];
       foreach ($dangChieu as $key => $value) {
         $attributes = json_decode($value['attributes']);
         $contentSapChieu = '<div class="col-md-4 col-sm-4 col-xs-6 movie-item">
         <div class = "article-movie-home">
-        <img class="img-thumbnail img-responsive" src="'.$urlImagePhim."/".$attributes->image.'" style ="width:396px;height:264px;">
+        <img class="img-thumbnail img-responsive" src="'.$urlImagePhim."/".$attributes->image.'">
         <a href="/dat-ve/'.$value['id'].'">
         <div class="decription-hover overlay">
         <div class="movies-content">
@@ -69,7 +70,7 @@ $urlImage = Yii::getAlias('@web/uploads/img');
         $attributes = json_decode($value['attributes']);
         $contentSapChieu = '<div class="col-md-4 col-sm-4 col-xs-6 movie-item">
         <div class = "article-movie-home">
-        <img class="img-thumbnail img-responsive" src="'.$urlImagePhim."/".$attributes->image.'" style ="width:396px;height:264px;">
+        <img class="img-thumbnail img-responsive" src="'.$urlImagePhim."/".$attributes->image.'">
         <a href="/dat-ve/'.$value['id'].'">
         <div class="decription-hover overlay">
         <div class="movies-content">
