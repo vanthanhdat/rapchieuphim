@@ -27,6 +27,9 @@ class PhimController extends \yii\web\Controller
 		}
 		if ($param > 0) {
 			$listPhim  = Phim::find()->where(['status' => $param])->orderBy(['created_at' => SORT_DESC])->all();
+			foreach ($listPhim as $key => $value) {
+				var_dump($value);
+			}exit;
 			return $listPhim;
 		}
 		return false;

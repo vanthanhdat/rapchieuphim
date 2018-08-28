@@ -28,6 +28,15 @@ class ObjPhim extends Model
     public $updated_at;
     public $status;
 
+    public function __set($name, $value)
+    {
+        $this->$name = $value;
+    }
+
+    public function __get($name)
+    {
+        return $this->$name;
+    }
 
     public function rules()
     {
