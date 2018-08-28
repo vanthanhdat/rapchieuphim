@@ -177,10 +177,5 @@ class ObjPhim extends Model
         $this->trailerUrl = $attributes->trailerurl;
         return $this;
     }
-
-    public function changeStatus()
-    {
-        
-    }
 }
 ?>

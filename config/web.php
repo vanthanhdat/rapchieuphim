@@ -93,9 +93,9 @@ $config = [
         'db' => $container->get('db'),
 
         'urlManager' => [
-           'enablePrettyUrl' => true,
-           'showScriptName' => false,
-           'normalizer' =>[
+         'enablePrettyUrl' => true,
+         'showScriptName' => false,
+         'normalizer' =>[
             'class' => 'yii\web\UrlNormalizer',
             'collapseSlashes' => true,
 
@@ -112,6 +112,10 @@ $config = [
                 //dao diễn
             ['pattern' => 'dao-dien','route' => 'daodien/index',],
             ['pattern' => 'dao-dien/<slug>','route' => 'daodien/view','suffix' => '.html'],
+
+            // phim //
+            ['pattern' => '<slug>','route' => 'phim/index',], 
+            
         ],
     ],
     'assetManager' => [
