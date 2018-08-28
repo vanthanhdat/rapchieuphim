@@ -42,8 +42,7 @@ class DaodienController extends Controller
             'defaultPageSize' => 6,
             'totalCount' => $query->count(),
         ]);
-
-        $listDaoDien = $query->orderBy('id')
+        $listDaoDien = $query->orderBy('id')->orderBy(['created_at' => SORT_DESC])
         ->offset($pagination->offset)
         ->limit($pagination->limit)->all();
         $data = ObjDaoDien::getListObject($listDaoDien);
