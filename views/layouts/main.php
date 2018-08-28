@@ -102,8 +102,8 @@ $urlImage = Yii::getAlias('@web/uploads/img');
             ['label' => 'Mua vé', 'url' => ['/site/index']],
             ['label' => 'City', 'url' => ['/thanh-pho']],
             ['label' => 'Phim', 'url' => ['#'],'items' => [
-                ['label' => 'ABC', 'url' => '#'],
-                ['label' => 'DEF', 'url' => '#'],
+                ['label' => 'phim đang chiếu', 'url' => '#'],
+                ['label' => 'phim sắp chiếu', 'url' => '#'],
             ],],
             ['label' => 'GÓC ĐIỆN ẢNH','url' => '#','items' => [
              ['label' => 'Thể loại phim', 'url' => '#'],
