@@ -20,11 +20,11 @@ $this->title = 'Danh sách đạo diễn';
                 'alt' => Html::encode($value->name),
                 'class' => 'img-responsive',
                 'title' => Html::encode($value->name),
-            ]), ['daodien/view', 'id' => $value->id,]) ?>
+            ]), ['daodien/view', 'slug' => $value->slug,]) ?>
         </div>
         <div class="col-md-8 col-xs-8">
             <h4>
-            <?= Html::a($value->name, ['daodien/view', 'id' => $value->id,/*'name' =>$value->name*/]) ?>
+            <?= Html::a($value->name, ['daodien/view', 'slug' => $value->slug,]) ?>
         </h4>
         <div class="article-description hidden-xs">
             <div class="article-introtext">

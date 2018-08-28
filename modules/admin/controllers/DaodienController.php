@@ -14,6 +14,7 @@ use app\components\AccessRule;
 use app\models\User;
 use yii\web\UploadedFile;
 use yii\data\Pagination;
+use yii\behaviors\TimestampBehavior;
 /**
  * DaodienController implements the CRUD actions for Daodien model.
  */
@@ -163,6 +164,7 @@ class DaodienController extends Controller
         if (($model = Daodien::findOne($id)) !== null) {
             $obj = new ObjDaoDien();
             $obj->id = $model->id;
+            $obj->slug = $model->slug;
             $attributes = json_decode($model->attributes);
             $obj->name = $attributes->name;
             $obj->description = $attributes->description;

@@ -11,17 +11,16 @@ class ObjDaoDien extends Model
 {
 	public $id;
     public $name;
-	public $description;
-	public $birthdate;
-	public $tieusu;
-	public $image;
-	public $quoctich;
+    public $description;
+    public $birthdate;
+    public $tieusu;
+    public $image;
+    public $quoctich;
+    public $slug;
     public $created_at;
     public $updated_at;
 
-
-	
-	public function rules()
+    public function rules()
     {
         return [        
             [['name', 'description','birthdate','tieusu','quoctich'],'required','message'=>'{attribute} không được để trống !'],
@@ -75,21 +74,21 @@ class ObjDaoDien extends Model
         $allAttributes = '';
         if ($oldAttributes === null) {
             if ($image === null) {
-                $array = array('name' => $this->name,
-                              'description' => $this->description,
-                              'birthdate' => $this->birthdate,
-                              'image' => '',
-                              'tieusu' => $this->tieusu);
+                $array = array(
+                   'name' => $this->name, 
+                  'description' => $this->description,
+                  'birthdate' => $this->birthdate,
+                  'image' => '',
+                  'tieusu' => $this->tieusu);
                 $allAttributes = json_encode($array);
             }
             else {
                 $this->uploadImageDaoDien();
-                $array = array(
-                        'name' => $this->name,
-                        'description' => $this->description,
-                        'birthdate' => $this->birthdate,
-                        'image' => $this->image->name,
-                        'tieusu' => $this->tieusu);
+                $array = array('name' => $this->name,                         
+                    'description' => $this->description,
+                    'birthdate' => $this->birthdate,
+                    'image' => $this->image->name,
+                    'tieusu' => $this->tieusu);
                 $allAttributes = json_encode($array);
             }
         } else {
@@ -97,12 +96,12 @@ class ObjDaoDien extends Model
             $attributes = json_decode($obj->attributes);
             $oldImage = $attributes->image; 
             if ($image === null) {
-                $array = array('name' => $this->name,
+                $array = array('name' => $this->name, 
                  'description' => $this->description,
-                  'birthdate' => $this->birthdate,
-                  'image' => $oldImage,
-                  'tieusu' => $this->tieusu);
-                  $allAttributes = json_encode($array);
+                 'birthdate' => $this->birthdate,
+                 'image' => $oldImage,
+                 'tieusu' => $this->tieusu);
+                $allAttributes = json_encode($array);
             }
             else {
                 $pathFile ='';
@@ -111,12 +110,11 @@ class ObjDaoDien extends Model
                     $this->deleteFile($pathFile);
                 }
                 $this->uploadImageDaoDien();
-                $array = array(
-                'name' => $this->name,
-                'description' => $this->description,
-                'birthdate' => $this->birthdate,
-                'image' => $this->image->name,
-                'tieusu' => $this->tieusu);
+                $array = array('name' => $this->name, 
+                    'description' => $this->description,
+                    'birthdate' => $this->birthdate,
+                    'image' => $this->image->name,
+                    'tieusu' => $this->tieusu);
                 $allAttributes = json_encode($array);
             }
         }
@@ -125,10 +123,12 @@ class ObjDaoDien extends Model
     
     public function createDaoDien()
     {
+        $date = new \DateTime();
         $id = 0;
         $daodien = new Daodien();
         $daodien->quoctich = $this->quoctich;
         $daodien->attributes = $this->setObject($this->image,null);
+        $daodien->slug = implode('-',explode(' ',$this->remove_vietnamese_accents($this->name))).'-'.date_timestamp_get($date);
         if ($daodien->save()) {
             $id = $daodien->id;
         }
@@ -148,9 +148,11 @@ class ObjDaoDien extends Model
     //update Đạo diễn
     public function save($image)
     {
+        $date = new \DateTime();
     	$daodien = Daodien::findOne($this->id);
         $daodien->attributes = $this->setObject($image,$daodien->attributes);
         $daodien->quoctich = $this->quoctich;
+        $daodien->slug = implode('-',explode(' ',$this->remove_vietnamese_accents($this->name))).'-'.date_timestamp_get($date);
         if ($daodien->save()) {
             $session = Yii::$app->session;
             $session->addFlash('flashMessage');
@@ -166,26 +168,73 @@ class ObjDaoDien extends Model
         for ($i = 0; $i < count($params) ; $i++) {
             $objDaoDien = new ObjDaoDien();
             $objDaoDien->id = $params[$i]->id;
+            $objDaoDien->slug = $params[$i]->slug;
             $objDaoDien->quoctich = $params[$i]->quoctich;
             $objDaoDien->created_at = $params[$i]->created_at;
             $objDaoDien->updated_at = $params[$i]->updated_at;
             $attributes = json_decode($params[$i]->attributes);
             foreach ($attributes as $key => $value) {
-                 $objDaoDien->__set($key,$value);
-            }
-            array_push($listObj, $objDaoDien);            
-        }
-        return $listObj;
-    }
+             $objDaoDien->__set($key,$value);
+         }
+         array_push($listObj, $objDaoDien);            
+     }
+     return $listObj;
+ }
 
-    public function getPreview()
-    {
-        $words = 40;
-        if (StringHelper::countWords($this->description) > $words) {
-            return StringHelper::truncateWords($this->description,$words);
-        }
-        return $this->description;
+ public function getPreview()
+ {
+    $words = 40;
+    if (StringHelper::countWords($this->description) > $words) {
+        return StringHelper::truncateWords($this->description,$words);
     }
+    return $this->description;
+}
+
+public function remove_vietnamese_accents($str)
+{
+    $accents_arr=array(
+        "à","á","ạ","ả","ã","â","ầ","ấ","ậ","ẩ","ẫ","ă",
+        "ằ","ắ","ặ","ẳ","ẵ","è","é","ẹ","ẻ","ẽ","ê","ề",
+        "ế","ệ","ể","ễ",
+        "ì","í","ị","ỉ","ĩ",
+        "ò","ó","ọ","ỏ","õ","ô","ồ","ố","ộ","ổ","ỗ","ơ",
+        "ờ","ớ","ợ","ở","ỡ",
+        "ù","ú","ụ","ủ","ũ","ư","ừ","ứ","ự","ử","ữ",
+        "ỳ","ý","ỵ","ỷ","ỹ",
+        "đ",
+        "À","Á","Ạ","Ả","Ã","Â","Ầ","Ấ","Ậ","Ẩ","Ẫ","Ă",
+        "Ằ","Ắ","Ặ","Ẳ","Ẵ",
+        "È","É","Ẹ","Ẻ","Ẽ","Ê","Ề","Ế","Ệ","Ể","Ễ",
+        "Ì","Í","Ị","Ỉ","Ĩ",
+        "Ò","Ó","Ọ","Ỏ","Õ","Ô","Ồ","Ố","Ộ","Ổ","Ỗ","Ơ",
+        "Ờ","Ớ","Ợ","Ở","Ỡ",
+        "Ù","Ú","Ụ","Ủ","Ũ","Ư","Ừ","Ứ","Ự","Ử","Ữ",
+        "Ỳ","Ý","Ỵ","Ỷ","Ỹ",
+        "Đ"
+    );
+    $no_accents_arr=array(
+        "a","a","a","a","a","a","a","a","a","a","a",
+        "a","a","a","a","a","a",
+        "e","e","e","e","e","e","e","e","e","e","e",
+        "i","i","i","i","i",
+        "o","o","o","o","o","o","o","o","o","o","o","o",
+        "o","o","o","o","o",
+        "u","u","u","u","u","u","u","u","u","u","u",
+        "y","y","y","y","y",
+        "d",
+        "A","A","A","A","A","A","A","A","A","A","A","A",
+        "A","A","A","A","A",
+        "E","E","E","E","E","E","E","E","E","E","E",
+        "I","I","I","I","I",
+        "O","O","O","O","O","O","O","O","O","O","O","O",
+        "O","O","O","O","O",
+        "U","U","U","U","U","U","U","U","U","U","U",
+        "Y","Y","Y","Y","Y",
+        "D"
+    );
+
+    return str_replace($accents_arr,$no_accents_arr,$str);
+}
 }
 
 ?>

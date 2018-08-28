@@ -107,7 +107,7 @@ $urlImage = Yii::getAlias('@web/uploads/img');
             ],],
             ['label' => 'GÓC ĐIỆN ẢNH','url' => '#','items' => [
              ['label' => 'Thể loại phim', 'url' => '#'],
-             ['label' => 'Đạo diễn', 'url' => '/dao-dien'],
+             ['label' => 'Đạo diễn', 'url' => '/dao-dien.html'],
              ['label' => 'bình luận phim', 'url' => '#'],
              ['label' => 'blog điện ảnh', 'url' => '#'],
          ],],

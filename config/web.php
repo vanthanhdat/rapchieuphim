@@ -102,7 +102,6 @@ $config = [
         ],
         'rules' => [
             '' => 'site/index',
-
                 //site
             ['pattern' => 'profile','route' => '/site/profile',],
             ['pattern' => 'login','route' => '/site/login',],
@@ -111,10 +110,8 @@ $config = [
                 //end site
                 //
                 //dao diễn
-               // 'dao-dien' => '/daodien/index',
-            ['pattern' => 'dao-dien','route' => 'daodien/index',],
-            ['pattern' => 'dao-dien/<id:\d+>','route' => 'daodien/view'],
-               // end dao diễn
+            ['pattern' => 'dao-dien','route' => 'daodien/index', 'suffix' => '.html'],
+            ['pattern' => 'dao-dien/<slug>','route' => 'daodien/view','suffix' => '.html'],
         ],
     ],
     'assetManager' => [
