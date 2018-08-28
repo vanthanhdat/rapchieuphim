@@ -73,8 +73,8 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $query = new Query();
-        $sapChieu = $query->select(['id','attributes','status'])->from('phim')->where(['status' => 1])->limit(6)->all();
-        $dangChieu = $query->select(['id','attributes','status'])->from('phim')->where(['status' => 2])->limit(6)->all();
+        $sapChieu = $query->select(['id','attributes','status'])->from('phim')->where(['status' => 1])->orderBy(['created_at' => SORT_DESC])->limit(6)->all();
+        $dangChieu = $query->select(['id','attributes','status'])->from('phim')->where(['status' => 2])->orderBy(['created_at' => SORT_DESC])->limit(6)->all();
         return $this->render('index',[
             'sapChieu' => $sapChieu,
             'dangChieu' => $dangChieu
