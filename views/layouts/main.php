@@ -42,14 +42,14 @@ $urlImage = Yii::getAlias('@web/uploads/img');
                     <?php if (Yii::$app->user->isGuest): ?> 
                         <?php //data-toggle="modal" data-target="#login-modal" ?>
                         <li>
-                            <a href="/login" >Login</a>
+                            <a href="/login.html" >Login</a>
                         </li>
                         <span>|</span>
-                        <li><a href="/register">Register</a>
+                        <li><a href="/register.html">Register</a>
                         </li>
                         <?php else: ?>
                             <li>
-                                <a href="/profile" style="text-transform: uppercase;"><?= Yii::$app->controller->id //Yii::$app->user->identity->hoten ?></a>
+                                <a href="/profile.html" style="text-transform: uppercase;"><?= Yii::$app->controller->id //Yii::$app->user->identity->hoten ?></a>
                             </li>
                             <span>|</span>
                             <?= '<li style= "padding-top:5px;">'
@@ -102,12 +102,12 @@ $urlImage = Yii::getAlias('@web/uploads/img');
             ['label' => 'Mua vé', 'url' => ['/site/index']],
             ['label' => 'City', 'url' => ['/thanh-pho']],
             ['label' => 'Phim', 'url' => ['#'],'items' => [
-                ['label' => 'phim đang chiếu', 'url' => '#'],
-                ['label' => 'phim sắp chiếu', 'url' => '#'],
+                ['label' => 'phim đang chiếu', 'url' => '/phim-dang-chieu'],
+                ['label' => 'phim sắp chiếu', 'url' => '/phim-sap-chieu'],
             ],],
             ['label' => 'GÓC ĐIỆN ẢNH','url' => '#','items' => [
              ['label' => 'Thể loại phim', 'url' => '#'],
-             ['label' => 'Đạo diễn', 'url' => '/dao-dien.html'],
+             ['label' => 'Đạo diễn', 'url' => '/dao-dien'],
              ['label' => 'bình luận phim', 'url' => '#'],
              ['label' => 'blog điện ảnh', 'url' => '#'],
          ],],

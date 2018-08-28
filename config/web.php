@@ -103,14 +103,14 @@ $config = [
         'rules' => [
             '' => 'site/index',
                 //site
-            ['pattern' => 'profile','route' => '/site/profile',],
-            ['pattern' => 'login','route' => '/site/login',],
-            ['pattern' => 'register','route' => '/site/signup',],
+            ['pattern' => 'profile','route' => '/site/profile','suffix' => '.html'],
+            ['pattern' => 'login','route' => '/site/login','suffix' => '.html'],
+            ['pattern' => 'register','route' => '/site/signup','suffix' => '.html'],
             ['pattern' => 'thanh-pho/<page:\d+>/<tag>','route' => 'city/index','defaults' => ['page' => 1, 'tag' => '']],
                 //end site
                 //
                 //dao diễn
-            ['pattern' => 'dao-dien','route' => 'daodien/index', 'suffix' => '.html'],
+            ['pattern' => 'dao-dien','route' => 'daodien/index',],
             ['pattern' => 'dao-dien/<slug>','route' => 'daodien/view','suffix' => '.html'],
         ],
     ],
