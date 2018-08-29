@@ -29,6 +29,7 @@ $urlImage = Yii::getAlias('@web/uploads/img');
 <body>
     <?php $this->beginBody() ?>
     <div id="top">
+        <pre id="response"></pre>
         <div class="container animated fadeInDown" data-animate="fadeInDown" style="opacity: 0;">
             <div class="col-xs-6 col-sm-8 col-md-8">
                 <a href="/">

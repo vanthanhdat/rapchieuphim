@@ -69,56 +69,61 @@ class DaodienController extends Controller
 
 
     public function actionView($slug)
-    {
-        $model = $this->findModelBySlug($slug);
-        $listPhim = Phim::find()->where(['id_dd' => $model->id])->all();
-        $relatedPost = Daodien::find()->orderBy(['created_at' => SORT_DESC])
-        ->limit(4)->all();
-        return $this->render('view', [
-            'model' => $model,
-            'listPhim' => $listPhim,
-            'relatedPost' => $relatedPost
-        ]);
-    }
+    {  
+      $model = $this->findModelBySlug($slug);
+      $listPhim = Phim::find()->where(['id_dd' => $model->id])->all();
+      return $this->render('view', [
+        'model' => $model,
+        'listPhim' => $listPhim,
+    ]);
+  }
 
 
-    protected function findModel($id)
-    {
-        if (($model = Daodien::findOne($id)) !== null) {
-            $obj = new ObjDaoDien();
-            $obj->id = $model->id;
-            $attributes = json_decode($model->attributes);
-            $obj->name = $attributes->name;
-            $obj->description = $attributes->description;
-            $obj->birthdate = $attributes->birthdate;
-            $obj->tieusu = $attributes->tieusu;
-            $obj->image = $attributes->image;
-            $obj->quoctich = $model->quoctich;
-            $obj->created_at = $model->created_at;
-            $obj->updated_at = $model->updated_at;
-            return $obj;
-        }
-        throw new NotFoundHttpException('The requested page does not exist.');
+  protected function findModel($id)
+  {
+    if (($model = Daodien::findOne($id)) !== null) {
+        $obj = new ObjDaoDien();
+        $obj->id = $model->id;
+        $attributes = json_decode($model->attributes);
+        $obj->name = $attributes->name;
+        $obj->description = $attributes->description;
+        $obj->birthdate = $attributes->birthdate;
+        $obj->tieusu = $attributes->tieusu;
+        $obj->image = $attributes->image;
+        $obj->quoctich = $model->quoctich;
+        $obj->created_at = $model->created_at;
+        $obj->updated_at = $model->updated_at;
+        return $obj;
     }
+    throw new NotFoundHttpException('The requested page does not exist.');
+}
 
-    protected function findModelBySlug($slug)
-    {
-        if (($model = Daodien::findOne(['slug' => $slug])) !== null) {
-            $obj = new ObjDaoDien();
-            $obj->id = $model->id;
-            $attributes = json_decode($model->attributes);
-            $obj->name = $attributes->name;
-            $obj->description = $attributes->description;
-            $obj->birthdate = $attributes->birthdate;
-            $obj->tieusu = $attributes->tieusu;
-            $obj->image = $attributes->image;
-            $obj->quoctich = $model->quoctich;
-            $obj->created_at = $model->created_at;
-            $obj->updated_at = $model->updated_at;
-            return $obj;
-        } else {
-            throw new NotFoundHttpException();
-        }
+protected function findModelBySlug($slug)
+{
+
+    if (($model = Daodien::findOne(['slug' => $slug])) !== null) {
+        $obj = new ObjDaoDien();
+        $obj->id = $model->id;
+        $attributes = json_decode($model->attributes);
+        $obj->name = $attributes->name;
+        $obj->description = $attributes->description;
+        $obj->birthdate = $attributes->birthdate;
+        $obj->tieusu = $attributes->tieusu;
+        $obj->image = $attributes->image;
+        $obj->quoctich = $model->quoctich;
+        $obj->created_at = $model->created_at;
+        $obj->updated_at = $model->updated_at;
+      /*  $data = json_decode(file_get_contents('https://api.ipdata.co?api-key=test'), true);
+        var_dump($data);
+        Yii::$app->params['abc'] = $data['ip'];
+        var_dump(Yii::$app->params['abc']);
+        exit;*/
+        $model->updateCounters(['views' => 1]);
+        $obj->views = $model->views;
+        return $obj;
+    } else {
+        throw new NotFoundHttpException();
     }
+}
 
 }

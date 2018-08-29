@@ -24,15 +24,16 @@ $this->title = 'Danh sách đạo diễn';
         </div>
         <div class="col-md-8 col-xs-8">
             <h4>
-            <?= Html::a($value->name, ['daodien/view', 'slug' => $value->slug,]) ?>
-        </h4>
-        <div class="article-description hidden-xs">
-            <div class="article-introtext">
-              <?= $value->getPreview();?>
-          </div>   
+                <?= Html::a($value->name, ['daodien/view', 'slug' => $value->slug,]) ?>
+            </h4>
+            <h4><span class="label label-primary"><i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i> <?= $value->views ?></span></h4>
+            <div class="article-description hidden-xs">
+                <div class="article-introtext">
+                  <?= $value->getPreview();?>
+              </div>   
+          </div>
       </div>
-  </div>
-</article>
+  </article>
 <?php endforeach ?>  
 <?= LinkPager::widget([
     'pagination' => $pagination,

@@ -19,6 +19,7 @@ class ObjDaoDien extends Model
     public $slug;
     public $created_at;
     public $updated_at;
+    public $views;
 
     public function rules()
     {
@@ -172,6 +173,7 @@ class ObjDaoDien extends Model
             $objDaoDien->quoctich = $params[$i]->quoctich;
             $objDaoDien->created_at = $params[$i]->created_at;
             $objDaoDien->updated_at = $params[$i]->updated_at;
+            $objDaoDien->views = $params[$i]->views;
             $attributes = json_decode($params[$i]->attributes);
             foreach ($attributes as $key => $value) {
              $objDaoDien->__set($key,$value);

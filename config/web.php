@@ -2,7 +2,7 @@
 $params = require __DIR__ . '/params.php';
 Yii::setAlias('@img', realpath(dirname(__FILE__).'/../web/uploads/image/'));
 
-$_sodo =[];
+$_sodo = [];
 $_bookedSeats = [];
 $_tickets = 0;
 $_holidays = ['01/01','30/04','01/05','2/9','10/3'];
@@ -140,7 +140,8 @@ $config = [
     ]
 ],
 'params' => [
-    'thumbnail.size' => [128, 128],    
+    'thumbnail.size' => [128, 128],
+    'abc' => ''    
 ],
 ];
 
