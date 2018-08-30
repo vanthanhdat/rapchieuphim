@@ -153,11 +153,9 @@ class ObjDaoDien extends Model
     //update Đạo diễn
     public function save($image)
     {
-        $date = new \DateTime();
         $daodien = Daodien::findOne($this->id);  
         $daodien->attributes = $this->setObject($this->image,$daodien->attributes);
         $daodien->quoctich = $this->quoctich;
-        $daodien->slug = implode('-',explode(' ',$this->remove_vietnamese_accents($this->name))).'-'.date_timestamp_get($date);
         if ($daodien->save()) {
             $session = Yii::$app->session;
             $session->addFlash('flashMessage');
