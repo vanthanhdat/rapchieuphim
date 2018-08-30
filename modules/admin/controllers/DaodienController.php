@@ -61,7 +61,7 @@ class DaodienController extends Controller
 
         $query = Daodien::find();
         $pagination = new Pagination([
-            'defaultPageSize' => 2,
+            'defaultPageSize' => 5,
             'totalCount' => $query->count(),
         ]);
         $listDaoDien = $query->orderBy(['created_at' => SORT_DESC])
