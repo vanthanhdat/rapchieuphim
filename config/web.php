@@ -12,7 +12,7 @@ $_rules = [
 ];
 
 $_custom = [
-    '12' => ['site'],
+    '12' => ['site','phim-dang-chieu','phim-sap-chieu'],
     '8-4' =>['']
 ];
 

@@ -10,6 +10,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 $urlImage = Yii::getAlias('@web/uploads/img'); 
@@ -29,7 +30,6 @@ $urlImage = Yii::getAlias('@web/uploads/img');
 <body>
     <?php $this->beginBody() ?>
     <div id="top">
-        <pre id="response"></pre>
         <div class="container animated fadeInDown" data-animate="fadeInDown" style="opacity: 0;">
             <div class="col-xs-6 col-sm-8 col-md-8">
                 <a href="/">
@@ -107,50 +107,53 @@ $urlImage = Yii::getAlias('@web/uploads/img');
                 ['label' => 'phim sắp chiếu', 'url' => '/phim-sap-chieu'],
             ],],
             ['label' => 'GÓC ĐIỆN ẢNH','url' => '#','items' => [
-             ['label' => 'Thể loại phim', 'url' => '#'],
-             ['label' => 'Đạo diễn', 'url' => '/dao-dien'],
-             ['label' => 'bình luận phim', 'url' => '#'],
-             ['label' => 'blog điện ảnh', 'url' => '#'],
-         ],],
-         ['label' => 'Rạp', 'url' => ['/site/about']],
-         ['label' => 'phim hay trong tháng', 'url' => ['/site/about']],
-         '<div class="navbar-collapse collapse in col-sm-4 col-md-4">
-         <form class="navbar-form">
-         <div class="input-group">
-         <input type="text" class="form-control" placeholder="Search">
-         <span class="input-group-btn">
-         <button type="submit" class="btn"><i class="fa fa-search"></i></button>
-         </span>
-         </div>
-         </form>
-         </div>'
-     ];
-     echo Nav::widget([
+               ['label' => 'Thể loại phim', 'url' => '#'],
+               ['label' => 'Đạo diễn', 'url' => '/dao-dien'],
+               ['label' => 'bình luận phim', 'url' => '#'],
+               ['label' => 'blog điện ảnh', 'url' => '#'],
+           ],],
+           ['label' => 'Rạp', 'url' => ['/site/about']],
+           ['label' => 'phim hay trong tháng', 'url' => ['/site/about']],
+           '<div class="navbar-collapse collapse in col-sm-4 col-md-4">
+           <form class="navbar-form">
+           <div class="input-group">
+           <input type="text" class="form-control" placeholder="Search">
+           <span class="input-group-btn">
+           <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+           </span>
+           </div>
+           </form>
+           </div>'
+       ];
+       echo Nav::widget([
         'activateItems' => false,
         'options' => [
             'class' => 'navbar-nav navbar-inverse',
             'data-hover' => 'dropdown',
             'data-animations' => 'fadeInDown'],
-        'items' => $navItems,
-    ]);
-    NavBar::end();?>
-    <div class="container">
-        <?php     
-        if (Yii::$app->session->getFlash('flashMessage') != null) {
-            echo Alert::widget([
-                'options' => ['class' => 'alert-success'],
-                'body' => Yii::$app->session->getFlash('flashMessage'),
-            ]);
-        }
-        ?>  
-        <!--Breadcrumbs-->
-        <?php echo Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>             
-    </div> 
-    <div class="wrap">
-        <?php $custom =$GLOBALS['_custom']; ?>
-        <?php if (!in_array(Yii::$app->controller->id, $custom['12'])): ?>
+            'items' => $navItems,
+        ]);
+        NavBar::end();?>
+        <div class="container">
+            <?php     
+            if (Yii::$app->session->getFlash('flashMessage') != null) {
+                echo Alert::widget([
+                    'options' => ['class' => 'alert-success'],
+                    'body' => Yii::$app->session->getFlash('flashMessage'),
+                ]);
+            }
+            ?>  
+            <!--Breadcrumbs-->
+            <?php echo Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ]) ?>             
+        </div> 
+        <div class="wrap">
+            <?php 
+            $custom =$GLOBALS['_custom'];
+            $slug = explode('/', Url::current());
+            ?>
+            <?php if (!in_array(Yii::$app->controller->id, $custom['12']) && !in_array($slug[1], $custom['12'])): ?>
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-sm-8 col-xs-12">
@@ -165,16 +168,16 @@ $urlImage = Yii::getAlias('@web/uploads/img');
                 <?= $content ?>
             <?php endif ?>
             
-            <?php if (Yii::$app->controller->action->id =='index'): ?>
+            <?php if (Yii::$app->controller->action->id === 'index'): ?>
                 <div class="container">
-                <div class="row">
-                    introduce....
+                    <div class="row">
+                        introduce....
+                    </div>
                 </div>
-            </div>
             <?php endif ?>
         </div>
         <div class="container" id = "footer">  
-         <div id="footer" class="animated fadeInUp" data-animate="fadeInUp">
+           <div id="footer" class="animated fadeInUp" data-animate="fadeInUp">
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 col-sm-6">

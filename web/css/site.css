@@ -11,7 +11,7 @@ body {
 }
 
 .wrap > .container {
-    padding: 70px 15px 20px;
+    padding: 25px 15px 20px;
 }
 
 .footer {
@@ -179,7 +179,8 @@ a.desc:after {
 }
 
 .article-movie-home > img {
-    width:396px;height:264px;
+    width:396px;
+    height:264px;
 }
 
 .btn.secondary-white {

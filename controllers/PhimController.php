@@ -2,18 +2,16 @@
 
 namespace app\controllers;
 use app\models\Phim;
-
+use app\models\objects\ObjPhim;
 class PhimController extends \yii\web\Controller
 {
 	public function actionIndex($slug)
 	{	
 		$listPhim = $this->getListPhimBySlug($slug);
-		var_dump($listPhim);exit;
 		return $this->render('index',[
 			'listPhim' => $listPhim,
 		]);
 	}
-
 
 	protected function getListPhimBySlug($slug)
 	{
@@ -27,10 +25,13 @@ class PhimController extends \yii\web\Controller
 		}
 		if ($param > 0) {
 			$listPhim  = Phim::find()->where(['status' => $param])->orderBy(['created_at' => SORT_DESC])->all();
+			$returnList = [];
 			foreach ($listPhim as $key => $value) {
-				var_dump($value);
-			}exit;
-			return $listPhim;
+				$obj = new ObjPhim();
+				array_push($returnList, $obj->getObject($value['id']));
+			}
+			//var_dump($returnList);exit;
+			return $returnList;
 		}
 		return false;
 	}
