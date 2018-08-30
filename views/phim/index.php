@@ -40,10 +40,9 @@ use yii\bootstrap\Tabs;
 					'url' => '/phim-sap-chieu',
 				]
 			];
-			
 			$tab[Url::current()]['content'] = '<div class="movies-group">'.implode(' ',$arrPhim).'</div>';
 			$tab[Url::current()]['active'] = true;
-
+			$tab[Url::current()]['options'] = ['class' => 'animated fadeInUp','data-animate' => 'fadeInUp'];
 			echo Tabs::widget([
 				'items' => $tab,
 			]); ?>
