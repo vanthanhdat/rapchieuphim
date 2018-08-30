@@ -29,7 +29,7 @@ use yii\bootstrap\Tabs;
 				array_push($arrPhim, $content);
 			}
 			$tab = [
-				'/phim-dang-chieu'=>
+				'/phim-dang-chieu' =>
 				[
 					'label' => 'Phim đang chiếu',
 					'url' => '/phim-dang-chieu',
@@ -41,11 +41,7 @@ use yii\bootstrap\Tabs;
 				]
 			];
 			
-			$tab[Url::current()]['content'] = '  
-			<div class="movies-group">
-			'.implode(' ',$arrPhim).'
-			</div>
-			';
+			$tab[Url::current()]['content'] = '<div class="movies-group">'.implode(' ',$arrPhim).'</div>';
 			$tab[Url::current()]['active'] = true;
 
 			echo Tabs::widget([
