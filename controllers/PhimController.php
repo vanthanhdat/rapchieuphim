@@ -3,13 +3,36 @@
 namespace app\controllers;
 use app\models\Phim;
 use app\models\objects\ObjPhim;
-class PhimController extends \yii\web\Controller
+use yii\web\Controller;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+
+class PhimController extends Controller
 {
+
+	public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index'],
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                       // 'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
 	public function actionIndex($slug)
 	{	
 		$listPhim = $this->getListPhimBySlug($slug);
 		return $this->render('index',[
 			'listPhim' => $listPhim,
+			'slug' => $slug
 		]);
 	}
 
@@ -30,7 +53,6 @@ class PhimController extends \yii\web\Controller
 				$obj = new ObjPhim();
 				array_push($returnList, $obj->getObject($value['id']));
 			}
-			//var_dump($returnList);exit;
 			return $returnList;
 		}
 		return false;

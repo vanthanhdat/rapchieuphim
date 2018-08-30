@@ -29,23 +29,25 @@ use yii\bootstrap\Tabs;
 				array_push($arrPhim, $content);
 			}
 			$tab = [
-				'/phim-dang-chieu' =>
+				'phim-dang-chieu' =>
 				[
 					'label' => 'Phim đang chiếu',
-					'url' => '/phim-dang-chieu',
+					'url' => ['/phim/index','slug' => 'phim-dang-chieu',],
 				],
-				'/phim-sap-chieu' =>
+				'phim-sap-chieu' =>
 				[
 					'label' => 'Phim sắp chiếu',
-					'url' => '/phim-sap-chieu',
+					'url' => ['/phim/index','slug' => 'phim-sap-chieu',],
 				]
 			];
-			$tab[Url::current()]['content'] = '<div class="movies-group">'.implode(' ',$arrPhim).'</div>';
-			$tab[Url::current()]['active'] = true;
-			$tab[Url::current()]['options'] = ['class' => 'animated fadeInUp','data-animate' => 'fadeInUp'];
+			$tab[$slug]['content'] = '<div class="movies-group">'.implode(' ',$arrPhim).'</div>';
+			$tab[$slug]['active'] = true;
+			$tab[$slug]['options'] = ['class' => 'animated fadeInUp','data-animate' => 'fadeInUp'];
 			echo Tabs::widget([
 				'items' => $tab,
-			]); ?>
+			]);
+			
+			?>
 		</div>
 	</div>
 

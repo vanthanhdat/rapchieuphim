@@ -106,7 +106,7 @@ $config = [
             ['pattern' => 'profile','route' => '/site/profile','suffix' => '.html'],
             ['pattern' => 'login','route' => '/site/login','suffix' => '.html'],
             ['pattern' => 'register','route' => '/site/signup','suffix' => '.html'],
-            ['pattern' => 'thanh-pho/<page:\d+>/<tag>','route' => 'city/index','defaults' => ['page' => 1, 'tag' => '']],
+           //['pattern' => 'phim-hot/<slug>','route' => '/site/phimhot','suffix' => '.html'],
                 //end site
                 //
                 //dao diễn
@@ -114,7 +114,7 @@ $config = [
             ['pattern' => 'dao-dien/<slug>','route' => 'daodien/view','suffix' => '.html'],
 
             // phim //
-            ['pattern' => '<slug>','route' => 'phim/index',], 
+            ['pattern' => 'phim-hot/<slug>','route' => '/phim/index'], 
             
         ],
     ],
@@ -141,7 +141,7 @@ $config = [
 ],
 'params' => [
     'thumbnail.size' => [128, 128],
-    'abc' => ''    
+   // 'abc' => ''    
 ],
 ];
 

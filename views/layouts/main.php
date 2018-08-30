@@ -101,31 +101,30 @@ $urlImage = Yii::getAlias('@web/uploads/img');
         ]);
         $navItems = [
             ['label' => 'Mua vé', 'url' => ['/site/index']],
-            ['label' => 'City', 'url' => ['/thanh-pho']],
             ['label' => 'Phim', 'url' => ['#'],'items' => [
-                ['label' => 'phim đang chiếu', 'url' => '/phim-dang-chieu'],
-                ['label' => 'phim sắp chiếu', 'url' => '/phim-sap-chieu'],
+                ['label' => 'phim đang chiếu', 'url' => ['/phim/index','slug' => 'phim-dang-chieu',]],
+                ['label' => 'phim sắp chiếu', 'url' => ['/phim/index','slug' => 'phim-sap-chieu',]],
             ],],
             ['label' => 'GÓC ĐIỆN ẢNH','url' => '#','items' => [
-               ['label' => 'Thể loại phim', 'url' => '#'],
-               ['label' => 'Đạo diễn', 'url' => '/dao-dien'],
-               ['label' => 'bình luận phim', 'url' => '#'],
-               ['label' => 'blog điện ảnh', 'url' => '#'],
-           ],],
-           ['label' => 'Rạp', 'url' => ['/site/about']],
-           ['label' => 'phim hay trong tháng', 'url' => ['/site/about']],
-           '<div class="navbar-collapse collapse in col-sm-4 col-md-4">
-           <form class="navbar-form">
-           <div class="input-group">
-           <input type="text" class="form-control" placeholder="Search">
-           <span class="input-group-btn">
-           <button type="submit" class="btn"><i class="fa fa-search"></i></button>
-           </span>
-           </div>
-           </form>
-           </div>'
-       ];
-       echo Nav::widget([
+             ['label' => 'Thể loại phim', 'url' => '#'],
+             ['label' => 'Đạo diễn', 'url' => '/dao-dien'],
+             ['label' => 'bình luận phim', 'url' => '#'],
+             ['label' => 'blog điện ảnh', 'url' => '#'],
+         ],],
+         ['label' => 'Rạp', 'url' => ['/site/about']],
+         ['label' => 'phim hay trong tháng', 'url' => ['/site/about']],
+         '<div class="navbar-collapse collapse in col-sm-4 col-md-4">
+         <form class="navbar-form">
+         <div class="input-group">
+         <input type="text" class="form-control" placeholder="Search">
+         <span class="input-group-btn">
+         <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+         </span>
+         </div>
+         </form>
+         </div>'
+     ];
+     echo Nav::widget([
         'activateItems' => false,
         'options' => [
             'class' => 'navbar-nav navbar-inverse',
@@ -153,7 +152,7 @@ $urlImage = Yii::getAlias('@web/uploads/img');
             $custom =$GLOBALS['_custom'];
             $slug = explode('/', Url::current());
             ?>
-            <?php if (!in_array(Yii::$app->controller->id, $custom['12']) && !in_array($slug[1], $custom['12'])): ?>
+            <?php if (!in_array(Yii::$app->controller->id, $custom['12']) && !in_array(end($slug), $custom['12'])): ?>
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-sm-8 col-xs-12">
@@ -177,7 +176,7 @@ $urlImage = Yii::getAlias('@web/uploads/img');
             <?php endif ?>
         </div>
         <div class="container" id = "footer">  
-           <div id="footer" class="animated fadeInUp" data-animate="fadeInUp">
+         <div id="footer" class="animated fadeInUp" data-animate="fadeInUp">
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 col-sm-6">
