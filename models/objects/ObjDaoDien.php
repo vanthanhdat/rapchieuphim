@@ -49,18 +49,20 @@ class ObjDaoDien extends Model
         return $this->$name;
     }
 
-    public function uploadImageDaoDien()
+    public function uploadImageDaoDien($slug)
     {
         if ($this->validate()) {
+           // $date = new \DateTime();
+           // $imageName = implode('-',explode(' ',$this->remove_vietnamese_accents($this->name))).'-'.date_timestamp_get($date);
             $path = Yii::getAlias('@img');
-            $this->image->saveAs($path.'/daodien'.'/'. $this->image->name);
-            $src = imagecreatefromjpeg($path.'/daodien'.'/'. $this->image->name);
-            list($width,$height) = getimagesize($path.'/daodien'.'/'. $this->image->name);
+            $this->image->saveAs($path.'/daodien'.'/'. $slug . '.' . $this->image->extension);
+            $src = imagecreatefromjpeg($path.'/daodien'.'/'. $slug . '.' . $this->image->extension);
+            list($width,$height) = getimagesize($path.'/daodien'.'/'. $slug . '.' . $this->image->extension);
             $newWidth = 400;
             $newHeight = 400;
             $newImage = imagecreatetruecolor($newWidth, $newHeight);
             imagecopyresampled($newImage,$src,0,0,0,0,$newWidth,$newHeight,$width,$height);
-            imagejpeg($newImage,$path.'/daodien'.'/'. $this->image->name,100);
+            imagejpeg($newImage,$path.'/daodien'.'/'. $slug . '.' . $this->image->extension,100);
             imagedestroy($src);
             imagedestroy($newImage);
             return true;
@@ -72,23 +74,25 @@ class ObjDaoDien extends Model
 
     public function setObject($image,$oldAttributes)
     {
+        $date = new \DateTime();
+        $this->slug = implode('-',explode(' ',$this->remove_vietnamese_accents($this->name))).'-'.date_timestamp_get($date);
         $allAttributes = '';
         if ($oldAttributes === null) {
             if ($image === null) {
                 $array = array(
                    'name' => $this->name, 
-                  'description' => $this->description,
-                  'birthdate' => $this->birthdate,
-                  'image' => '',
-                  'tieusu' => $this->tieusu);
+                   'description' => $this->description,
+                   'birthdate' => $this->birthdate,
+                   'image' => '',
+                   'tieusu' => $this->tieusu);
                 $allAttributes = json_encode($array);
             }
             else {
-                $this->uploadImageDaoDien();
+                $this->uploadImageDaoDien($this->slug);
                 $array = array('name' => $this->name,                         
                     'description' => $this->description,
                     'birthdate' => $this->birthdate,
-                    'image' => $this->image->name,
+                    'image' => $this->slug . '.' . $this->image->extension,
                     'tieusu' => $this->tieusu);
                 $allAttributes = json_encode($array);
             }
@@ -110,11 +114,11 @@ class ObjDaoDien extends Model
                     $pathFile = Yii::getAlias('@img').'/daodien'.'/'.$oldImage;
                     $this->deleteFile($pathFile);
                 }
-                $this->uploadImageDaoDien();
+                $this->uploadImageDaoDien($this->slug);
                 $array = array('name' => $this->name, 
                     'description' => $this->description,
                     'birthdate' => $this->birthdate,
-                    'image' => $this->image->name,
+                    'image' => $this->slug . '.' . $this->image->extension,
                     'tieusu' => $this->tieusu);
                 $allAttributes = json_encode($array);
             }
@@ -128,8 +132,8 @@ class ObjDaoDien extends Model
         $id = 0;
         $daodien = new Daodien();
         $daodien->quoctich = $this->quoctich;
-        $daodien->attributes = $this->setObject($this->image,null);
         $daodien->slug = implode('-',explode(' ',$this->remove_vietnamese_accents($this->name))).'-'.date_timestamp_get($date);
+        $daodien->attributes = $this->setObject($this->image,null);
         if ($daodien->save()) {
             $id = $daodien->id;
         }
@@ -150,8 +154,8 @@ class ObjDaoDien extends Model
     public function save($image)
     {
         $date = new \DateTime();
-    	$daodien = Daodien::findOne($this->id);
-        $daodien->attributes = $this->setObject($image,$daodien->attributes);
+        $daodien = Daodien::findOne($this->id);  
+        $daodien->attributes = $this->setObject($this->image,$daodien->attributes);
         $daodien->quoctich = $this->quoctich;
         $daodien->slug = implode('-',explode(' ',$this->remove_vietnamese_accents($this->name))).'-'.date_timestamp_get($date);
         if ($daodien->save()) {

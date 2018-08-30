@@ -106,7 +106,6 @@ $config = [
             ['pattern' => 'profile','route' => '/site/profile','suffix' => '.html'],
             ['pattern' => 'login','route' => '/site/login','suffix' => '.html'],
             ['pattern' => 'register','route' => '/site/signup','suffix' => '.html'],
-           //['pattern' => 'phim-hot/<slug>','route' => '/site/phimhot','suffix' => '.html'],
                 //end site
                 //
                 //dao diễn
