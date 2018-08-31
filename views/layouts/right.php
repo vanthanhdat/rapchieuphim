@@ -1,7 +1,7 @@
 <?php 
 use yii\db\Query;
 $query = new Query();
-$arr = $query->select(['id','attributes','status'])->from('phim')->where(['status' => 2])
+$arr = $query->select(['id','attributes','status','slug'])->from('phim')->where(['status' => 2])
 ->limit(6)->orderBy(['created_at' => SORT_DESC])->all();
 $urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
 ?>
@@ -14,7 +14,7 @@ $urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
       <div class="col-md-12 col-sm-12 col-xs-12 movie-item">
         <div class="article-movie-home">
           <img class="img-responsive" src="<?= $urlImagePhim.'/'.$attributes->image?>" style ="width:396px;height:264px;">
-          <a href='/dat-ve/<?= $value['id'] ?>'>
+          <a href='/dat-ve/<?= $value['slug'] ?>'>
             <div class="decription-hover overlay">
               <div class="movies-content">
                 <div class="group">
