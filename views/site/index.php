@@ -47,9 +47,9 @@ $urlImage = Yii::getAlias('@web/uploads/img');
         $attributes = json_decode($value['attributes']);
         $contentSapChieu = '<div class="col-md-4 col-sm-4 col-xs-6 movie-item">
         <div class = "article-movie-home">
-        <img class="img-responsive" src="'.$urlImagePhim."/".$attributes->image.'">
+        <img class="item-home img-responsive" src="'.$urlImagePhim."/".$attributes->image.'">
         <a href="/dat-ve/'.$value['id'].'">
-        <div class="decription-hover overlay">
+        <div class="overlay">
         <div class="movies-content">
         <div class="group">
         <div class="btn secondary-white">mua vé</div>
@@ -68,9 +68,9 @@ $urlImage = Yii::getAlias('@web/uploads/img');
         $attributes = json_decode($value['attributes']);
         $contentSapChieu = '<div class="col-md-4 col-sm-4 col-xs-6 movie-item">
         <div class = "article-movie-home">
-        <img class="img-responsive" src="'.$urlImagePhim."/".$attributes->image.'">
+        <img class="item-home img-responsive" src="'.$urlImagePhim."/".$attributes->image.'">
         <a href="/dat-ve/'.$value['id'].'">
-        <div class="decription-hover overlay">
+        <div class="overlay">
         <div class="movies-content">
         <div class="group">
         <div class="btn secondary-white">mua vé</div>
@@ -93,7 +93,7 @@ $urlImage = Yii::getAlias('@web/uploads/img');
             </div>
             <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
-            <a href="/phim-dang-chieu" class="btn secondary fl-right">Xem thêm</a>
+            <a href="/phim-hot/phim-dang-chieu" class="btn secondary fl-right">Xem thêm</a>
             </div>
             </div>
             ',
@@ -107,7 +107,7 @@ $urlImage = Yii::getAlias('@web/uploads/img');
             </div>
             <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
-            <a href="/phim-dang-chieu" class="btn secondary fl-right">Xem thêm</a>
+            <a href="/phim-hot/phim-sap-chieu" class="btn secondary fl-right">Xem thêm</a>
             </div>
             </div>',
                   //'headerOptions' => ['color' => 'yellow'],

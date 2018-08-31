@@ -1024,6 +1024,7 @@ h1 {
 }
 .nav-tabs {
   border-bottom: 1px solid #dddddd;
+  text-transform: uppercase;
 }
 .nav-tabs > li > a {
   line-height: 1.42857143;
@@ -1040,7 +1041,6 @@ h1 {
   background-color: #f0f0f0;
   border: 1px solid #dddddd;
 }
-
 
 .nav-pills > li > a {
   border-radius: 0;

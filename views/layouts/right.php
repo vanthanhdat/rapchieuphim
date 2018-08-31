@@ -13,7 +13,7 @@ $urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
       <?php  $attributes = json_decode($value['attributes']); ?>
       <div class="col-md-12 col-sm-12 col-xs-12 movie-item">
         <div class="article-movie-home">
-          <img class="img-thumbnail img-responsive" src="<?= $urlImagePhim.'/'.$attributes->image?>" style ="width:396px;height:264px;">
+          <img class="img-responsive" src="<?= $urlImagePhim.'/'.$attributes->image?>" style ="width:396px;height:264px;">
           <a href='/dat-ve/<?= $value['id'] ?>'>
             <div class="decription-hover overlay">
               <div class="movies-content">
@@ -32,7 +32,7 @@ $urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
   </div>
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
-      <a href="/phim-dang-chieu" class="btn secondary fl-right">Xem thêm <span class="glyphicon glyphicon-arrow-right"></span></a>
+      <a href="/phim-hot/phim-dang-chieu" class="btn secondary fl-right">Xem thêm <span class="glyphicon glyphicon-arrow-right"></span></a>
     </div>
   </div>
 </section>

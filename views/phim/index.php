@@ -11,11 +11,11 @@ use yii\bootstrap\Tabs;
 			$urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
 			$arrPhim = [];
 			foreach ($listPhim as $key) {
-				$content = '<div class="col-md-4 col-sm-4 col-xs-6 movie-item">
+				$content = '<div class="col-md-3 col-sm-3 col-xs-6 movie-item">
 				<div class = "article-movie-home">
 				<img class="img-responsive" src="'.$urlImagePhim."/".$key['image'].'">
 				<a href="/dat-ve/'.$key['id'].'">
-				<div class="decription-hover overlay">
+				<div class="overlay">
 				<div class="movies-content">
 				<div class="group">
 				<div class="btn secondary-white">mua vé</div>
