@@ -51,9 +51,7 @@ class ObjDaoDien extends Model
 
     public function uploadImageDaoDien($slug)
     {
-        if ($this->validate()) {
-           // $date = new \DateTime();
-           // $imageName = implode('-',explode(' ',$this->remove_vietnamese_accents($this->name))).'-'.date_timestamp_get($date);
+        if ($this->validate()  && $this->image!=null) {
             $path = Yii::getAlias('@img');
             $this->image->saveAs($path.'/daodien'.'/'. $slug . '.' . $this->image->extension);
             $src = imagecreatefromjpeg($path.'/daodien'.'/'. $slug . '.' . $this->image->extension);
@@ -80,11 +78,11 @@ class ObjDaoDien extends Model
         if ($oldAttributes === null) {
             if ($image === null) {
                 $array = array(
-                   'name' => $this->name, 
-                   'description' => $this->description,
-                   'birthdate' => $this->birthdate,
-                   'image' => '',
-                   'tieusu' => $this->tieusu);
+                 'name' => $this->name, 
+                 'description' => $this->description,
+                 'birthdate' => $this->birthdate,
+                 'image' => '',
+                 'tieusu' => $this->tieusu);
                 $allAttributes = json_encode($array);
             }
             else {
@@ -102,10 +100,10 @@ class ObjDaoDien extends Model
             $oldImage = $attributes->image; 
             if ($image === null) {
                 $array = array('name' => $this->name, 
-                 'description' => $this->description,
-                 'birthdate' => $this->birthdate,
-                 'image' => $oldImage,
-                 'tieusu' => $this->tieusu);
+                   'description' => $this->description,
+                   'birthdate' => $this->birthdate,
+                   'image' => $oldImage,
+                   'tieusu' => $this->tieusu);
                 $allAttributes = json_encode($array);
             }
             else {
@@ -178,15 +176,15 @@ class ObjDaoDien extends Model
             $objDaoDien->views = $params[$i]->views;
             $attributes = json_decode($params[$i]->attributes);
             foreach ($attributes as $key => $value) {
-             $objDaoDien->__set($key,$value);
-         }
-         array_push($listObj, $objDaoDien);            
-     }
-     return $listObj;
- }
+               $objDaoDien->__set($key,$value);
+           }
+           array_push($listObj, $objDaoDien);            
+       }
+       return $listObj;
+   }
 
- public function getPreview()
- {
+   public function getPreview()
+   {
     $words = 40;
     if (StringHelper::countWords($this->description) > $words) {
         return StringHelper::truncateWords($this->description,$words);

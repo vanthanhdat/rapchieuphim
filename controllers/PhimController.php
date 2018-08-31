@@ -47,7 +47,7 @@ class PhimController extends Controller
 			}   
 		}
 		if ($param > 0) {
-			$listPhim  = Phim::find()->where(['status' => $param])->orderBy(['created_at' => SORT_DESC])->all();
+			$listPhim  = Phim::find()->where(['status' => $param])->orderBy(['created_at' => SORT_ASC])->all();
 			$returnList = [];
 			foreach ($listPhim as $key => $value) {
 				$obj = new ObjPhim();
