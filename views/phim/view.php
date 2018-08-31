@@ -15,7 +15,7 @@ $urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
 				<div class="detail-img-order-ticket">
 					<img class="img-responsive" src="<?= $urlImagePhim.'/'. $attributes->image ?>">
 					<div class="play-button">
-						<a href="#" data-toggle="modal" data-target="#modalTrailerPhim" class="btn">Trailler</a>
+						<a href="#" data-toggle="modal" data-target="#modalTrailerPhim" class="btn"></a>
 					</div>
 				</div>
 			</div>
