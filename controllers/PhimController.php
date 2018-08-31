@@ -6,6 +6,7 @@ use app\models\objects\ObjPhim;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\db\Query;
 
 class PhimController extends Controller
 {
@@ -34,6 +35,23 @@ class PhimController extends Controller
 			'listPhim' => $listPhim,
 			'slug' => $slug
 		]);
+	}
+
+	public function actionView($slug)
+	{
+		$phim = $this->getPhimBySlug($slug);
+		//var_dump($phim->tl['name']);exit;
+		$query = new Query();
+		return $this->render('view',[
+			'phim' => $phim,
+			'slug' => $slug
+		]);
+	}
+
+	protected function getPhimBySlug($slug)
+	{
+		$phim = Phim::findOne(['slug' => $slug]);
+		return $phim;
 	}
 
 	protected function getListPhimBySlug($slug)

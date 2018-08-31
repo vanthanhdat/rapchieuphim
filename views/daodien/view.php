@@ -1,8 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
-use yii\widgets\ActiveForm;
 use yii\bootstrap\Tabs;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Đạo diễn', 'url' => ['index']];

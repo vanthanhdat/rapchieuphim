@@ -139,7 +139,6 @@ class ObjPhim extends Model
         $phim->id_tl = $this->id_tl;
         $phim->id_dd = $this->id_dd;
         $phim->status = $this->status;
-        $phim->slug = implode('-',explode(' ',$this->remove_vietnamese_accents(str_replace([':','/',],'',$this->title)))).'-'.date_timestamp_get($date);
         $oldAttributes = json_decode($phim->attributes);
         $newAttributes = array(
             'title' => $this->title,
@@ -180,6 +179,7 @@ class ObjPhim extends Model
         $this->status = $phim->status;
         $this->id_dd = $phim->id_dd;
         $this->id_tl = $phim->id_tl;
+        $this->slug = $phim->slug;
         $attributes = json_decode($phim->attributes);
         $this->title = $attributes->title;
         $this->tomTat = $attributes->tomtat;

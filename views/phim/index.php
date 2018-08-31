@@ -14,7 +14,7 @@ use yii\bootstrap\Tabs;
 				$content = '<div class="col-md-3 col-sm-3 col-xs-6 movie-item">
 				<div class = "article-movie-home">
 				<img class="img-responsive" src="'.$urlImagePhim."/".$key['image'].'">
-				<a href="/dat-ve/'.$key['id'].'">
+				<a href="/dat-ve/'.$key['slug'].'">
 				<div class="overlay">
 				<div class="movies-content">
 				<div class="group">

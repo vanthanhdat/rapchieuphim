@@ -113,7 +113,8 @@ $config = [
             ['pattern' => 'dao-dien/<slug>','route' => 'daodien/view','suffix' => '.html'],
 
             // phim //
-            ['pattern' => 'phim-hot/<slug>','route' => '/phim/index'], 
+            ['pattern' => 'phim-hot/<slug>','route' => 'phim/index'], 
+            ['pattern' => 'dat-ve/<slug>','route' => 'phim/view',], 
             
         ],
     ],
