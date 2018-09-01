@@ -28,7 +28,7 @@ use app\models\Phim;
 
     <?= $form->field($model, 'thoiLuong') ?>
 	
-	<?= $form->field($model, 'trailerUrl') ?> 
+	<?= $form->field($model, 'trailerUrl')->widget(\yii\redactor\widgets\Redactor::className()) ?> 
 
     <?= $form->field($model,'quocGia') ?>
 

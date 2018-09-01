@@ -42,8 +42,6 @@ $urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
 	</article>
 </section>
 
-<?php $idUrl = explode('=', $attributes->trailerurl); ?>
-
 <div class="modal fade" id="modalTrailerPhim" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -53,7 +51,7 @@ $urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
 			</div>
 			<div class="modal-body">
 				<div class="embed-responsive embed-responsive-16by9">
-					<iframe id ='trailerVideo' class="embed-responsive-item" src="https://www.youtube.com/embed/<?= $idUrl[1] ?>" frameborder="0" allowfullscreen></iframe>
+					<?= $attributes->trailerurl ?>
 				</div>
 			</div>
 			<div class="modal-footer">
