@@ -17,13 +17,13 @@ $(document).ready(function() {
 
 	$('#modalTrailerPhim').on('shown.bs.modal', function(){     
 		var urlTrailer = $(this).find('iframe').attr('src');
-		var playVideo = urlTrailer.concat('?autoplay=1');
+		var playVideo = urlTrailer.concat("?autoplay=1;rel=0&amp;showinfo=1");
 		$('iframe').attr('src',playVideo);
 	});
 
 	$('#modalTrailerPhim').on('hidden.bs.modal', function(){ 
 		var urlTrailer = $(this).find('iframe').attr('src');
-		var playVideo = urlTrailer.replace("?autoplay=1","");
+		var playVideo = urlTrailer.replace("?autoplay=1;rel=0&amp;showinfo=1","");
 		$('iframe').attr('src', playVideo);
 	});
 

@@ -1,6 +1,6 @@
 <?php 
 use yii\helpers\Html;
-
+use yii\bootstrap\Modal;
 $attributes = json_decode($phim->attributes);
 $this->title = $attributes->title;
 $this->params['breadcrumbs'][] = ['label' => 'Đặt vé', 'url' => ['index','slug' => 'phim-dang-chieu']];
@@ -42,22 +42,15 @@ $urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
 	</article>
 </section>
 
-<div class="modal fade" id="modalTrailerPhim" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title"><?= $attributes->title ?></h4>
-			</div>
-			<div class="modal-body">
-				<div class="embed-responsive embed-responsive-16by9">
-					<?= $attributes->trailerurl ?>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
+<?php 
+Modal::begin([
+	'header' => $attributes->title,
+	'id' => 'modalTrailerPhim',
+]);
 
-	</div>
-</div>
+echo '<div class="embed-responsive embed-responsive-16by9">
+'.$attributes->trailerurl.'
+</div>';
+
+Modal::end();
+?>
