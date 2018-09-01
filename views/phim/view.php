@@ -40,17 +40,18 @@ $urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
 			<?= $attributes->tomtat ?>
 		</div>
 	</article>
+	<?php 
+	Modal::begin([
+		'header' => $attributes->title,
+		'id' => 'modalTrailerPhim',
+	]);
+
+	echo '<div class="embed-responsive embed-responsive-16by9">
+	'.$attributes->trailerurl.'
+	</div>';
+
+	Modal::end();
+	?>
 </section>
 
-<?php 
-Modal::begin([
-	'header' => $attributes->title,
-	'id' => 'modalTrailerPhim',
-]);
 
-echo '<div class="embed-responsive embed-responsive-16by9">
-'.$attributes->trailerurl.'
-</div>';
-
-Modal::end();
-?>
