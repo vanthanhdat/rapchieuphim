@@ -243,15 +243,6 @@ class RapController extends Controller
         }
         return $this->redirect(['index']);
     }
-<<<<<<< HEAD
-
-    public function actionLichChieu()
-    {
-        
-    }
-
-=======
->>>>>>> taodatne
     protected function findModel($id)
     {
         if (($model = Rap::findOne($id)) !== null) {
