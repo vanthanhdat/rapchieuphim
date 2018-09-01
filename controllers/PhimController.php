@@ -42,6 +42,7 @@ class PhimController extends Controller
 		$phim = $this->getPhimBySlug($slug);
 		//var_dump($phim->tl['name']);exit;
 		$query = new Query();
+		
 		return $this->render('view',[
 			'phim' => $phim,
 			'slug' => $slug
