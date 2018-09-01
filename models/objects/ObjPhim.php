@@ -124,7 +124,7 @@ class ObjPhim extends Model
             'start' => $this->start,
             'trailerurl' => $this->trailerUrl
         );
-        $phim->attributes = json_encode($attributes);
+        $phim->attributes = json_encode($attributes, JSON_UNESCAPED_UNICODE);
         if ($phim->save()) {
             $this->uploadImagePhim($phim->slug);
             return true;
@@ -162,8 +162,7 @@ class ObjPhim extends Model
             $this->uploadImagePhim($phim->slug);
             $newAttributes['image'] = $phim->slug . '.' . $this->image->extension;
         }
-        $phim->attributes = json_encode($newAttributes);
-
+        $phim->attributes = json_encode($newAttributes, JSON_UNESCAPED_UNICODE);    
         if ($phim->save()) {
             return true;
         }

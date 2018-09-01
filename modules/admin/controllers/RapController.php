@@ -5,6 +5,7 @@ namespace app\modules\admin\controllers;
 use Yii;
 use app\models\Rap;
 use app\models\Phongchieu;
+use app\models\Lichchieu;
 use app\models\City;
 use app\models\objects\ObjRap;
 use app\models\objects\ObjGia;
@@ -16,6 +17,7 @@ use app\components\AccessRule;
 use app\models\User;
 use yii\data\Pagination;
 use yii\db\Query;
+use app\models\search\LichchieuSearch;
 
 /**
  * RapController implements the CRUD actions for Rap model.
@@ -37,21 +39,21 @@ class RapController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'ruleConfig' => [
-                       'class' => AccessRule::className(),
-                   ],
-                'rules' => [
-                        [
+                   'class' => AccessRule::className(),
+               ],
+               'rules' => [
+                [
                             // Allow full if user is admin
-                           'actions' => ['index','create', 'update', 'delete','view','delete-phong','view-phong','create-phong'],
-                           'allow' => true,
-                           'roles' => [
-                               User::ROLE_ADMIN
-                           ],
-                       ],
-                ],   
-            ],
-        ];
-    }
+                    'actions' => ['index','create', 'update', 'delete','view','delete-phong','view-phong','create-phong','lich-chieu'],
+                   'allow' => true,
+                   'roles' => [
+                       User::ROLE_ADMIN
+                   ],
+               ],
+           ],   
+       ],
+   ];
+}
 
     /**
      * Lists all Rap models.
@@ -83,7 +85,7 @@ class RapController extends Controller
      */
     public function actionView($id)
     {
-    
+
         $rap = Rap::findOne($id);
         $dsPhong = $rap->phongchieus;
         return $this->render('view', [
@@ -124,6 +126,16 @@ class RapController extends Controller
         return $this->render('create-phong',[
             'rap' => $objRap,
             'model' => $model,
+        ]);
+    }
+
+    public function actionLichChieu($id)
+    {
+        $searchModel = new LichchieuSearch();
+        $dataProvider = $searchModel->search($id,Yii::$app->request->queryParams);
+        return $this->render('lichchieu', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -231,12 +243,15 @@ class RapController extends Controller
         }
         return $this->redirect(['index']);
     }
+<<<<<<< HEAD
 
     public function actionLichChieu()
     {
         
     }
 
+=======
+>>>>>>> taodatne
     protected function findModel($id)
     {
         if (($model = Rap::findOne($id)) !== null) {

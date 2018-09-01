@@ -43,7 +43,6 @@ class TheloaiSearch extends Theloai
     public function search($params)
     {
         $query = Theloai::find();
-
         $pagination = new Pagination([
             'totalCount' => $query->count(),
         ]);
@@ -56,11 +55,8 @@ class TheloaiSearch extends Theloai
                 'totalCount' => $query->count()
             ],
         ]);
-
         $this->load($params); 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
