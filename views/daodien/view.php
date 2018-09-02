@@ -18,15 +18,15 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="col-md-8 col-sm-8 col-xs-8">
                 <h2 class="detail-title"><?= Html::encode($this->title) ?></h2>
-                 <h4><span class="label label-primary"><i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i> <?= $model->views ?></span></h4>
+                <h4><span class="label label-default"><i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i> <?= $model->views ?></span></h4>
                 <div class="detail-info">
-                   <p><?= $model->description ?></p>
-                   <p>Ngày sinh: <?= $model->birthdate  ?></p>
-                   <p>Quốc tịch: <?= $model->quoctich  ?></p>
-               </div>
-           </div>
-       </div>
-   </article>
+                 <p><?= $model->description ?></p>
+                 <p>Ngày sinh: <?= $model->birthdate  ?></p>
+                 <p>Quốc tịch: <?= $model->quoctich  ?></p>
+             </div>
+         </div>
+     </div>
+ </article>
 </section>
 
 <section style="margin: 15px 0;">

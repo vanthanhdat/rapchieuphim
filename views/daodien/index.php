@@ -13,27 +13,27 @@ $this->title = 'Danh sách đạo diễn';
 <?php $urlImage = Yii::getAlias('@web/uploads/image/daodien'); ?>
 <h3 class="text-uppercase"><?= $this->title ?></h3>
 <?php foreach($listDaoDien as $value): ?>
-    <article class="blog-post">
-        <div class="col-md-4 col-xs-4"> 
-            <?= Html::a(Html::img($urlImage.'/'. $value->image, [
-                'alt' => Html::encode($value->name),
-                'class' => 'img-responsive',
-                'title' => Html::encode($value->name),
-            ]), ['daodien/view', 'slug' => $value->slug,]) ?>
-        </div>
-        <div class="col-md-8 col-xs-8">
-            <h4>
-                <?= Html::a($value->name, ['daodien/view', 'slug' => $value->slug,]) ?>
-            </h4>
-            <h4><span class="label label-primary"><i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i> <?= $value->views ?></span></h4>
-            <div class="article-description hidden-xs">
-                <div class="article-introtext">
-                  <?= $value->getPreview();?>
-              </div>   
-          </div>
+  <article class="blog-post">
+    <div class="col-md-4 col-xs-4"> 
+      <?= Html::a(Html::img($urlImage.'/'. $value->image, [
+        'alt' => Html::encode($value->name),
+        'class' => 'img-responsive',
+        'title' => Html::encode($value->name),
+      ]), ['daodien/view', 'slug' => $value->slug,]) ?>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <h4>
+        <?= Html::a($value->name, ['daodien/view', 'slug' => $value->slug,]) ?>
+      </h4>
+      <h4><span class="label label-default"><i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i> <?= $value->views ?></span></h4>
+      <div class="article-description hidden-xs">
+        <div class="article-introtext">
+          <?= $value->getPreview();?>
+        </div>   
       </div>
+    </div>
   </article>
 <?php endforeach ?>  
 <?= LinkPager::widget([
-    'pagination' => $pagination,
-    ]) ?>
+  'pagination' => $pagination,
+  ]) ?>

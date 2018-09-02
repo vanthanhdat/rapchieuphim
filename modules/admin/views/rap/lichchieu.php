@@ -9,7 +9,6 @@ $this->title = 'Lịch chiếu'
 		<?= Html::a('Thêm lịch chiếu', ['create'], ['class' => 'btn btn-success']) ?>
 	</p>
 	<?php 
-	//var_dump($dataProvider->getModels()[1]);exit;
 	echo GridView::widget([
 		'dataProvider' => $dataProvider,
 		'filterModel' =>$searchModel, 
