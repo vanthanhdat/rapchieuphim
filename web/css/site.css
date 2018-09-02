@@ -358,3 +358,10 @@ article > div.content-text{
         height: 128px;
     }
 }
+
+@media (min-width: 768px){
+   .modal-dialog {
+    width: 800px;
+    margin: 30px auto;
+}
+}

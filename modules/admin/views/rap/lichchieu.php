@@ -1,12 +1,16 @@
 <?php 
 use yii\helpers\Html;
 use yii\grid\GridView;
-$this->title = 'Lịch chiếu'
+$this->title = 'Lịch chiếu';
+$this->params['breadcrumbs'][] = ['label' => 'Danh sách rạp', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $rap->name, 'url' => ['view','id' => $rap->id]];
+$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="container">
 	<h1><?= Html::encode($this->title) ?></h1>
 	<p>
-		<?= Html::a('Thêm lịch chiếu', ['create'], ['class' => 'btn btn-success']) ?>
+		<?= Html::a('Thêm lịch chiếu', ['create-lich'], ['class' => 'btn btn-success']) ?>
 	</p>
 	<?php 
 	echo GridView::widget([

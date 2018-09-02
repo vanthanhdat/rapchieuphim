@@ -25,6 +25,8 @@ class ObjLichChieu extends Model
     public $updated_at;
     public $selectedSeat;
 
+    
+
 }
 
 ?>

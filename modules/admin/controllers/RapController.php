@@ -39,20 +39,20 @@ class RapController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'ruleConfig' => [
-                   'class' => AccessRule::className(),
-               ],
-               'rules' => [
+                 'class' => AccessRule::className(),
+             ],
+             'rules' => [
                 [
                             // Allow full if user is admin
-                    'actions' => ['index','create', 'update', 'delete','view','delete-phong','view-phong','create-phong','lich-chieu'],
-                   'allow' => true,
-                   'roles' => [
-                       User::ROLE_ADMIN
-                   ],
-               ],
-           ],   
-       ],
-   ];
+                    'actions' => ['index','create', 'update', 'delete','view','delete-phong','view-phong','create-phong','lich-chieu','create-lich'],
+                    'allow' => true,
+                    'roles' => [
+                     User::ROLE_ADMIN
+                 ],
+             ],
+         ],   
+     ],
+ ];
 }
 
     /**
@@ -133,10 +133,17 @@ class RapController extends Controller
     {
         $searchModel = new LichchieuSearch();
         $dataProvider = $searchModel->search($id,Yii::$app->request->queryParams);
+        $objRap = $this->findModel($id);
         return $this->render('lichchieu', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'rap' => $objRap
         ]);
+    }
+
+    public function actionCreateLich()
+    {
+        var_dump('abc');exit;
     }
 
     public function actionViewPhong($id)
