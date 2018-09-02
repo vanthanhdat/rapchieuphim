@@ -26,9 +26,8 @@ class LichchieuSearch extends Lichchieu
 
     public function search($id,$params)
     {
-
     	$query = Lichchieu::find()->where(['>','ngaychieu',date("Y-m-d")]);
-    	$query->joinWith('phong');
+    	$query->joinWith('phong')->andWhere(['idrap' => $id]);
     	$query->joinWith('phim');
     	$pagination = new Pagination([
     		'totalCount' => $query->count(),
@@ -46,6 +45,8 @@ class LichchieuSearch extends Lichchieu
     	if (!$this->validate()) {
     		return $dataProvider;
     	}
+    	//var_dump($this->idphim);
+    	//var_dump($this->idphong);exit;
     	$query->andFilterWhere(['like', 'phim.attributes',$this->idphim]);
     	$query->andFilterWhere(['like', 'phongchieu.name', $this->idphong]);
     	return $dataProvider;

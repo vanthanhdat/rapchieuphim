@@ -92,7 +92,7 @@ class ObjDaoDien extends Model
                     'birthdate' => $this->birthdate,
                     'image' => $this->slug . '.' . $this->image->extension,
                     'tieusu' => $this->tieusu);
-                $allAttributes = json_encode($array);
+                $allAttributes = json_encode($array, JSON_UNESCAPED_UNICODE);
             }
         } else {
             $obj = Daodien::findOne($this->id);
@@ -104,7 +104,7 @@ class ObjDaoDien extends Model
                    'birthdate' => $this->birthdate,
                    'image' => $oldImage,
                    'tieusu' => $this->tieusu);
-                $allAttributes = json_encode($array);
+                $allAttributes = json_encode($array, JSON_UNESCAPED_UNICODE);
             }
             else {
                 $pathFile ='';
@@ -118,7 +118,7 @@ class ObjDaoDien extends Model
                     'birthdate' => $this->birthdate,
                     'image' => $this->slug . '.' . $this->image->extension,
                     'tieusu' => $this->tieusu);
-                $allAttributes = json_encode($array);
+                $allAttributes = json_encode($array, JSON_UNESCAPED_UNICODE);
             }
         }
         return $allAttributes;
