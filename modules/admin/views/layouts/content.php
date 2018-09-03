@@ -1,7 +1,6 @@
 <?php
 use yii\widgets\Breadcrumbs;
 use yii\bootstrap\Alert;
-
 ?>
 <div class="content-wrapper">
     <section class="content-header">
@@ -9,29 +8,30 @@ use yii\bootstrap\Alert;
             'itemTemplate' => "<li><b>{link}</b></li>\n",     
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             'homeLink' => [ 
-                      'label' => Yii::t('yii', 'Admin-Page'),
-                      'url' => '/admin/default/',
-                      'template' => "<li><b>{link}</b></li>\n",
-                 ],
-        ]) ?>
-    </section>
-    <section class="content">
-        <?php
-            if (Yii::$app->session->getFlash('flashMessage') != null) {
-                echo Alert::widget([
-                    'options' => ['class' => 'alert-success'],
-                    'body' => Yii::$app->session->getFlash('flashMessage'),
-                ]);
-            }
-            else if(Yii::$app->session->getFlash('errorMessage') != null) {
-                echo Alert::widget([
-                    'options' => ['class' => 'alert-danger'],
-                    'body' => Yii::$app->session->getFlash('errorMessage'),
-                ]);
-            }
-         ?>
-        <?= $content ?>
-    </section>
+              'label' => Yii::t('yii', 'Admin-Page'),
+              'url' => '/admin/default/',
+              'template' => "<li><b>{link}</b></li>\n",
+          ],
+      ]) ?>
+  </section>
+  <section class="content">
+    <?php
+    if (Yii::$app->session->getFlash('flashMessage') != null) {
+        echo Alert::widget([
+            'options' => ['class' => 'alert-success'],
+            'body' => Yii::$app->session->getFlash('flashMessage'),
+        ]);
+    }
+    else if(Yii::$app->session->getFlash('errorMessage') != null) {
+        echo Alert::widget([
+            'options' => ['class' => 'alert-danger'],
+            'body' => Yii::$app->session->getFlash('errorMessage'),
+        ]);
+    }
+    ?>
+    <?php  ?>
+    <?= $content ?>
+</section>
 </div>
 
 <footer class="main-footer">
@@ -230,5 +230,5 @@ use yii\bootstrap\Alert;
     </div>
 </aside><!-- /.control-sidebar -->
 <!-- Add the sidebar's background. This div must be placed
-     immediately after the control sidebar -->
-<div class='control-sidebar-bg'></div>
+ immediately after the control sidebar -->
+ <div class='control-sidebar-bg'></div>

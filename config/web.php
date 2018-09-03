@@ -16,6 +16,8 @@ $_custom = [
     '8-4' =>['']
 ];
 
+
+
 //$db = require __DIR__ . '/db.php';
 $container = new \yii\di\Container;
 
@@ -141,7 +143,7 @@ $config = [
 ],
 'params' => [
     'thumbnail.size' => [128, 128],
-   // 'abc' => ''    
+    'time_start_end' => ['9:00','23:00'],
 ],
 ];
 

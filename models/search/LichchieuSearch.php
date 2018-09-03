@@ -26,7 +26,7 @@ class LichchieuSearch extends Lichchieu
 
     public function search($id,$params)
     {
-    	$query = Lichchieu::find()->where(['>','ngaychieu',date("Y-m-d")]);
+    	$query = Lichchieu::find()->where(['>','ngaychieu',date("Y-m-d")])->orderBy(['ngaychieu' => SORT_DESC]);
     	$query->joinWith('phong')->andWhere(['idrap' => $id]);
     	$query->joinWith('phim');
     	$pagination = new Pagination([

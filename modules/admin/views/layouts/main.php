@@ -164,7 +164,6 @@ function readURL(input,id) {
         reader.readAsDataURL(input.files[0]);
     }
 }
-
 </script>
 </body>
 </html>

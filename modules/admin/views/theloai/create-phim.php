@@ -15,7 +15,7 @@ use dosamigos\datepicker\DatePicker;
 	$this->params['breadcrumbs'][] = $this->title;
  ?>
 
-<div class="phim-form container">
+<div class="container">
 	<h1><?= Html::encode($this->title) ?></h1>
     <?= $this->render('_form-phim', [
         'model' => $model,

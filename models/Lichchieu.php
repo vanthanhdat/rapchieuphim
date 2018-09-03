@@ -3,7 +3,8 @@
 namespace app\models;
 
 use Yii;
-
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 /**
  * This is the model class for table "lichchieu".
  *
@@ -21,7 +22,7 @@ use Yii;
  * @property Phongchieu $phong
  * @property Ve[] $ves
  */
-class Lichchieu extends \yii\db\ActiveRecord
+class Lichchieu extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -43,6 +44,7 @@ class Lichchieu extends \yii\db\ActiveRecord
             [['selected_seat'], 'string'],
             [['idphim'], 'exist', 'skipOnError' => true, 'targetClass' => Phim::className(), 'targetAttribute' => ['idphim' => 'id']],
             [['idphong'], 'exist', 'skipOnError' => true, 'targetClass' => Phongchieu::className(), 'targetAttribute' => ['idphong' => 'id']],
+            
         ];
     }
 
@@ -61,6 +63,20 @@ class Lichchieu extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'selected_seat' => 'Các ghế được đặt',
+        ];
+    }
+
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
         ];
     }
 

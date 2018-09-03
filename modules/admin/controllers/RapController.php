@@ -7,8 +7,10 @@ use app\models\Rap;
 use app\models\Phongchieu;
 use app\models\Lichchieu;
 use app\models\City;
+use app\models\Phim;
 use app\models\objects\ObjRap;
 use app\models\objects\ObjGia;
+use app\models\objects\ObjLichChieu;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -18,6 +20,8 @@ use app\models\User;
 use yii\data\Pagination;
 use yii\db\Query;
 use app\models\search\LichchieuSearch;
+use yii\helpers\Json;
+use yii\bootstrap\Alert;
 
 /**
  * RapController implements the CRUD actions for Rap model.
@@ -44,7 +48,7 @@ class RapController extends Controller
              'rules' => [
                 [
                             // Allow full if user is admin
-                    'actions' => ['index','create', 'update', 'delete','view','delete-phong','view-phong','create-phong','lich-chieu','create-lich'],
+                    'actions' => ['index','create', 'update', 'delete','view','delete-phong','view-phong','create-phong','lich-chieu','create-lich','get-phong'],
                     'allow' => true,
                     'roles' => [
                      User::ROLE_ADMIN
@@ -109,7 +113,7 @@ class RapController extends Controller
                 for ($i = 0; $i < count($data) ; $i++) {
                     array_push($arr,trim($data[$i]));
                 }
-                $model->sodo = json_encode($arr);
+                $model->sodo = json_encode($arr,JSON_UNESCAPED_UNICODE);
                 if ($model->save()) {
                     $session = Yii::$app->session;
                     $session->addFlash('flashMessage');
@@ -131,19 +135,33 @@ class RapController extends Controller
 
     public function actionLichChieu($id)
     {
+        $dsPhong = Phongchieu::find()->where(['idrap' => $id])->all();
+        $model = new ObjLichChieu();
+        $dsPhim = Phim::find()->where(['>=','status',1])->orderBy(['status' => SORT_DESC])->all();
         $searchModel = new LichchieuSearch();
         $dataProvider = $searchModel->search($id,Yii::$app->request->queryParams);
-        $objRap = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->createLichChieu()) {
+                 $model = new ObjLichChieu();
+            }
+            else{
+                return $this->redirect(['lich-chieu','id' => $id]);
+            }
+
+        }
         return $this->render('lichchieu', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'rap' => $objRap
+            'model' => $model,
+            'dsPhong' => $dsPhong,
+            'dsPhim' => $dsPhim
         ]);
     }
 
-    public function actionCreateLich()
+    public function actionGetPhong($ngayChieu,$gioChieu)
     {
-        var_dump('abc');exit;
+        $query = new Query();
+        echo Json::encode(['id' => 1,'name' => 'abc']);
     }
 
     public function actionViewPhong($id)
@@ -157,7 +175,7 @@ class RapController extends Controller
             for ($i = 0; $i < count($data) ; $i++) {
                 array_push($arr,trim($data[$i]));
             }
-            $model->sodo = json_encode($arr);
+            $model->sodo = json_encode($arr,JSON_UNESCAPED_UNICODE);
             if ($model->save()) {
                 $session = Yii::$app->session;
                 $session->addFlash('flashMessage');
