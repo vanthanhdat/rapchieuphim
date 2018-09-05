@@ -38,6 +38,7 @@ class RapController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+
                 ],
             ],
             'access' => [
@@ -142,62 +143,68 @@ class RapController extends Controller
         $dataProvider = $searchModel->search($id,Yii::$app->request->queryParams);
         if ($model->load(Yii::$app->request->post())) {
             if ($model->createLichChieu()) {
-                 $model = new ObjLichChieu();
-            }
-            else{
-                return $this->redirect(['lich-chieu','id' => $id]);
-            }
+             $model = new ObjLichChieu();
+         }
+         else{
+            return $this->redirect(['lich-chieu','id' => $id]);
         }
-        return $this->render('lichchieu', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'model' => $model,
-            'dsPhong' => $dsPhong,
-            'dsPhim' => $dsPhim
-        ]);
     }
+   // $this->checkGetRooms($id,'','');
+    return $this->render('lichchieu', [
+        'searchModel' => $searchModel,
+        'dataProvider' => $dataProvider,
+        'model' => $model,
+        'dsPhong' => $dsPhong,
+        'dsPhim' => $dsPhim
+    ]);
+}
 
-    public function actionGetPhong($idRap,$ngayChieu,$gioChieu)
-    {
-        $query = new Query();
-        echo Json::encode([['id' => 1,'name' => $idRap],['id' => 2,'name' => $idRap]]);
+public function actionGetPhong()
+{   
+    $idRap = $_POST["idRap"];
+    $ngayChieu = $_POST["ngayChieu"];
+    $gioChieu = $_POST["gioChieu"];
+    $phongs = $this->checkGetRooms($idRap,$ngayChieu,$gioChieu);
+    if (!empty($phongs)) {
+        echo Json::encode($phongs);
     }
+}
 
-    public function actionViewPhong($id)
-    {   
-        $model = Phongchieu::findOne($id);
-        $rap = Rap::findOne($model->idrap);
-        if ($model->load(Yii::$app->request->post())) {
-            $model->idrap = $model->idrap;
-            $data = explode(',', trim($model->sodo));
-            $arr = [];
-            for ($i = 0; $i < count($data) ; $i++) {
-                array_push($arr,trim($data[$i]));
-            }
-            $model->sodo = json_encode($arr,JSON_UNESCAPED_UNICODE);
-            if ($model->save()) {
-                $session = Yii::$app->session;
-                $session->addFlash('flashMessage');
-                $session->setFlash('flashMessage', 'Cập nhật thành công !');
-                return $this->redirect(['view-phong',  'id' => $model->id]);
-            }
+public function actionViewPhong($id)
+{   
+    $model = Phongchieu::findOne($id);
+    $rap = Rap::findOne($model->idrap);
+    if ($model->load(Yii::$app->request->post())) {
+        $model->idrap = $model->idrap;
+        $data = explode(',', trim($model->sodo));
+        $arr = [];
+        for ($i = 0; $i < count($data) ; $i++) {
+            array_push($arr,trim($data[$i]));
         }
-        return $this->render('view-phong',[
-            'model' => $model,
-            'rap' => $rap]);
-    }
-
-    public function actionDeletePhong($id)
-    {
-        $phong = Phongchieu::findOne($id);
-        $idRap = $phong->idrap;
-        if ($phong->delete()) {
+        $model->sodo = json_encode($arr,JSON_UNESCAPED_UNICODE);
+        if ($model->save()) {
             $session = Yii::$app->session;
             $session->addFlash('flashMessage');
-            $session->setFlash('flashMessage', 'Đã xóa "'.$phong->name.'" thành công !');
+            $session->setFlash('flashMessage', 'Cập nhật thành công !');
+            return $this->redirect(['view-phong',  'id' => $model->id]);
         }
-        return $this->redirect(['view','id' => $idRap]);
     }
+    return $this->render('view-phong',[
+        'model' => $model,
+        'rap' => $rap]);
+}
+
+public function actionDeletePhong($id)
+{
+    $phong = Phongchieu::findOne($id);
+    $idRap = $phong->idrap;
+    if ($phong->delete()) {
+        $session = Yii::$app->session;
+        $session->addFlash('flashMessage');
+        $session->setFlash('flashMessage', 'Đã xóa "'.$phong->name.'" thành công !');
+    }
+    return $this->redirect(['view','id' => $idRap]);
+}
     /**
      * Creates a new Rap model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -285,4 +292,58 @@ class RapController extends Controller
         }
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    protected function checkGetRooms($idRap,$ngayChieu,$gioChieu)
+    {
+        //$ngayChieu = '13-09-2018';
+       // $gioChieu = '23:10'.':00';
+        $arr = [];
+        $date = new \DateTime(date('Y-m-d',strtotime($ngayChieu)).$gioChieu);
+        $date->modify('-180 minutes');
+        $before = date('H:i:s',strtotime($date->format('H:i')));
+
+        $date->modify('+360 minutes');
+        $after = date('H:i:s',strtotime($date->format('H:i')));
+
+        $checkHours = (new Query())->select('phongchieu.id,name')->from('lichchieu')
+        ->leftJoin('phongchieu', 'phongchieu.id = lichchieu.idphong')
+        ->where(['or',['<', 'lichchieu.ngaychieu', date('Y-m-d',strtotime($ngayChieu))],['>=', 'lichchieu.ngaychieu', date('Y-m-d',strtotime($ngayChieu))]])
+        ->andWhere(['or',
+           ['<=','lichchieu.giochieu', $before],
+           ['>=','lichchieu.giochieu', $after]
+       ])->all();
+
+        $check = (new Query())->select('phongchieu.id,name')->from('lichchieu')
+        ->leftJoin('phongchieu', 'phongchieu.id = lichchieu.idphong')
+        ->where(['or', ['<', 'lichchieu.ngaychieu', date('Y-m-d',strtotime($ngayChieu))],['>', 'lichchieu.ngaychieu', date('Y-m-d',strtotime($ngayChieu))]])
+        ->all();
+        if (!empty($checkHours)) {
+            foreach ($checkHours as $key) {
+                array_push($arr, $key);
+            }
+        }
+
+        if (!empty($check)) {
+            foreach ($check as $key) {
+                array_push($arr, $key);
+            }
+        }
+        $arr = $this->unique_multidim_array($arr,'id');
+        sort($arr);
+        return $arr;   
+    }
+
+    protected function unique_multidim_array($array, $key) { 
+        $temp_array = array(); 
+        $i = 0; 
+        $key_array = array(); 
+        foreach($array as $val) { 
+            if (!in_array($val[$key], $key_array)) { 
+                $key_array[$i] = $val[$key]; 
+                $temp_array[$i] = $val; 
+            } 
+            $i++; 
+        } 
+        return $temp_array; 
+    } 
 }

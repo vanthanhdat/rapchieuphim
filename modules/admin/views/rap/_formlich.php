@@ -22,7 +22,7 @@ $this->registerJs(
 			$.pjax.reload({container:"#lich-chieu"});
 			});
 		$("#objlichchieu-ngaychieu").change(function(){
-		$.get("get-phong",{idRap:'.$idRap.',ngayChieu: $("#objlichchieu-ngaychieu").val(),gioChieu:$("#objlichchieu-giochieu").val()},function(data){
+		$.post("get-phong",{idRap:'.$idRap.',ngayChieu: $("#objlichchieu-ngaychieu").val(),gioChieu:$("#objlichchieu-giochieu").val()},function(data){
 			var data = $.parseJSON(data);
 			$("#objlichchieu-phong").empty();
 			var options = "<option value>-Chọn phòng-</option>";

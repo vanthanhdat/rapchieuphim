@@ -30,6 +30,7 @@ class ObjLichChieu extends Model
     {
         return [        
             [['ngayChieu', 'gioChieu','gia','phim','phong'],'required','message'=>'{attribute} không được để trống !'],
+             ['phim', 'unique','targetClass' => Lichchieu::className() ,'message' => 'Lịch chiếu bạn muốn thêm đã tồn tại,vui lòng kiểm tra lại!','targetAttribute'=> ['idphim', 'ngaychieu','giochieu'],]
         ];
     }
 
