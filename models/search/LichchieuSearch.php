@@ -26,7 +26,7 @@ class LichchieuSearch extends Lichchieu
 
     public function search($id,$params)
     {
-    	$query = Lichchieu::find()->where(['>','ngaychieu',date("Y-m-d")])->orderBy(['ngaychieu' => SORT_DESC]);
+    	$query = Lichchieu::find()->where(['>=','ngaychieu',date("Y-m-d")])->orderBy(['ngaychieu' => SORT_ASC]);
     	$query->joinWith('phong')->andWhere(['idrap' => $id]);
     	$query->joinWith('phim');
     	$pagination = new Pagination([
@@ -45,11 +45,20 @@ class LichchieuSearch extends Lichchieu
     	if (!$this->validate()) {
     		return $dataProvider;
     	}
-    	//var_dump($this->idphim);
-    	//var_dump($this->idphong);exit;
     	$query->andFilterWhere(['like', 'phim.attributes',$this->idphim]);
     	$query->andFilterWhere(['like', 'phongchieu.name', $this->idphong]);
-    	return $dataProvider;
-    }
+        if ($this->ngaychieu) {
+            $day = '';
+            foreach ($this::DAYS_OF_WEEK as $key => $value) {
+                if (strpos(strtolower($value), strtolower($this->ngaychieu))) {
+                  $day =  $key;
+              }
+          }
+          $query->andFilterWhere(['like', 'ngaychieu', date("Y-m-d",strtotime($day))]);
+          $query->orFilterWhere(['like', 'ngaychieu', date("Y-m-d",strtotime($this->ngaychieu))]);
+      }
+      $query->andFilterWhere(['like', 'giochieu',$this->giochieu]);
+      return $dataProvider;
+  }
 }
 ?>

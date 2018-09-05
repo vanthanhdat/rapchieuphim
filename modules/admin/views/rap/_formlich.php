@@ -15,11 +15,24 @@ foreach ($dsPhim as $key) {
 ?>
 
 <?php
+$idRap = $rap->id;
 $this->registerJs(
 	'$("document").ready(function(){ 
 		$("#create-lich").on("pjax:end", function() {
 			$.pjax.reload({container:"#lich-chieu"});
 			});
+		$("#objlichchieu-ngaychieu").change(function(){
+		$.get("get-phong",{idRap:'.$idRap.',ngayChieu: $("#objlichchieu-ngaychieu").val(),gioChieu:$("#objlichchieu-giochieu").val()},function(data){
+			var data = $.parseJSON(data);
+			$("#objlichchieu-phong").empty();
+			var options = "<option value>-Chọn phòng-</option>";
+			for(i = 0; i < data.length;i++){
+				options += "<option value ="+data[i].id+">"+data[i].name+"</option>";
+			}
+			$("#objlichchieu-phong").append(options);
+			})});
+		
+		$("#objlichchieu-giochieu").change(function(){$("#objlichchieu-ngaychieu").trigger("change");});
 		});'
 	);
 	?>
@@ -52,10 +65,10 @@ $this->registerJs(
 					],
 				]) ?>
 
-				<?= $form->field($model, 'phong')->dropDownList(Arrayhelper::map($dsPhong,'id','name'),['prompt' => '-Chọn phòng-']) ?>
+				<?= $form->field($model, 'phong')->dropDownList(Arrayhelper::map([],'id','name'),['prompt' => '-Chọn phòng-']) ?>
 				<div class="form-group">
 					<br>
-					<?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+					<?= Html::submitButton('add', ['class' => 'btn btn-success']) ?>
 				</div>
 				<?php ActiveForm::end(); ?>
 				<?php Pjax::end(); ?>

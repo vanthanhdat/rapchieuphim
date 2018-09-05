@@ -27,6 +27,15 @@ class Lichchieu extends ActiveRecord
     /**
      * {@inheritdoc}
      */
+    const DAYS_OF_WEEK = [
+        'Monday' => 'Thứ hai',
+        'Tuesday' => 'Thứ ba',
+        'Wednesday' => 'Thứ tư',
+        'Thursday' => 'Thứ năm',
+        'Friday' => 'Thứ sáu',
+        'Saturday' => 'Thứ bảy',
+        'Sunday' => 'Chủ nhật'
+    ];
     public static function tableName()
     {
         return 'lichchieu';

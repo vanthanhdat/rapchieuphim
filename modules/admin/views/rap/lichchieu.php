@@ -18,14 +18,14 @@ $this->params['breadcrumbs'][] = 'Lịch chiếu';
 	</p>-->
 	<?= $this->render('_formlich', [
 		'model' => $model,
-		'dsPhong' => $dsPhong,
+		'rap' => $rap,
 		'dsPhim' => $dsPhim
 	]) ?>
 
 	<?php Pjax::begin(['id' => 'lich-chieu'])  ?>
 	<?= GridView::widget([
 		'dataProvider' => $dataProvider,
-		'filterModel' =>$searchModel, 
+		'filterModel' =>$searchModel,
 		'columns' => [
 			['class' => 'yii\grid\SerialColumn','header'=>"Số thứ tự"],
 			'id',
@@ -42,12 +42,24 @@ $this->params['breadcrumbs'][] = 'Lịch chiếu';
 				'attribute' => 'idphong',
 				'value' => 'phong.name'
 			],
-			'ngaychieu',
-			'giochieu',
+			[
+				'attribute' => 'ngaychieu',
+				'value' => function ($model)
+				{
+					return $model::DAYS_OF_WEEK[date("l",strtotime($model->ngaychieu))].' '. date("d-m-Y",strtotime($model->ngaychieu));
+				}
+			],
+			[
+				'attribute' => 'giochieu',
+				'value' => function ($model)
+				{
+					return date("H:i", strtotime($model->giochieu));
+				}
+			],
 			'gia',
 			'selected_seat',
-			['class' => 'yii\grid\ActionColumn','header'=>"Hành động"],
-		],       
+			//['class' => 'yii\grid\ActionColumn','header'=>"Hành động"],
+		],'tableOptions' => ['class' => 'table table-bordered table-hover table-striped'], 
 	]); ?>
 	<?php Pjax::end() ?>
 </div>

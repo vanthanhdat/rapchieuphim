@@ -3,6 +3,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 use yii\bootstrap\ActiveForm;
+use yii\widgets\Pjax;
 $this->title = 'Danh sách các tỉnh thành'; 
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -14,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Add', ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('Demo download'.' '.'<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>', ['download'], ['class' => 'btn btn-primary']) ?>
     </p>
+    <?php Pjax::begin()  ?>
     <?php echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' =>$searchModel, 
@@ -24,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ['class' => 'yii\grid\ActionColumn','header'=>"Hành động"],
     ],       
     ]); ?>
+    <?php Pjax::end()  ?>
 </div>
 
 

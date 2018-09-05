@@ -58,10 +58,13 @@ class ObjLichChieu extends Model
             return false;
         }
         else{
-         if (strtotime($this->gioChieu) >= strtotime($times[0]) && strtotime($this->gioChieu) <= strtotime($times[1])) {
-            return true;
-         }
-         else{
+           if (strtotime($this->gioChieu) >= strtotime($times[0]) && strtotime($this->gioChieu) <= strtotime($times[1])) {
+               $session = Yii::$app->session;
+               $session->addFlash('flashMessage');
+               $session->setFlash('flashMessage', 'Ok');
+               return true;
+           }
+           else{
             $session = Yii::$app->session;
             $session->addFlash('errorMessage');
             $session->setFlash('errorMessage', 'Giờ chiếu phải nằm trong khoảng từ '.$times[0].' đến '.$times[1].', vui lòng kiểm tra lại !');

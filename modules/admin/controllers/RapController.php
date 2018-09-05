@@ -147,7 +147,6 @@ class RapController extends Controller
             else{
                 return $this->redirect(['lich-chieu','id' => $id]);
             }
-
         }
         return $this->render('lichchieu', [
             'searchModel' => $searchModel,
@@ -158,10 +157,10 @@ class RapController extends Controller
         ]);
     }
 
-    public function actionGetPhong($ngayChieu,$gioChieu)
+    public function actionGetPhong($idRap,$ngayChieu,$gioChieu)
     {
         $query = new Query();
-        echo Json::encode(['id' => 1,'name' => 'abc']);
+        echo Json::encode([['id' => 1,'name' => $idRap],['id' => 2,'name' => $idRap]]);
     }
 
     public function actionViewPhong($id)
