@@ -295,8 +295,8 @@ public function actionDeletePhong($id)
 
     protected function checkGetRooms($idRap,$ngayChieu,$gioChieu)
     {
-        //$ngayChieu = '13-09-2018';
-       // $gioChieu = '23:10'.':00';
+       // $ngayChieu = '14-09-2018';
+        //$gioChieu = '14:30'.':00';
         $arr = [];
         $date = new \DateTime(date('Y-m-d',strtotime($ngayChieu)).$gioChieu);
         $date->modify('-180 minutes');
@@ -307,43 +307,26 @@ public function actionDeletePhong($id)
 
         $checkHours = (new Query())->select('phongchieu.id,name')->from('lichchieu')
         ->leftJoin('phongchieu', 'phongchieu.id = lichchieu.idphong')
-        ->where(['or',['<', 'lichchieu.ngaychieu', date('Y-m-d',strtotime($ngayChieu))],['>=', 'lichchieu.ngaychieu', date('Y-m-d',strtotime($ngayChieu))]])
-        ->andWhere(['or',
-           ['<=','lichchieu.giochieu', $before],
-           ['>=','lichchieu.giochieu', $after]
+        ->where(['>=', 'lichchieu.ngaychieu', date('Y-m-d',strtotime($ngayChieu))])
+        ->andWhere(['=', 'phongchieu.idrap', $idRap])
+        ->andWhere(['and',
+           ['>','lichchieu.giochieu', $before],
+           ['<','lichchieu.giochieu', $after]
        ])->all();
 
-        $check = (new Query())->select('phongchieu.id,name')->from('lichchieu')
-        ->leftJoin('phongchieu', 'phongchieu.id = lichchieu.idphong')
-        ->where(['or', ['<', 'lichchieu.ngaychieu', date('Y-m-d',strtotime($ngayChieu))],['>', 'lichchieu.ngaychieu', date('Y-m-d',strtotime($ngayChieu))]])
-        ->all();
-        if (!empty($checkHours)) {
-            foreach ($checkHours as $key) {
-                array_push($arr, $key);
-            }
-        }
+        $phongs = (new Query())->select('id,name')->from('phongchieu')->where(['idrap' => $idRap])->all();
 
-        if (!empty($check)) {
-            foreach ($check as $key) {
-                array_push($arr, $key);
+       // var_dump($phongs);
+
+        foreach ($phongs as $key => $value) {
+            foreach ($checkHours as $key1 => $value1) {
+                if ($value['id'] === $value1['id']) {
+                    unset($phongs[$key]);
+                }
             }
         }
-        $arr = $this->unique_multidim_array($arr,'id');
+        $arr = $phongs;
         sort($arr);
         return $arr;   
     }
-
-    protected function unique_multidim_array($array, $key) { 
-        $temp_array = array(); 
-        $i = 0; 
-        $key_array = array(); 
-        foreach($array as $val) { 
-            if (!in_array($val[$key], $key_array)) { 
-                $key_array[$i] = $val[$key]; 
-                $temp_array[$i] = $val; 
-            } 
-            $i++; 
-        } 
-        return $temp_array; 
-    } 
 }
