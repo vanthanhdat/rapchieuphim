@@ -142,7 +142,7 @@ class RapController extends Controller
         $searchModel = new LichchieuSearch();
         $dataProvider = $searchModel->search($id,Yii::$app->request->queryParams);
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->createLichChieu()) {
+            if ($model->createLichChieu($id)) {
              $model = new ObjLichChieu();
          }
          else{

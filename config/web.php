@@ -95,9 +95,9 @@ $config = [
         'db' => $container->get('db'),
 
         'urlManager' => [
-         'enablePrettyUrl' => true,
-         'showScriptName' => false,
-         'normalizer' =>[
+           'enablePrettyUrl' => true,
+           'showScriptName' => false,
+           'normalizer' =>[
             'class' => 'yii\web\UrlNormalizer',
             'collapseSlashes' => true,
 
@@ -143,8 +143,10 @@ $config = [
 ],
 'params' => [
     'thumbnail.size' => [128, 128],
-    'time_start_end' => ['9:00','23:00'],
-],
+    'time_start_end' => [
+        'start'=>'9:00',
+        'end' => '23:00'],
+    ],
 ];
 
 if (YII_ENV_DEV) {

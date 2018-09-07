@@ -19,7 +19,8 @@ $this->params['breadcrumbs'][] = 'Lịch chiếu';
 	<?= $this->render('_formlich', [
 		'model' => $model,
 		'rap' => $rap,
-		'dsPhim' => $dsPhim
+		'dsPhim' => $dsPhim,
+		'dsPhong' => $dsPhong,
 	]) ?>
 
 	<?php Pjax::begin(['id' => 'lich-chieu'])  ?>

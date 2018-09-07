@@ -53,6 +53,7 @@ class Lichchieu extends ActiveRecord
             [['selected_seat'], 'string'],
             [['idphim'], 'exist', 'skipOnError' => true, 'targetClass' => Phim::className(), 'targetAttribute' => ['idphim' => 'id']],
             [['idphong'], 'exist', 'skipOnError' => true, 'targetClass' => Phongchieu::className(), 'targetAttribute' => ['idphong' => 'id']],
+            ['idphim', 'unique','targetClass' => Lichchieu::className() ,'message' => 'Lịch chiếu bạn muốn thêm đã tồn tại,vui lòng kiểm tra lại!','targetAttribute'=> ['idphim', 'ngaychieu','giochieu'],]
             
         ];
     }

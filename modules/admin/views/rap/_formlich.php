@@ -19,7 +19,7 @@ $idRap = $rap->id;
 $this->registerJs(
 	'$("document").ready(function(){ 
 		$("#create-lich").on("pjax:end", function() {
-			$.pjax.reload({container:"#lich-chieu"});
+			$.pjax.reload({container:"#lich-chieu"});	
 			});
 		$("#objlichchieu-ngaychieu").change(function(){
 		$.post("get-phong",{idRap:'.$idRap.',ngayChieu: $("#objlichchieu-ngaychieu").val(),gioChieu:$("#objlichchieu-giochieu").val()},function(data){
@@ -31,8 +31,6 @@ $this->registerJs(
 			}
 			$("#objlichchieu-phong").append(options);
 			})});
-		
-		$("#objlichchieu-giochieu").change(function(){$("#objlichchieu-ngaychieu").trigger("change");});
 		});'
 	);
 	?>
@@ -63,9 +61,9 @@ $this->registerJs(
 						'showMeridian' => false,
 						'minuteStep' => 5,
 					],
+					'pluginEvents' => ['change' => "function(e) {  $('#objlichchieu-ngaychieu').trigger('change'); }"]
 				]) ?>
-
-				<?= $form->field($model, 'phong')->dropDownList(Arrayhelper::map([],'id','name'),['prompt' => '-Chọn phòng-']) ?>
+				<?= $form->field($model, 'phong')->dropDownList(Arrayhelper::map($dsPhong,'id','name'),['prompt' => '-Chọn phòng-']) ?>
 				<div class="form-group">
 					<br>
 					<?= Html::submitButton('add', ['class' => 'btn btn-success']) ?>
