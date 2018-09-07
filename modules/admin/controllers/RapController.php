@@ -307,7 +307,7 @@ public function actionDeletePhong($id)
 
         $checkHours = (new Query())->select('phongchieu.id,name')->from('lichchieu')
         ->leftJoin('phongchieu', 'phongchieu.id = lichchieu.idphong')
-        ->where(['>=', 'lichchieu.ngaychieu', date('Y-m-d',strtotime($ngayChieu))])
+        ->where(['=', 'lichchieu.ngaychieu', date('Y-m-d',strtotime($ngayChieu))])
         ->andWhere(['=', 'phongchieu.idrap', $idRap])
         ->andWhere(['and',
            ['>','lichchieu.giochieu', $before],
