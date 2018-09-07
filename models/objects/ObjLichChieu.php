@@ -58,49 +58,72 @@ class ObjLichChieu extends Model
             return false;
         }
         else{
-         if (strtotime($this->gioChieu) >= strtotime($times['start']) && strtotime($this->gioChieu) <= strtotime($times['end'])) {
-           $lich = new Lichchieu();
-           $lich->ngaychieu = date('Y-m-d',strtotime($this->ngayChieu));
-           $lich->giochieu = $this->gioChieu;
-           $rap = Rap::findOne($idRap);
-           $gia = json_decode($rap->giave);
-           $date = date('l',strtotime($this->ngayChieu));
-           $giaVe = [];
-           foreach ($gia as $key => $value) {
-            if (strpos($key, $date) !== false) {
-                $keyGia = explode('_',$key);
-                $giaVe[$keyGia[1]] = $value;
+           if (strtotime($this->gioChieu) >= strtotime($times['start']) && strtotime($this->gioChieu) <= strtotime($times['end'])) {
+             $lich = new Lichchieu();
+             $lich->ngaychieu = date('Y-m-d',strtotime($this->ngayChieu));
+             $lich->giochieu = $this->gioChieu;
+             $rap = Rap::findOne($idRap);
+             $gia = json_decode($rap->giave);
+             $date = date('l',strtotime($this->ngayChieu));
+             $giaVe = [];
+             foreach ($gia as $key => $value) {
+                if (strpos($key, $date) !== false) {
+                    $keyGia = explode('_',$key);
+                    $giaVe[$keyGia[1]] = $value;
+                }
             }
-        }
-        if ($this->gioChieu < '17:00') {
-            $lich->gia = $giaVe['before'];
-        }
-        else{
-            $lich->gia = $giaVe['after'];
-        }
-        $lich->idphim = $this->phim;
-        $lich->idphong = $this->phong;
-        $lich->selected_seat = '';
+            if ($this->gioChieu < '17:00') {
+                $lich->gia = $giaVe['before'];
+            }
+            else{
+                $lich->gia = $giaVe['after'];
+            }
+            $lich->idphim = $this->phim;
+            $lich->idphong = $this->phong;
+            $lich->selected_seat = '';
            // var_dump($this);
           //  var_dump($giaVe);
            // exit;
-        if ($lich->save()) {
-         return true;
-     }
-     $session = Yii::$app->session;
-     $session->addFlash('errorMessage');
-     $session->setFlash('errorMessage', 'Lịch chiếu này đã tồn tại!');
-     return false;
- }
- else{
-    $session = Yii::$app->session;
-    $session->addFlash('errorMessage');
-    $session->setFlash('errorMessage', 'Giờ chiếu phải nằm trong khoảng từ '.$times[0].' đến '.$times[1].', vui lòng kiểm tra lại !');
-    return false;
-}
+           if ($this->checkPhim($idRap,$this->ngayChieu,$this->gioChieu,$this->phim)) {
+               return $lich->save();
+           }
+           $session = Yii::$app->session;
+           $session->addFlash('errorMessage');
+           $session->setFlash('errorMessage', 'Lịch chiếu này đã tồn tại, trong khoảng thời gian gần đó, không thể thêm!');
+           return false;
+       }
+       else{
+        $session = Yii::$app->session;
+        $session->addFlash('errorMessage');
+        $session->setFlash('errorMessage', 'Giờ chiếu phải nằm trong khoảng từ '.$times[0].' đến '.$times[1].', vui lòng kiểm tra lại !');
+        return false;
+    }
 }
 return false;
 }
+
+public function checkPhim($idRap,$ngayChieu,$gioChieu,$idPhim)
+{
+    $date = new \DateTime(date('Y-m-d',strtotime($ngayChieu)).$gioChieu);
+    $date->modify('-180 minutes');
+    $before = date('H:i:s',strtotime($date->format('H:i')));
+
+    $date->modify('+360 minutes');
+    $after = date('H:i:s',strtotime($date->format('H:i')));
+    $check = (new Query())->select('phongchieu.id,name')->from('lichchieu')
+    ->leftJoin('phongchieu', 'phongchieu.id = lichchieu.idphong')
+    ->where(['=', 'lichchieu.ngaychieu', date('Y-m-d',strtotime($ngayChieu))])
+    ->andWhere(['=', 'phongchieu.idrap', $idRap])
+    ->andWhere(['and',
+       ['>','lichchieu.giochieu', $before],
+       ['<','lichchieu.giochieu', $after]
+   ])->andWhere(['idphim' => $idPhim])->all();
+    if (empty($check)) {
+        return true;
+    }
+    return false;
+}
+
 }
 
 ?>

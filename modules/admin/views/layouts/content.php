@@ -29,7 +29,6 @@ use yii\bootstrap\Alert;
         ]);
     }
     ?>
-    <?php  ?>
     <?= $content ?>
 </section>
 </div>
