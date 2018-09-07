@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\db\Query;
 use yii\data\Pagination;
 use app\models\Phim;
+use app\models\Rap;
 /**
  * summary
  */
@@ -30,7 +31,6 @@ class ObjLichChieu extends Model
     {
         return [        
             [['ngayChieu', 'gioChieu','gia','phim','phong'],'required','message'=>'{attribute} không được để trống !'],
-             ['phim', 'unique','targetClass' => Lichchieu::className() ,'message' => 'Lịch chiếu bạn muốn thêm đã tồn tại,vui lòng kiểm tra lại!','targetAttribute'=> ['idphim', 'ngaychieu','giochieu'],]
         ];
     }
 
@@ -43,10 +43,9 @@ class ObjLichChieu extends Model
 
 
 
-    public function createLichChieu()
+    public function createLichChieu($idRap)
     {
 
-        $lich = new Lichchieu();
         $times = Yii::$app->params['time_start_end'];
         $phim = Phim::findOne($this->phim);
         $phimAttr = json_decode($phim->attributes);
@@ -59,20 +58,48 @@ class ObjLichChieu extends Model
             return false;
         }
         else{
-           if (strtotime($this->gioChieu) >= strtotime($times[0]) && strtotime($this->gioChieu) <= strtotime($times[1])) {
-               $session = Yii::$app->session;
-               $session->addFlash('flashMessage');
-               $session->setFlash('flashMessage', 'Ok');
-               return true;
-           }
-           else{
-            $session = Yii::$app->session;
-            $session->addFlash('errorMessage');
-            $session->setFlash('errorMessage', 'Giờ chiếu phải nằm trong khoảng từ '.$times[0].' đến '.$times[1].', vui lòng kiểm tra lại !');
-            return false;
+         if (strtotime($this->gioChieu) >= strtotime($times['start']) && strtotime($this->gioChieu) <= strtotime($times['end'])) {
+           $lich = new Lichchieu();
+           $lich->ngaychieu = date('Y-m-d',strtotime($this->ngayChieu));
+           $lich->giochieu = $this->gioChieu;
+           $rap = Rap::findOne($idRap);
+           $gia = json_decode($rap->giave);
+           $date = date('l',strtotime($this->ngayChieu));
+           $giaVe = [];
+           foreach ($gia as $key => $value) {
+            if (strpos($key, $date) !== false) {
+                $keyGia = explode('_',$key);
+                $giaVe[$keyGia[1]] = $value;
+            }
         }
-    }
+        if ($this->gioChieu < '17:00') {
+            $lich->gia = $giaVe['before'];
+        }
+        else{
+            $lich->gia = $giaVe['after'];
+        }
+        $lich->idphim = $this->phim;
+        $lich->idphong = $this->phong;
+        $lich->selected_seat = '';
+           // var_dump($this);
+          //  var_dump($giaVe);
+           // exit;
+        if ($lich->save()) {
+         return true;
+     }
+     $session = Yii::$app->session;
+     $session->addFlash('errorMessage');
+     $session->setFlash('errorMessage', 'Lịch chiếu này đã tồn tại!');
+     return false;
+ }
+ else{
+    $session = Yii::$app->session;
+    $session->addFlash('errorMessage');
+    $session->setFlash('errorMessage', 'Giờ chiếu phải nằm trong khoảng từ '.$times[0].' đến '.$times[1].', vui lòng kiểm tra lại !');
     return false;
+}
+}
+return false;
 }
 }
 
