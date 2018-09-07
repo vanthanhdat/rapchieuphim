@@ -44,20 +44,20 @@ class RapController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'ruleConfig' => [
-                 'class' => AccessRule::className(),
-             ],
-             'rules' => [
+                   'class' => AccessRule::className(),
+               ],
+               'rules' => [
                 [
                             // Allow full if user is admin
                     'actions' => ['index','create', 'update', 'delete','view','delete-phong','view-phong','create-phong','lich-chieu','create-lich','get-phong'],
                     'allow' => true,
                     'roles' => [
-                     User::ROLE_ADMIN
-                 ],
-             ],
-         ],   
-     ],
- ];
+                       User::ROLE_ADMIN
+                   ],
+               ],
+           ],   
+       ],
+   ];
 }
 
     /**
@@ -143,9 +143,9 @@ class RapController extends Controller
         $dataProvider = $searchModel->search($id,Yii::$app->request->queryParams);
         if ($model->load(Yii::$app->request->post())) {
             if ($model->createLichChieu($id)) {
-             $model = new ObjLichChieu();
-         }
-         else{
+               $model = new ObjLichChieu();
+           }
+           else{
             return $this->redirect(['lich-chieu','id' => $id]);
         }
     }
@@ -310,9 +310,9 @@ public function actionDeletePhong($id)
         ->where(['=', 'lichchieu.ngaychieu', date('Y-m-d',strtotime($ngayChieu))])
         ->andWhere(['=', 'phongchieu.idrap', $idRap])
         ->andWhere(['and',
-           ['>','lichchieu.giochieu', $before],
-           ['<','lichchieu.giochieu', $after]
-       ])->all();
+         ['>','lichchieu.giochieu', $before],
+         ['<','lichchieu.giochieu', $after]
+     ])->all();
 
         $phongs = (new Query())->select('id,name')->from('phongchieu')->where(['idrap' => $idRap])->all();
 
