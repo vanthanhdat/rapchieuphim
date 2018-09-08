@@ -33,6 +33,10 @@ foreach ($dsPhim as $key) {
 
 		<?= $form->field($model,'gioChieu')->widget(
 			TimePicker::className(),[
+				'options' => [
+					'readonly' => true,
+					'autocomplete' => 'off'
+				],
 				'addonOptions' => [
 					'asButton' => true,
 				],
@@ -41,14 +45,30 @@ foreach ($dsPhim as $key) {
 					'showMeridian' => false,
 					'minuteStep' => 5,
 				],
-				'pluginEvents' => ['change' => "function(e) {  $('#objlichchieu-ngaychieu').trigger('change'); }"]
-			]) ?>
-			<?= $form->field($model, 'phong')->dropDownList(Arrayhelper::map([],'id','name'),['prompt' => '-Chọn phòng-']) ?>
-			<div class="form-group">
-				<br>
-				<?= Html::submitButton('add', ['class' => 'btn btn-success']) ?>
+				'pluginEvents' => ['change' => "function(e) {  
+					$.ajax({
+						url: 'get-phong',
+						type: 'post',
+						data: {idRap: '".$rap->id."',ngayChieu: $('#objlichchieu-ngaychieu').val(),gioChieu: $('#objlichchieu-giochieu').val()},
+						dataType: 'json',
+						success: function(response){
+							//var data = $.parseJSON(response);
+							$('#objlichchieu-phong').empty();
+							var options = '<option value>-Chọn phòng-</option>';
+							for(i = 0; i < response.length;i++){
+								options += '<option value ='+response[i].id+'>'+response[i].name+'</option>';
+							}
+							$('#objlichchieu-phong').append(options);
+						}
+						});
+					}"]
+				]) ?>
+				<?= $form->field($model, 'phong')->dropDownList(Arrayhelper::map([],'id','name'),['prompt' => '-Chọn phòng-']) ?>
+				<div class="form-group">
+					<br>
+					<?= Html::submitButton('add', ['class' => 'btn btn-success']) ?>
+				</div>
+				<?php ActiveForm::end(); ?>
+				<?php Pjax::end(); ?>
 			</div>
-			<?php ActiveForm::end(); ?>
-			<?php Pjax::end(); ?>
 		</div>
-	</div>
