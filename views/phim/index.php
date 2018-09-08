@@ -3,11 +3,13 @@ use yii\helpers\Html;
 use yii\widgets\LinkPager;
 use yii\helpers\Url;
 use yii\bootstrap\Tabs;
+use yii\widgets\Pjax;
 ?>
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<?php
+			Pjax::begin();
 			$urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
 			$arrPhim = [];
 			foreach ($listPhim as $key) {
@@ -43,10 +45,11 @@ use yii\bootstrap\Tabs;
 			$tab[$slug]['content'] = '<div class="movies-group">'.implode(' ',$arrPhim).'</div>';
 			$tab[$slug]['active'] = true;
 			$tab[$slug]['options'] = ['class' => 'animated fadeInUp','data-animate' => 'fadeInUp'];
+			
 			echo Tabs::widget([
 				'items' => $tab,
 			]);
-			
+			Pjax::end();
 			?>
 		</div>
 	</div>
