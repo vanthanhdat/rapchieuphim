@@ -35,9 +35,14 @@ $this->params['breadcrumbs'][] = 'Lịch chiếu';
 					$.post("get-phong",{idRap:'.$idRap.',ngayChieu: $("#objlichchieu-ngaychieu").val(),gioChieu:$("#objlichchieu-giochieu").val()},function(data){
 						var data = $.parseJSON(data);
 						$("#objlichchieu-phong").empty();
-						var options = "<option value>-Chọn phòng-</option>";
-						for(i = 0; i < data.length;i++){
-							options += "<option value ="+data[i].id+">"+data[i].name+"</option>";
+						var options = "";
+						if(data.length > 0){
+							for(i = 0; i < data.length;i++){
+								options += "<option value ="+data[i].id+">"+data[i].name+"</option>";
+							}
+						}
+						else{
+							options = "<option value>-Hết phòng-</option>";
 						}
 						$("#objlichchieu-phong").append(options);
 						})});

@@ -52,11 +52,15 @@ foreach ($dsPhim as $key) {
 						data: {idRap: '".$rap->id."',ngayChieu: $('#objlichchieu-ngaychieu').val(),gioChieu: $('#objlichchieu-giochieu').val()},
 						dataType: 'json',
 						success: function(response){
-							//var data = $.parseJSON(response);
 							$('#objlichchieu-phong').empty();
-							var options = '<option value>-Chọn phòng-</option>';
-							for(i = 0; i < response.length;i++){
-								options += '<option value ='+response[i].id+'>'+response[i].name+'</option>';
+							var options = '';
+							if(response.length > 0){
+								for(i = 0; i < response.length;i++){
+									options += '<option value ='+response[i].id+'>'+response[i].name+'</option>';
+								}
+							}
+							else{
+								options = '<option value>-Hết phòng-</option>';
 							}
 							$('#objlichchieu-phong').append(options);
 						}
