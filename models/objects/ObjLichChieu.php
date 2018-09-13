@@ -23,6 +23,7 @@ class ObjLichChieu extends Model
     public $gia;
     public $phim;
     public $phong;
+    public $selected_seat;
     public $created_at;
     public $updated_at;
 
@@ -45,7 +46,6 @@ class ObjLichChieu extends Model
 
     public function createLichChieu($idRap)
     {
-
         $times = Yii::$app->params['time_start_end'];
         $phim = Phim::findOne($this->phim);
         $phimAttr = json_decode($phim->attributes);
@@ -101,6 +101,8 @@ class ObjLichChieu extends Model
 }
 return false;
 }
+
+
 
 public function checkPhim($idRap,$ngayChieu,$gioChieu,$idPhim)
 {

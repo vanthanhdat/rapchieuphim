@@ -31,10 +31,10 @@ $this->params['breadcrumbs'][] = 'Lịch chiếu';
 			$("#create-lich").on("pjax:end", function() {
 				$.pjax.reload({container:"#lich-chieu"});	
 				});
-				$("#objlichchieu-ngaychieu").change(function(){
-					$.post("get-phong",{idRap:'.$idRap.',ngayChieu: $("#objlichchieu-ngaychieu").val(),gioChieu:$("#objlichchieu-giochieu").val()},function(data){
+				$("#lichchieu-ngaychieu").change(function(){
+					$.post("get-phong",{idRap:'.$idRap.',ngayChieu: $("#lichchieu-ngaychieu").val(),gioChieu:$("#lichchieu-giochieu").val()},function(data){
 						var data = $.parseJSON(data);
-						$("#objlichchieu-phong").empty();
+						$("#lichchieu-idphong").empty();
 						var options = "";
 						if(data.length > 0){
 							for(i = 0; i < data.length;i++){
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = 'Lịch chiếu';
 						else{
 							options = "<option value>-Hết phòng-</option>";
 						}
-						$("#objlichchieu-phong").append(options);
+						$("#lichchieu-idphong").append(options);
 						})});
 					});'
 				);
