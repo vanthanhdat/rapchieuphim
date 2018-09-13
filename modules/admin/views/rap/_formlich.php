@@ -18,9 +18,9 @@ foreach ($dsPhim as $key) {
 	<div class="col-md-12">
 		<?php Pjax::begin(['id' => 'create-lich']);  ?>
 		<?php $form = ActiveForm::begin(['layout' => 'inline','options' => ['data-pjax' => true]]); ?>
-		<?= $form->field($model, 'phim')->dropDownList(Arrayhelper::map($listPhim,'id','title','status'),['prompt' => '-Chọn phim-']) ?>
+		<?= $form->field($model, 'idphim')->dropDownList(Arrayhelper::map($listPhim,'id','title','status'),['prompt' => '-Chọn phim-']) ?>
 
-		<?= $form->field($model, 'ngayChieu')->widget(
+		<?= $form->field($model, 'ngaychieu')->widget(
 			DatePicker::className(), [
 				'options' => ['autocomplete' => 'off',],		    		   			    			    		      	
 				'clientOptions' => [
@@ -31,7 +31,7 @@ foreach ($dsPhim as $key) {
 				]
 			]);?>
 
-		<?= $form->field($model,'gioChieu')->widget(
+		<?= $form->field($model,'giochieu')->widget(
 			TimePicker::className(),[
 				'options' => [
 					'readonly' => true,
@@ -49,10 +49,10 @@ foreach ($dsPhim as $key) {
 					$.ajax({
 						url: 'get-phong',
 						type: 'post',
-						data: {idRap: '".$rap->id."',ngayChieu: $('#objlichchieu-ngaychieu').val(),gioChieu: $('#objlichchieu-giochieu').val()},
+						data: {idRap: '".$rap->id."',ngayChieu: $('#lichchieu-ngaychieu').val(),gioChieu: $('#lichchieu-giochieu').val()},
 						dataType: 'json',
 						success: function(response){
-							$('#objlichchieu-phong').empty();
+							$('#lichchieu-idphong').empty();
 							var options = '';
 							if(response.length > 0){
 								for(i = 0; i < response.length;i++){
@@ -62,16 +62,18 @@ foreach ($dsPhim as $key) {
 							else{
 								options = '<option value>-Hết phòng-</option>';
 							}
-							$('#objlichchieu-phong').append(options);
+							$('#lichchieu-idphong').append(options);
 						}
 						});
 					}"]
 				]) ?>
-				<?= $form->field($model, 'phong')->dropDownList(Arrayhelper::map([],'id','name'),['prompt' => '-Chọn phòng-']) ?>
+				<?= $form->field($model, 'idphong')->dropDownList(Arrayhelper::map([],'id','name'),['prompt' => '-Chọn phòng-']) ?>
+				
 				<div class="form-group">
 					<br>
-					<?= Html::submitButton('add', ['class' => 'btn btn-success']) ?>
+					<?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Add') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 				</div>
+
 				<?php ActiveForm::end(); ?>
 				<?php Pjax::end(); ?>
 			</div>

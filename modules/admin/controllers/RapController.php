@@ -137,13 +137,13 @@ class RapController extends Controller
     public function actionLichChieu($id)
     {
         $dsPhong = Phongchieu::find()->where(['idrap' => $id])->all();
-        $model = new ObjLichChieu();
+        $model = new Lichchieu();
         $dsPhim = Phim::find()->where(['>=','status',1])->orderBy(['status' => SORT_DESC])->all();
         $searchModel = new LichchieuSearch();
         $dataProvider = $searchModel->search($id,Yii::$app->request->queryParams);
         if ($model->load(Yii::$app->request->post())) {
             if ($model->createLichChieu($id)) {
-               $model = new ObjLichChieu();
+               $model = new Lichchieu();
            }
            else{
             return $this->redirect(['lich-chieu','id' => $id]);

@@ -5,6 +5,9 @@ namespace app\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Query;
+use app\models\Phim;
+use app\models\Rap;
 /**
  * This is the model class for table "lichchieu".
  *
@@ -47,7 +50,7 @@ class Lichchieu extends ActiveRecord
     public function rules()
     {
         return [
-            [['ngaychieu', 'giochieu', 'idphim', 'idphong'], 'required'],
+            [['ngaychieu', 'giochieu', 'idphim', 'idphong'], 'required','message'=>'{attribute} không được để trống !'],
             [['ngaychieu', 'giochieu'], 'safe'],
             [['gia', 'idphim', 'idphong', 'created_at', 'updated_at'], 'integer'],
             [['selected_seat'], 'string'],
@@ -114,8 +117,84 @@ class Lichchieu extends ActiveRecord
         return $this->hasMany(Ve::className(), ['id_lichchieu' => 'id']);
     }
 
-    /**
-     * {@inheritdoc}
-     * @return LichchieuQuery the active query used by this AR class.
-     */
+    public function createLichChieu($idRap)
+    {
+        $times = Yii::$app->params['time_start_end'];
+        $phim = Phim::findOne($this->idphim);
+        $phimAttr = json_decode($phim->attributes);
+        $start = $phimAttr->start;
+        $check = Lichchieu::find()->Where(['idphim' => $this->idphim])->all();
+        if (empty($check) && date("Y-m-d", strtotime($start)) !== date("Y-m-d", strtotime($this->ngaychieu))) {
+            $session = Yii::$app->session;
+            $session->addFlash('errorMessage');
+            $session->setFlash('errorMessage', 'Bộ phim "'.$phimAttr->title.'" chưa có lịch chiếu, vui lòng chọn ngày chiếu khóp với ngày bắt đầu !');
+            return false;
+        }
+        else{
+           if (strtotime($this->giochieu) >= strtotime($times['start']) && strtotime($this->giochieu) <= strtotime($times['end'])) {
+             $lich = new Lichchieu();
+             $lich->ngaychieu = date('Y-m-d',strtotime($this->ngaychieu));
+             $lich->giochieu = $this->giochieu;
+             $rap = Rap::findOne($idRap);
+             $gia = json_decode($rap->giave);
+             $date = date('l',strtotime($this->ngaychieu));
+             $giaVe = [];
+             foreach ($gia as $key => $value) {
+                if (strpos($key, $date) !== false) {
+                    $keyGia = explode('_',$key);
+                    $giaVe[$keyGia[1]] = $value;
+                }
+            }
+            if ($this->giochieu < '17:00') {
+                $lich->gia = $giaVe['before'];
+            }
+            else{
+                $lich->gia = $giaVe['after'];
+            }
+            $lich->idphim = $this->idphim;
+            $lich->idphong = $this->idphong;
+            $lich->selected_seat = '';
+           // var_dump($this);
+          //  var_dump($giaVe);
+           // exit;
+           if ($this->checkPhim($idRap,$this->ngaychieu,$this->giochieu,$this->idphim)) {
+               return $lich->save();
+           }
+           $session = Yii::$app->session;
+           $session->addFlash('errorMessage');
+           $session->setFlash('errorMessage', 'Lịch chiếu này đã tồn tại, trong khoảng thời gian gần đó, không thể thêm!');
+           return false;
+       }
+       else{
+        $session = Yii::$app->session;
+        $session->addFlash('errorMessage');
+        $session->setFlash('errorMessage', 'Giờ chiếu phải nằm trong khoảng từ '.$times['start'].' đến '.$times['end'].', vui lòng kiểm tra lại !');
+        return false;
+    }
+}
+return false;
+}
+
+public function checkPhim($idRap,$ngayChieu,$gioChieu,$idPhim)
+{
+    $date = new \DateTime(date('Y-m-d',strtotime($ngayChieu)).$gioChieu);
+    $date->modify('-180 minutes');
+    $before = date('H:i:s',strtotime($date->format('H:i')));
+
+    $date->modify('+360 minutes');
+    $after = date('H:i:s',strtotime($date->format('H:i')));
+    $check = (new Query())->select('phongchieu.id,name')->from('lichchieu')
+    ->leftJoin('phongchieu', 'phongchieu.id = lichchieu.idphong')
+    ->where(['=', 'lichchieu.ngaychieu', date('Y-m-d',strtotime($ngayChieu))])
+    ->andWhere(['=', 'phongchieu.idrap', $idRap])
+    ->andWhere(['and',
+       ['>','lichchieu.giochieu', $before],
+       ['<','lichchieu.giochieu', $after]
+   ])->andWhere(['idphim' => $idPhim])->all();
+    if (empty($check)) {
+        return true;
+    }
+    return false;
+}
+
 }
