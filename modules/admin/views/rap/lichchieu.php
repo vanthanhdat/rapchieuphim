@@ -82,9 +82,18 @@ $this->params['breadcrumbs'][] = 'Lịch chiếu';
 								return date("H:i", strtotime($model->giochieu));
 							}
 						],
+						[
+							'header'=>"Các ghế đã được chọn",
+				            'class' => 'yii\grid\ActionColumn',
+				            'template' => '{selected-seat}',  
+				            'buttons' => [
+				                'selected-seat' => function($url, $model, $key) {   
+				                    return Html::a($model->phong->name, [$url], ['class' => 'btn btn-primary']);
+				                }
+				            ]
+				        ],
 						'gia',
-						'selected_seat',
-			//['class' => 'yii\grid\ActionColumn','header'=>"Hành động"],
+						['class' => 'yii\grid\ActionColumn','header'=>"Hành động"],
 					],'tableOptions' => ['class' => 'table table-bordered table-hover table-striped'], 
 				]); ?>
 				<?php Pjax::end() ?>
