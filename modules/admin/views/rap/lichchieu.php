@@ -2,6 +2,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 
 $rap = $dsPhong[0]->rap;
 $attributesRap = json_decode($rap->attributes);
@@ -27,7 +29,15 @@ $this->params['breadcrumbs'][] = 'Lịch chiếu';
 	<?php
 	$idRap = $rap->id;
 	$this->registerJs(
-		'$("document").ready(function(){ 
+		'
+		$(".view-selected-seats").click(function (){
+        $.get($(this).attr("href"), function(data) {
+        	//alert(data);
+          $("#modal").modal("show").find("#modalContent").html(data)
+       });
+       return false;
+    });
+		$("document").ready(function(){ 
 			$("#create-lich").on("pjax:end", function() {
 				$.pjax.reload({container:"#lich-chieu"});	
 				});
@@ -84,17 +94,29 @@ $this->params['breadcrumbs'][] = 'Lịch chiếu';
 						],
 						[
 							'header'=>"Các ghế đã được chọn",
-				            'class' => 'yii\grid\ActionColumn',
-				            'template' => '{selected-seat}',  
-				            'buttons' => [
-				                'selected-seat' => function($url, $model, $key) {   
-				                    return Html::a($model->phong->name, [$url], ['class' => 'btn btn-primary']);
-				                }
-				            ]
-				        ],
+							'class' => 'yii\grid\ActionColumn',
+							'template' => '{selected-seat}',  
+							'buttons' => [
+								'selected-seat' => function($url, $model, $key) {   
+									return Html::a($model->phong->name, [Url::current()], ['class' => 'btn btn-primary view-selected-seats']);
+								}
+							]
+						],
 						'gia',
 						['class' => 'yii\grid\ActionColumn','header'=>"Hành động"],
 					],'tableOptions' => ['class' => 'table table-bordered table-hover table-striped'], 
 				]); ?>
 				<?php Pjax::end() ?>
 			</div>
+			<?php 
+			Modal::begin([
+				'header' => 'test',
+				'id' => 'modal',
+			]);
+
+			echo '<div id="modalContent">
+			<p>Hello abc</p>
+			</div>';
+
+			Modal::end();
+			?>
