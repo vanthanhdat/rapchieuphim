@@ -19,7 +19,7 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
-        'css/jquery.seat-charts.css',
+        //'css/jquery.seat-charts.css',
         'css/template/font-awesome.css',
         'css/template/animate.min.css',
         'css/template/style.default.css',
@@ -28,7 +28,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/template/respond.min.js',
         'js/main.js',
-        'js/jquery.seat-charts.js',
+        //'js/jquery.seat-charts.js',
         'js/bootstrap-dropdownhover.js',
     ];
     public $depends = [

@@ -1,10 +1,6 @@
 <?php
 $params = require __DIR__ . '/params.php';
 Yii::setAlias('@img', realpath(dirname(__FILE__).'/../web/uploads/image/'));
-
-$_sodo = [];
-$_bookedSeats = [];
-$_tickets = 0;
 $_holidays = ['01/01','30/04','01/05','2/9','10/3'];
 $_rules = [
     'number_of_rooms_in_a_theater' => 5,
@@ -95,9 +91,9 @@ $config = [
         'db' => $container->get('db'),
 
         'urlManager' => [
-           'enablePrettyUrl' => true,
-           'showScriptName' => false,
-           'normalizer' =>[
+         'enablePrettyUrl' => true,
+         'showScriptName' => false,
+         'normalizer' =>[
             'class' => 'yii\web\UrlNormalizer',
             'collapseSlashes' => true,
 
