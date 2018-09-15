@@ -97,31 +97,31 @@ $this->registerJs('
 												}	
 												');
 												?>
-												<div class="container">
-													<p id="selected-seats">
-													</p>
-													<div id="seat-map" class="col-md-7">
-														<div class="front-indicator"><i class="fa fa-desktop fa-5x"></i></div>
-													</div>
-													<div class="col-md-5">
-														<?php $form = ActiveForm::begin(); ?>
+<div class="container">
+	<p id="selected-seats">
+	</p>
+	<div id="seat-map" class="col-md-7">
+		<div class="front-indicator"><i class="fa fa-desktop fa-5x"></i></div>
+	</div>
+	<div class="col-md-5">
+		<?php $form = ActiveForm::begin(); ?>
 
-														<?= $form->field($model, 'name') ?>
+		<?= $form->field($model, 'name') ?>
 
-														<div class="form-group" style="text-align: center;background-color: #3c8dbc;color: white;"><b>Screen</b></div><br>
+		<div class="form-group" style="text-align: center;background-color: #3c8dbc;color: white;"><b>Screen</b></div><br>
 
-														<?= $form->field($model,'sodo')->textArea(['rows' => 15,'value' => implode(','."\n", json_decode($model->sodo))]) ?>
+		<?= $form->field($model,'sodo')->textArea(['rows' => 15,'value' => implode(','."\n", json_decode($model->sodo))]) ?>
 
-														<div class="form-group">
-															<?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-														</div>
-														<?php ActiveForm::end(); ?>
-														<div class="row">
-															<b>Chú thích:</b>
-															<p><strong>_</strong> đại diện chỗ trống trong phòng.</p>
-															<p><strong>Các chữ cái</strong> đại diện các ghế</p>
-															<p><strong>Các hàng ghế</strong> được ngăn cách bằng dấu <strong>","</strong> .</p>
-														</div>
-													</div>
-												</div>
+		<div class="form-group">
+			<?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+		</div>
+		<?php ActiveForm::end(); ?>
+		<div class="row">
+			<b>Chú thích:</b>
+			<p><strong>_</strong> đại diện chỗ trống trong phòng.</p>
+			<p><strong>Các chữ cái</strong> đại diện các ghế</p>
+			<p><strong>Các hàng ghế</strong> được ngăn cách bằng dấu <strong>","</strong> .</p>
+		</div>
+	</div>
+</div>
 
