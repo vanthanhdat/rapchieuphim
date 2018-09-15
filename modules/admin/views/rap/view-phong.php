@@ -97,6 +97,7 @@ $this->registerJs('
 												}	
 												');
 												?>
+
 <div class="container">
 	<p id="selected-seats">
 	</p>
