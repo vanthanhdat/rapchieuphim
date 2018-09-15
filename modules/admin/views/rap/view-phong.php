@@ -125,4 +125,3 @@ $this->registerJs('
 		</div>
 	</div>
 </div>
-
