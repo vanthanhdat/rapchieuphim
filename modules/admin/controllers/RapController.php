@@ -10,7 +10,6 @@ use app\models\City;
 use app\models\Phim;
 use app\models\objects\ObjRap;
 use app\models\objects\ObjGia;
-use app\models\objects\ObjLichChieu;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -49,7 +48,7 @@ class RapController extends Controller
                'rules' => [
                 [
                             // Allow full if user is admin
-                    'actions' => ['index','create', 'update', 'delete','view','delete-phong','view-phong','create-phong','lich-chieu','create-lich','get-phong'],
+                    'actions' => ['index','create', 'update', 'delete','view','delete-phong','view-phong','create-phong','lich-chieu','create-lich','get-phong','selected-seat'],
                     'allow' => true,
                     'roles' => [
                        User::ROLE_ADMIN
@@ -274,6 +273,13 @@ public function actionDeletePhong($id)
         }
         return $this->redirect(['index']);
     }
+
+    public function actionSelectedSeat($id)
+    {
+        $model = Lichchieu::findOne($id);
+        echo Json::encode(['sodo' => json_decode($model->phong->sodo),'selected_seats' => json_decode($model->selected_seat,JSON_UNESCAPED_UNICODE)]);
+    }
+
     protected function findModel($id)
     {
         if (($model = Rap::findOne($id)) !== null) {

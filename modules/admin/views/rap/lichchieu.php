@@ -29,94 +29,128 @@ $this->params['breadcrumbs'][] = 'Lịch chiếu';
 	<?php
 	$idRap = $rap->id;
 	$this->registerJs(
-		'
-		$(".view-selected-seats").click(function (){
-        $.get($(this).attr("href"), function(data) {
-        	//alert(data);
-          $("#modal").modal("show").find("#modalContent").html(data)
-       });
-       return false;
-    });
-		$("document").ready(function(){ 
-			$("#create-lich").on("pjax:end", function() {
-				$.pjax.reload({container:"#lich-chieu"});	
-				});
-				$("#lichchieu-ngaychieu").change(function(){
-					$.post("get-phong",{idRap:'.$idRap.',ngayChieu: $("#lichchieu-ngaychieu").val(),gioChieu:$("#lichchieu-giochieu").val()},function(data){
-						var data = $.parseJSON(data);
-						$("#lichchieu-idphong").empty();
-						var options = "";
-						if(data.length > 0){
-							for(i = 0; i < data.length;i++){
-								options += "<option value ="+data[i].id+">"+data[i].name+"</option>";
-							}
-						}
-						else{
-							options = "<option value>-Hết phòng-</option>";
-						}
-						$("#lichchieu-idphong").append(options);
-						})});
-					});'
-				);
-				?>
-				<?= GridView::widget([
-					'dataProvider' => $dataProvider,
-					'filterModel' =>$searchModel,
-					'columns' => [
-						['class' => 'yii\grid\SerialColumn','header'=>"Số thứ tự"],
-						'id',
-						[	
-							'attribute' => 'idphim',
-							'value' =>  function ($model)
-							{
-								$phim = $model->phim;
-								$attributes = json_decode($phim->attributes);
-								return $attributes->title;
-							}
-						],
-						[
-							'attribute' => 'idphong',
-							'value' => 'phong.name'
-						],
-						[
-							'attribute' => 'ngaychieu',
-							'value' => function ($model)
-							{
-								return $model::DAYS_OF_WEEK[date("l",strtotime($model->ngaychieu))].' '. date("d-m-Y",strtotime($model->ngaychieu));
-							}
-						],
-						[
-							'attribute' => 'giochieu',
-							'value' => function ($model)
-							{
-								return date("H:i", strtotime($model->giochieu));
-							}
-						],
-						[
-							'header'=>"Các ghế đã được chọn",
-							'class' => 'yii\grid\ActionColumn',
-							'template' => '{selected-seat}',  
-							'buttons' => [
-								'selected-seat' => function($url, $model, $key) {   
-									return Html::a($model->phong->name, [Url::current()], ['class' => 'btn btn-primary view-selected-seats']);
+		'$(".view-selected-seats").click(function (){
+			$("#modal-selected-seat").on("hidden.bs.modal", function(){ 
+					$(".seatCharts-row").remove();
+					$(".seatCharts-legendList").remove();
+					$("#seat-map").removeData("seatCharts");
+									}); 
+			$.get($(this).attr("href"), function(data) {
+				var obj = JSON.parse(data);
+				var firstSeatLabel = 1;
+				var unavailable_seats = obj.selected_seats;	
+				var arr = obj.sodo;
+				sc = $("#seat-map").seatCharts({
+					map: arr,
+					naming : {
+						top : false,
+						getLabel : function (character, row, column) {
+							return firstSeatLabel++;
+							},
+							},
+							legend : {
+								node : $("#legend"),
+								items : [
+								["a", "available",   "Còn trống"],
+								["a", "unavailable", "Đã bán"],
+								]                   
+								},
+								click: function () {
+									if (this.status() == "unavailable") {                      
+											return "unavailable";
+										}
 								}
-							]
-						],
-						'gia',
-						['class' => 'yii\grid\ActionColumn','header'=>"Hành động"],
-					],'tableOptions' => ['class' => 'table table-bordered table-hover table-striped'], 
-				]); ?>
-				<?php Pjax::end() ?>
-			</div>
-			<?php 
-			Modal::begin([
-				'header' => 'test',
-				'id' => 'modal',
-			]);
+								});
+								sc.get(unavailable_seats).status("unavailable");
+								$("#modal-selected-seat").modal("show");			
+								});
+								return false;
+								});
+								
+								$("document").ready(function(){
+									$("#create-lich").on("pjax:end", function() {
+										$.pjax.reload({container:"#lich-chieu"});	
+										});
+										$("#lichchieu-ngaychieu").change(function(){
+											$.post("get-phong",{idRap:'.$idRap.',ngayChieu: $("#lichchieu-ngaychieu").val(),gioChieu:$("#lichchieu-giochieu").val()},function(data){
+												var data = $.parseJSON(data);
+												$("#lichchieu-idphong").empty();
+												var options = "";
+												if(data.length > 0){
+													for(i = 0; i < data.length;i++){
+														options += "<option value ="+data[i].id+">"+data[i].name+"</option>";
+													}
+												}
+												else{
+													options = "<option value>-Hết phòng-</option>";
+												}
+												$("#lichchieu-idphong").append(options);
+												})});
+											});'
+										);
+										?>
+										<?= GridView::widget([
+											'dataProvider' => $dataProvider,
+											'filterModel' =>$searchModel,
+											'columns' => [
+												['class' => 'yii\grid\SerialColumn','header'=>"Số thứ tự"],
+												'id',
+												[	
+													'attribute' => 'idphim',
+													'value' =>  function ($model)
+													{
+														$phim = $model->phim;
+														$attributes = json_decode($phim->attributes);
+														return $attributes->title;
+													}
+												],
+												[
+													'attribute' => 'idphong',
+													'value' => 'phong.name'
+												],
+												[
+													'attribute' => 'ngaychieu',
+													'value' => function ($model)
+													{
+														return $model::DAYS_OF_WEEK[date("l",strtotime($model->ngaychieu))].' '. date("d-m-Y",strtotime($model->ngaychieu));
+													}
+												],
+												[
+													'attribute' => 'giochieu',
+													'value' => function ($model)
+													{
+														return date("H:i", strtotime($model->giochieu));
+													}
+												],
+												[
+													'header'=>"Các ghế đã được đặt",
+													'class' => 'yii\grid\ActionColumn',
+													'template' => '{selected-seat}',  
+													'buttons' => [
+														'selected-seat' => function($url, $model, $key) {   
+															return Html::a($model->phong->name, ['selected-seat','id' => $key], ['class' => 'btn btn-primary view-selected-seats']);
+														}
+													]
+												],
+												'gia',
+												['class' => 'yii\grid\ActionColumn','header'=>"Hành động"],
+											],'tableOptions' => ['class' => 'table table-bordered table-hover table-striped'], 
+										]); ?>
+										<?php Pjax::end() ?>
+									</div>
+									<?php 
+									Modal::begin([
+										'header' => 'DANH SÁCH CÁC GHẾ ĐÃ ĐƯỢC CHỌN',
+										'id' => 'modal-selected-seat',
+									]);
 
-			echo '<div id="modalContent">
-			<p>Hello abc</p>
-			</div>';
-
-			Modal::end();
-			?>
+									echo '<div id="modalContent">
+									<div id="seat-map">
+									<div class="front-indicator" style = "margin-left:-137px;">
+									<i class="fa fa-desktop fa-5x"></i>
+									</div>
+									</div>
+									<p id="legend"></p>
+									</div>';
+									Modal::end();
+									?>

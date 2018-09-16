@@ -32,7 +32,7 @@ class AppAsset extends AssetBundle
         'js/bootstrap-dropdownhover.js',
     ];
     public $depends = [
-        //'yii\web\YiiAsset',
+        'yii\web\YiiAsset',
         'yii\web\JqueryAsset',
         'yii\bootstrap\BootstrapAsset',
     ];
