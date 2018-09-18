@@ -45,6 +45,9 @@ class LichchieuSearch extends Lichchieu
     	if (!$this->validate()) {
     		return $dataProvider;
     	}
+      if (array_key_exists('id',$params)) {
+         $query->andFilterWhere(['lichchieu.id' => $params['id']]);
+      }
     	$query->andFilterWhere(['like', 'phim.attributes',$this->idphim]);
     	$query->andFilterWhere(['like', 'phongchieu.name', $this->idphong]);
         if ($this->ngaychieu) {

@@ -162,7 +162,7 @@ class Lichchieu extends ActiveRecord
            }
            $session = Yii::$app->session;
            $session->addFlash('errorMessage');
-           $session->setFlash('errorMessage', 'Lịch chiếu này đã tồn tại, trong khoảng thời gian gần đó, không thể thêm!');
+           $session->setFlash('errorMessage', 'Lịch chiếu này đã tồn tại trong khoảng thời gian gần đó, không thể thêm!');
            return false;
        }
        else{

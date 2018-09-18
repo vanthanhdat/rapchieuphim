@@ -67,7 +67,8 @@ class CitySearch extends City
             return $dataProvider;
         }
         // grid filtering conditions
-        $query->andFilterWhere(['like', 'id', $this->id,
+        $query->andFilterWhere([
+            'id' => $this->id,
         ]);
         $query->andFilterWhere(['like', 'cityname', $this->cityname]);
         return $dataProvider;

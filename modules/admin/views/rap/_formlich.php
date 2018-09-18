@@ -13,19 +13,21 @@ foreach ($dsPhim as $key) {
 	array_push($listPhim, $arr);
 }
 ?>
-
 <div class="row">
 	<div class="col-md-12">
-		<?php Pjax::begin(['id' => 'create-lich']);  ?>
+		<?php Pjax::begin(['id' => 'details-lich']);  ?>
 		<?php $form = ActiveForm::begin(['layout' => 'inline','options' => ['data-pjax' => true]]); ?>
 		<?= $form->field($model, 'idphim')->dropDownList(Arrayhelper::map($listPhim,'id','title','status'),['prompt' => '-Chọn phim-']) ?>
 
 		<?= $form->field($model, 'ngaychieu')->widget(
 			DatePicker::className(), [
-				'options' => ['autocomplete' => 'off',],		    		   			    			    		      	
+				'options' => [
+					'autocomplete' => 'off',
+					'value' => $model->ngaychieu ? date("d-m-Y", strtotime($model->ngaychieu)):'',
+				],		    		   			    			    		      	
 				'clientOptions' => [
 					'autoclose' => true,
-					'format' => 'd-mm-yyyy',		  		         				
+					'format' => 'dd-mm-yyyy',		  		         				
 					'endDate' => '+14d',
 					'startDate' => '+7d',
 				]
@@ -67,8 +69,8 @@ foreach ($dsPhim as $key) {
 						});
 					}"]
 				]) ?>
-				<?= $form->field($model, 'idphong')->dropDownList(Arrayhelper::map([],'id','name'),['prompt' => '-Chọn phòng-']) ?>
-				
+				<?= $form->field($model, 'idphong')->dropDownList(Arrayhelper::map($dsPhong,'id','name'),['prompt' => '-Chọn phòng-']) ?>
+
 				<div class="form-group">
 					<br>
 					<?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

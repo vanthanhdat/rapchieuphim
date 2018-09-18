@@ -48,7 +48,7 @@ $urlImage = Yii::getAlias('@web/uploads/img');
         $contentSapChieu = '<div class="col-md-4 col-sm-4 col-xs-6 movie-item">
         <div class = "article-movie-home">
         <img class="item-home img-responsive" src="'.$urlImagePhim."/".$attributes->image.'">
-        <a href="/dat-ve/'.$value['id'].'">
+        <a href="/dat-ve/'.$value['slug'].'">
         <div class="overlay">
         <div class="movies-content">
         <div class="group">
@@ -69,7 +69,7 @@ $urlImage = Yii::getAlias('@web/uploads/img');
         $contentSapChieu = '<div class="col-md-4 col-sm-4 col-xs-6 movie-item">
         <div class = "article-movie-home">
         <img class="item-home img-responsive" src="'.$urlImagePhim."/".$attributes->image.'">
-        <a href="/dat-ve/'.$value['id'].'">
+        <a href="/dat-ve/'.$value['slug'].'">
         <div class="overlay">
         <div class="movies-content">
         <div class="group">
