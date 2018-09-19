@@ -43,20 +43,20 @@ class RapController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'ruleConfig' => [
-                 'class' => AccessRule::className(),
-             ],
-             'rules' => [
+                   'class' => AccessRule::className(),
+               ],
+               'rules' => [
                 [
                             // Allow full if user is admin
                     'actions' => ['index','create', 'update', 'delete','view','delete-phong','view-phong','create-phong','lich-chieu','create-lich','get-phong','selected-seat','details-lich'],
                     'allow' => true,
                     'roles' => [
-                     User::ROLE_ADMIN
-                 ],
-             ],
-         ],   
-     ],
- ];
+                       User::ROLE_ADMIN
+                   ],
+               ],
+           ],   
+       ],
+   ];
 }
 
     /**
@@ -136,15 +136,16 @@ class RapController extends Controller
     public function actionLichChieu($idRap)
     {
         $dsPhong = Phongchieu::find()->where(['idrap' => $idRap])->all();
+        $rap = Rap::findOne($idRap);
         $model = new Lichchieu();
         $dsPhim = Phim::find()->where(['>=','status',1])->orderBy(['status' => SORT_DESC])->all();
         $searchModel = new LichchieuSearch();
         $dataProvider = $searchModel->search($idRap,Yii::$app->request->queryParams);
         if ($model->load(Yii::$app->request->post())) {
             if ($model->createLichChieu($idRap)) {
-             $model = new Lichchieu();
-         }
-         else{
+               $model = new Lichchieu();
+           }
+           else{
             return $this->redirect(['lich-chieu','idRap' => $idRap]);
         }
     }
@@ -152,22 +153,40 @@ class RapController extends Controller
         'searchModel' => $searchModel,
         'dataProvider' => $dataProvider,
         'model' => $model,
+        'rap' => $rap,
         'dsPhong' => $dsPhong,
-        'dsPhim' => $dsPhim
+        'dsPhim' => $dsPhim,
     ]);
 }
 
 public function actionDetailsLich($id)
 {
     $model =  Lichchieu::findOne($id);
-    $dsPhong = Phongchieu::find()->where(['idrap' => $model->phong->idrap])->all();
-    $dsPhim = Phim::find()->where(['>=','status',1])->orderBy(['status' => SORT_DESC])->all();
+    $dsPhong = $this->checkGetRooms($model->phong->idrap,$model->ngaychieu,$model->giochieu);
+    //array_push($dsPhong, $model->phong);
+    $dsPhim = [0 => $model->phim];
     $searchModel = new LichchieuSearch();
     $dataProvider = $searchModel->search($model->phong->idrap,Yii::$app->request->queryParams);
+    if ($model->load(Yii::$app->request->post())) {
+        $from = new \DateTime();
+        $to = new \DateTime();
+        $from->add(new \DateInterval('P'.Yii::$app->params['date-add']['startDate'].'D'));
+        $to->add(new \DateInterval('P'.Yii::$app->params['date-add']['endDate'].'D'));
+        $checkDate = new \DateTime(date('Y-m-d',strtotime($model->ngaychieu)));
+        if ($checkDate >= $from && $checkDate <= $to) {
+            $model->updateLichChieu($model->id);
+            return $this->redirect(['details-lich','id' => $id]); 
+        }
+        $session = Yii::$app->session;
+        $session->addFlash('errorMessage');
+        $session->setFlash('errorMessage', 'Lịch chiếu này không được phép cập nhật, do nằm ngoài thời gian cho phép !');
+        return $this->redirect(['details-lich','id' => $id]);
+    }
     return $this->render('lichchieu', [
         'searchModel' => $searchModel,
         'dataProvider' => $dataProvider,
         'model' => $model,
+        'rap' => $model->phong->rap,
         'dsPhong' => $dsPhong,
         'dsPhim' => $dsPhim
     ]);
@@ -332,9 +351,9 @@ public function actionDeletePhong($id)
         ->where(['=', 'lichchieu.ngaychieu', date('Y-m-d',strtotime($ngayChieu))])
         ->andWhere(['=', 'phongchieu.idrap', $idRap])
         ->andWhere(['and',
-           ['>','lichchieu.giochieu', $before],
-           ['<','lichchieu.giochieu', $after]
-       ])->all();
+         ['>','lichchieu.giochieu', $before],
+         ['<','lichchieu.giochieu', $after]
+     ])->all();
 
         $phongs = (new Query())->select('id,name')->from('phongchieu')->where(['idrap' => $idRap])->all();
 

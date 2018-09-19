@@ -5,16 +5,15 @@ use yii\widgets\Pjax;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
 
-$rap = $dsPhong[0]->rap;
 $attributesRap = json_decode($rap->attributes);
 $this->title = 'Lịch chiếu: '.$attributesRap->name;
 $this->params['breadcrumbs'][] = ['label' => 'Danh sách rạp', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $attributesRap->name, 'url' => ['view','id' => $rap->id]];
-$this->params['breadcrumbs'][] = $model->isNewRecord ? 'Lịch chiếu':['label' => 'Lịch chiếu', 'url' => ['lich-chieu','idRap' => $rap->id]];
+$this->params['breadcrumbs'][] = $model->isNewRecord ? 'Lịch chiếu':['label' => 'Quay lại', 'url' => ['lich-chieu','idRap' => $rap->id]];
 
 ?>
 <div class="container">
-	<h1><?= $model->isNewRecord ? 'Thêm lịch chiếu' : 'Chỉnh sửa lịch chiếu' ?></h1>
+	<h2 class="text-uppercase"><?= $model->isNewRecord ? 'Thêm lịch chiếu' : 'Chỉnh sửa lịch chiếu' ?></h2>
 	<?= $this->render('_formlich', [
 		'model' => $model,
 		'rap' => $rap,
@@ -145,7 +144,7 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? 'Lịch chiếu':['label'
 								</div>
 								<?php 
 								Modal::begin([
-									'header' => 'DANH SÁCH CÁC GHẾ ĐÃ ĐƯỢC CHỌN',
+									'header' => 'DANH SÁCH CÁC GHẾ ĐÃ ĐƯỢC BÁN',
 									'id' => 'modal-selected-seat',
 								]);
 

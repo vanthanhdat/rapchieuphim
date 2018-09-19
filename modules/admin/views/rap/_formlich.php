@@ -16,7 +16,7 @@ foreach ($dsPhim as $key) {
 <div class="row">
 	<div class="col-md-12">
 		<?php Pjax::begin(['id' => 'details-lich']);  ?>
-		<?php $form = ActiveForm::begin(['layout' => 'inline','options' => ['data-pjax' => true]]); ?>
+		<?php $form = ActiveForm::begin(['layout' => 'inline','options' => ['data-pjax' => $model->isNewRecord ? true:false]]); ?>
 		<?= $form->field($model, 'idphim')->dropDownList(Arrayhelper::map($listPhim,'id','title','status'),['prompt' => '-Chọn phim-']) ?>
 
 		<?= $form->field($model, 'ngaychieu')->widget(
@@ -24,12 +24,13 @@ foreach ($dsPhim as $key) {
 				'options' => [
 					'autocomplete' => 'off',
 					'value' => $model->ngaychieu ? date("d-m-Y", strtotime($model->ngaychieu)):'',
+					'disabled' => $model->isNewRecord ? false : true
 				],		    		   			    			    		      	
 				'clientOptions' => [
 					'autoclose' => true,
 					'format' => 'dd-mm-yyyy',		  		         				
-					'endDate' => '+14d',
-					'startDate' => '+7d',
+					'endDate' => '+'.Yii::$app->params['date-add']['endDate'].'d',
+					'startDate' => '+'.Yii::$app->params['date-add']['startDate'].'d',
 				]
 			]);?>
 
@@ -39,6 +40,7 @@ foreach ($dsPhim as $key) {
 					'readonly' => true,
 					'autocomplete' => 'off'
 				],
+				//'disabled' => $model->isNewRecord ? false : true,
 				'addonOptions' => [
 					'asButton' => true,
 				],
@@ -70,9 +72,8 @@ foreach ($dsPhim as $key) {
 					}"]
 				]) ?>
 				<?= $form->field($model, 'idphong')->dropDownList(Arrayhelper::map($dsPhong,'id','name'),['prompt' => '-Chọn phòng-']) ?>
-
-				<div class="form-group">
-					<br>
+				<div class="form-group" style="margin-top: 3px;">			
+					
 					<?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 				</div>
 

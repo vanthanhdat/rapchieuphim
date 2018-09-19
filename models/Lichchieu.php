@@ -154,10 +154,7 @@ class Lichchieu extends ActiveRecord
             $lich->idphim = $this->idphim;
             $lich->idphong = $this->idphong;
             $lich->selected_seat = '';
-           // var_dump($this);
-          //  var_dump($giaVe);
-           // exit;
-           if ($this->checkPhim($idRap,$this->ngaychieu,$this->giochieu,$this->idphim)) {
+            if ($this->checkPhim($idRap,$this->ngaychieu,$this->giochieu,$this->idphim)) {
                return $lich->save();
            }
            $session = Yii::$app->session;
@@ -174,6 +171,28 @@ class Lichchieu extends ActiveRecord
 }
 return false;
 }
+
+public function updateLichChieu($id)
+{
+    $lich = Lichchieu::findOne($id);
+    $times = Yii::$app->params['time_start_end'];
+    $lich->idphong = $this->idphong;
+    if (strtotime($this->giochieu) >= strtotime($times['start']) && strtotime($this->giochieu) <= strtotime($times['end'])) {
+        $lich->giochieu = $this->giochieu;
+        $session = Yii::$app->session;
+        $session->addFlash('flashMessage');
+        $session->setFlash('flashMessage', 'Cập nhật thành công!');
+        return $lich->save();
+    }
+    else{
+        $session = Yii::$app->session;
+        $session->addFlash('errorMessage');
+        $session->setFlash('errorMessage', 'Giờ chiếu phải nằm trong khoảng từ '.$times['start'].' đến '.$times['end'].', vui lòng kiểm tra lại !');
+        return false;
+    }
+}
+
+
 
 public function checkPhim($idRap,$ngayChieu,$gioChieu,$idPhim)
 {
