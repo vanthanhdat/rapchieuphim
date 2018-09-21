@@ -179,10 +179,16 @@ public function updateLichChieu($id)
     $lich->idphong = $this->idphong;
     if (strtotime($this->giochieu) >= strtotime($times['start']) && strtotime($this->giochieu) <= strtotime($times['end'])) {
         $lich->giochieu = $this->giochieu;
+        if ($this->checkPhim($lich->phong->idrap,$this->ngaychieu,$this->giochieu,$lich->idphim)) {
+            $session = Yii::$app->session;
+            $session->addFlash('flashMessage');
+            $session->setFlash('flashMessage', 'Cập nhật thành công!');
+            return $lich->save();
+        }
         $session = Yii::$app->session;
-        $session->addFlash('flashMessage');
-        $session->setFlash('flashMessage', 'Cập nhật thành công!');
-        return $lich->save();
+        $session->addFlash('errorMessage');
+        $session->setFlash('errorMessage', 'Đã tồn tại lịch chiếu trong khoản thời gian bạn cẩn thay đổi đến, không thể chỉnh sửa!');
+        return false;
     }
     else{
         $session = Yii::$app->session;
