@@ -131,43 +131,43 @@ class Lichchieu extends ActiveRecord
             return false;
         }
         else{
-           if (strtotime($this->giochieu) >= strtotime($times['start']) && strtotime($this->giochieu) <= strtotime($times['end'])) {
-             $lich = new Lichchieu();
-             $lich->ngaychieu = date('Y-m-d',strtotime($this->ngaychieu));
-             $lich->giochieu = $this->giochieu;
-             $rap = Rap::findOne($idRap);
-             $gia = json_decode($rap->giave);
-             $date = date('l',strtotime($this->ngaychieu));
-             $giaVe = [];
-             foreach ($gia as $key => $value) {
-                if (strpos($key, $date) !== false) {
-                    $keyGia = explode('_',$key);
-                    $giaVe[$keyGia[1]] = $value;
-                }
+         if (strtotime($this->giochieu) >= strtotime($times['start']) && strtotime($this->giochieu) <= strtotime($times['end'])) {
+           $lich = new Lichchieu();
+           $lich->ngaychieu = date('Y-m-d',strtotime($this->ngaychieu));
+           $lich->giochieu = $this->giochieu;
+           $rap = Rap::findOne($idRap);
+           $gia = json_decode($rap->giave);
+           $date = date('l',strtotime($this->ngaychieu));
+           $giaVe = [];
+           foreach ($gia as $key => $value) {
+            if (strpos($key, $date) !== false) {
+                $keyGia = explode('_',$key);
+                $giaVe[$keyGia[1]] = $value;
             }
-            if ($this->giochieu < '17:00') {
-                $lich->gia = $giaVe['before'];
-            }
-            else{
-                $lich->gia = $giaVe['after'];
-            }
-            $lich->idphim = $this->idphim;
-            $lich->idphong = $this->idphong;
-            $lich->selected_seat = '';
-            if ($this->checkPhim($idRap,$this->ngaychieu,$this->giochieu,$this->idphim)) {
-               return $lich->save();
-           }
-           $session = Yii::$app->session;
-           $session->addFlash('errorMessage');
-           $session->setFlash('errorMessage', 'Lịch chiếu này đã tồn tại trong khoảng thời gian gần đó, không thể thêm!');
-           return false;
-       }
-       else{
-        $session = Yii::$app->session;
-        $session->addFlash('errorMessage');
-        $session->setFlash('errorMessage', 'Giờ chiếu phải nằm trong khoảng từ '.$times['start'].' đến '.$times['end'].', vui lòng kiểm tra lại !');
-        return false;
-    }
+        }
+        if ($this->giochieu < '17:00') {
+            $lich->gia = $giaVe['before'];
+        }
+        else{
+            $lich->gia = $giaVe['after'];
+        }
+        $lich->idphim = $this->idphim;
+        $lich->idphong = $this->idphong;
+        $lich->selected_seat = '';
+        if ($this->checkPhim($idRap,$this->ngaychieu,$this->giochieu,$this->idphim)) {
+         return $lich->save();
+     }
+     $session = Yii::$app->session;
+     $session->addFlash('errorMessage');
+     $session->setFlash('errorMessage', 'Lịch chiếu này đã tồn tại trong khoảng thời gian gần đó, không thể thêm!');
+     return false;
+ }
+ else{
+    $session = Yii::$app->session;
+    $session->addFlash('errorMessage');
+    $session->setFlash('errorMessage', 'Giờ chiếu phải nằm trong khoảng từ '.$times['start'].' đến '.$times['end'].', vui lòng kiểm tra lại !');
+    return false;
+}
 }
 return false;
 }
@@ -179,6 +179,21 @@ public function updateLichChieu($id)
     $lich->idphong = $this->idphong;
     if (strtotime($this->giochieu) >= strtotime($times['start']) && strtotime($this->giochieu) <= strtotime($times['end'])) {
         $lich->giochieu = $this->giochieu;
+        $gia = json_decode($lich->phong->rap->giave);
+        $date = date('l',strtotime($this->ngaychieu));
+        $giaVe = [];
+        foreach ($gia as $key => $value) {
+            if (strpos($key, $date) !== false) {
+                $keyGia = explode('_',$key);
+                $giaVe[$keyGia[1]] = $value;
+            }
+        }
+        if ($this->giochieu < '17:00') {
+            $lich->gia = $giaVe['before'];
+        }
+        else{
+            $lich->gia = $giaVe['after'];
+        }
         if ($this->checkPhim($lich->phong->idrap,$this->ngaychieu,$this->giochieu,$lich->idphim)) {
             $session = Yii::$app->session;
             $session->addFlash('flashMessage');
@@ -187,7 +202,7 @@ public function updateLichChieu($id)
         }
         $session = Yii::$app->session;
         $session->addFlash('errorMessage');
-        $session->setFlash('errorMessage', 'Đã tồn tại lịch chiếu trong khoản thời gian bạn cẩn thay đổi đến, không thể chỉnh sửa!');
+        $session->setFlash('errorMessage', 'Đã tồn tại lịch chiếu bộ phim này trong khoản thời gian bạn cẩn thay đổi đến, không thể chỉnh sửa!');
         return false;
     }
     else{
@@ -213,9 +228,9 @@ public function checkPhim($idRap,$ngayChieu,$gioChieu,$idPhim)
     ->where(['=', 'lichchieu.ngaychieu', date('Y-m-d',strtotime($ngayChieu))])
     ->andWhere(['=', 'phongchieu.idrap', $idRap])
     ->andWhere(['and',
-       ['>','lichchieu.giochieu', $before],
-       ['<','lichchieu.giochieu', $after]
-   ])->andWhere(['idphim' => $idPhim])->all();
+     ['>','lichchieu.giochieu', $before],
+     ['<','lichchieu.giochieu', $after]
+ ])->andWhere(['idphim' => $idPhim])->all();
     if (empty($check)) {
         return true;
     }
