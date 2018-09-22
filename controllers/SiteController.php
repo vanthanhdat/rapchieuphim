@@ -11,6 +11,7 @@ use app\models\form\LoginForm;
 use app\models\EntryForm;
 use app\models\form\SignupForm;
 use app\models\User;
+use app\models\City;
 use yii\db\Query;
 use yii\helpers\Url;
 use app\models\Phim;
@@ -62,7 +63,16 @@ class SiteController extends Controller
 
     public function actionTestWeb()
     {
-        print_r('abc abc');
+        $cites = City::find()->all();
+        foreach($cites as $city) {
+            echo "<h2>City : " . $city->cityname . "</h2>";
+            echo "<ul>";
+            foreach($city->raps as $rap) {  
+                $attributes = json_decode($rap->attributes);
+                echo "<li>" . $attributes->name . "</li>";
+            }
+            echo "</ul>";
+        }
     }
 
     /**

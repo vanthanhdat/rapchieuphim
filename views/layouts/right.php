@@ -2,7 +2,7 @@
 use yii\db\Query;
 $query = new Query();
 $arr = $query->select(['id','attributes','status','slug'])->from('phim')->where(['status' => 2])
-->limit(6)->orderBy(['created_at' => SORT_DESC])->all();
+->limit(4)->orderBy(['created_at' => SORT_DESC])->all();
 $urlImagePhim = Yii::getAlias('@web/uploads/image/phim');
 ?>
 
