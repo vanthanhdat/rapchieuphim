@@ -11,6 +11,8 @@ use yii\data\Pagination;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use app\components\AccessRule;
+use app\models\User;
 use yii\data\ActiveDataProvider;
 use yii\base\Event;
 
@@ -28,30 +30,32 @@ class CityController extends Controller
     public function behaviors()
     {
         return [
-            
+
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['create', 'update','index','download'],
-                'rules' => [
-
-                    // deny all POST requests
-                   /* [
-                        'allow' => false,
-                        'verbs' => ['POST'],
-                   ],*/
-                    // allow authenticated users
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
+                'ruleConfig' => [
+                   'class' => AccessRule::className(),
+               ],
+               'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => [
+                        User::ROLE_ADMIN
                     ],
-                    // everything else is denied
                 ],
             ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => ['delete' =>['post']],
-            ],
-        ];
+        ],
+        'verbs' => [
+            'class' => VerbFilter::className(),
+            'actions' => ['delete' =>['post']],
+        ],
+    ];
+}
+
+    public function beforeAction($action)
+    {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
     }
 
     /**
@@ -60,38 +64,56 @@ class CityController extends Controller
      */
     public function actionIndex()
     {
-
+        $query = City::find();
+        $pagination = new Pagination([
+            'defaultPageSize' => 5,
+            'totalCount' => $query->count(),
+        ]);
         $searchModel = new CitySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-       // $userHost = Yii::$app->request->userHost;
-       // $userIP = Yii::$app->request->userIP;
-      //  var_dump($userIp);        
         return $this->render('index', [         
-           'dataProvider' => $dataProvider,'searchModel' => $searchModel,//'session' => $session,
-        ]);       
+           'dataProvider' => $dataProvider,
+           'searchModel' => $searchModel,
+           'pagination' => $pagination
+       ]);       
     }
 
-   
 
-    /**
-     * Displays a single Country model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     public function actionView($id)
     {
-
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
-    /**
-     * Creates a new Country model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
+    public function actionTestCreate()
+    {
+        $postData = file_get_contents('php://input');
+        $dataObj = json_decode($postData);
+        $city = new City();
+        $city->cityname = $dataObj->data->cityname;
+        $city->save();
+    }
+
+    public function actionTestUpdate()
+    {
+        $postData = file_get_contents('php://input');
+        $dataObj = json_decode($postData);
+        $city = City::findOne($dataObj->data->id);
+        $city->cityname = $dataObj->data->cityname;
+        $city->save();
+    }
+
+    public function actionGetCities()
+    {   
+        $page = $_GET["page"] === 0 ? 1:$_GET["page"];
+        $pageSize = 5;
+        $query = City::find();
+        $cities = $query->offset(($page-1)*$pageSize)->limit($pageSize)->orderBy(['cityname' => SORT_ASC])->asArray()->all();
+        echo json_encode(['cities' => $cities]);
+    }
+
     public function actionCreate()
     {   
        // Yii::$app->eventCustom->trigger(EventComponent::EVENT_DEMO1);
@@ -110,60 +132,42 @@ class CityController extends Controller
     public function actionDownload()
     {
         $path = Yii::getAlias('@webroot/files');
-         if (!is_file("$path/Hello.txt")) {
-             throw new \yii\web\NotFoundHttpException('Không tìm thấy file !');
-         }
-        return Yii::$app->response->sendFile("$path/Hello.txt");
-    }
-    /**
-     * Updates an existing Country model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
+        if (!is_file("$path/Hello.txt")) {
+         throw new \yii\web\NotFoundHttpException('Không tìm thấy file !');
+     }
+     return Yii::$app->response->sendFile("$path/Hello.txt");
+ }
 
-    /**
-     * Deletes an existing Country model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-         $this->findModel($id)->delete();    
-         
-         return $this->redirect(['index']); 
+
+
+ public function actionUpdate($id)
+ {
+    $model = $this->findModel($id);
+    if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        return $this->redirect(['view', 'id' => $model->id]);
+    }
+    return $this->render('update', [
+        'model' => $model,
+    ]);
+}
+
+
+public function actionDelete($id)
+{
+ $this->findModel($id)->delete();    
+
+ return $this->redirect(['index']); 
+}
+
+
+
+
+protected function findModel($id)
+{
+    if (($model = City::findOne($id)) !== null) {
+        return $model;
     }
 
-
-
-    /**
-     * Finds the Country model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Country the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = City::findOne($id)) !== null) {
-           // var_dump($model->raps);exit;
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
+    throw new NotFoundHttpException('The requested page does not exist.');
+}
 }

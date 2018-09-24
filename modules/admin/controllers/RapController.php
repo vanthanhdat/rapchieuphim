@@ -48,7 +48,7 @@ class RapController extends Controller
                'rules' => [
                 [
                             // Allow full if user is admin
-                    'actions' => ['index','create', 'update', 'delete','view','delete-phong','view-phong','create-phong','lich-chieu','create-lich','get-phong','selected-seat','details-lich'],
+                   // 'actions' => ['index','create', 'update', 'delete','view','delete-phong','view-phong','create-phong','lich-chieu','create-lich','get-phong','selected-seat','details-lich'],
                     'allow' => true,
                     'roles' => [
                        User::ROLE_ADMIN

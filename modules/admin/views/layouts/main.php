@@ -17,11 +17,10 @@ echo $this->render(
     if (class_exists('backend\assets\AppAsset')) {
         backend\assets\AppAsset::register($this);
     } else {
-        //app\assets\AppAsset::register($this);
         app\assets\AdminAsset::register($this);
     }
-
-    dmstr\web\AdminLteAsset::register($this);
+    app\assets\AdminLTEAsset::register($this);
+    //dmstr\web\AdminLteAsset::register($this);
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
     $name = 'Project của Đạt';
     ?>
@@ -31,46 +30,47 @@ echo $this->render(
     <head>
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
-    </head>
-    <body class="hold-transition skin-blue sidebar-mini">
-        <?php $this->beginBody() ?>
-        <div class="wrapper">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <?php $this->beginBody() ?>
+    <div class="wrapper">
 
-            <?= $this->render(
-                'header.php',
-                ['directoryAsset' => $directoryAsset,'name' => $name]
-            ) ?>
+        <?= $this->render(
+            'header.php',
+            ['directoryAsset' => $directoryAsset,'name' => $name]
+        ) ?>
 
-            <?= $this->render(
-                'left.php',
-                ['directoryAsset' => $directoryAsset,'name' => $name,]
-            )
-            ?>
+        <?= $this->render(
+            'left.php',
+            ['directoryAsset' => $directoryAsset,'name' => $name,]
+        )
+        ?>
 
-            <?= $this->render(
-                'content.php',
-                ['content' => $content, 'directoryAsset' => $directoryAsset]
-            ) ?>
+        <?= $this->render(
+            'content.php',
+            ['content' => $content, 'directoryAsset' => $directoryAsset]
+        ) ?>
 
-        </div>
+    </div>
 
-        <?php $this->endBody() ?>
-        <script type="text/javascript">
-            function readURL(input,id) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        $('#'+id+'')
-                        .attr('src', e.target.result);                
-                    };
-                    reader.readAsDataURL(input.files[0]);
-                }
+    <?php $this->endBody() ?>
+    <script type="text/javascript">
+        function readURL(input,id) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#'+id+'')
+                    .attr('src', e.target.result);                
+                };
+                reader.readAsDataURL(input.files[0]);
             }
-        </script>
-    </body>
-    </html>
-    <?php $this->endPage() ?>
+        }
+    </script>
+</body>
+</html>
+<?php $this->endPage() ?>
 <?php } ?>

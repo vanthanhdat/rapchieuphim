@@ -134,7 +134,8 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? 'Lịch chiếu':['label'
 														'class' => 'yii\grid\ActionColumn',
 														'header'=>"Chi tiết",
 														'template' => $model->isNewRecord?'{details-lich}':'{delete} ',
-														'buttons' => $model->isNewRecord ? ['details-lich' => function($url, $model, $key) {										return Html::a('Xem', ['details-lich','id' => $key], ['class' => 'btn btn-primary','data-pjax'=> 0]);
+														'buttons' => $model->isNewRecord ? ['details-lich' => function($url, $model, $key) { 
+															return Html::a('Xem', ['details-lich','id' => $key], ['class' => 'btn btn-primary','data-pjax'=> 0]);
 													}
 												]:[]  
 											],
