@@ -1,10 +1,18 @@
 var app = angular.module("demoApp", []);
-app.controller("demoCtrl", function($scope,$http) {
+app.controller("demoCityCtrl", function($scope,$http) {
 
 	$scope.dataLoading = true;
 
 	$scope.status = "create";
 	$scope.data = {};
+
+	$scope.sortReverse  = false;
+	$scope.searchCity = '';
+
+	$scope.sort = function(key) {
+        $scope.sortType = key;
+        $scope.sortReverse = !$scope.sortReverse;
+    }
 
 	$scope.save = function(){
 		switch($scope.status){
