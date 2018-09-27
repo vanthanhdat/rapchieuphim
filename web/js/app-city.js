@@ -1,7 +1,20 @@
 var app = angular.module("demoApp", []);
-app.controller("demoCityCtrl", function($scope,$http) {
+
+
+app.controller("demoCityCtrl", function($scope,$http,$timeout) {
+
+
+	$scope.submitForm = function(formValid){
+		if(formValid) {
+			$scope.save();	
+		}
+	};
 
 	$scope.dataLoading = true;
+
+	$scope.alertStatus = {status:false,message:"",doFade:false};
+
+
 
 	$scope.status = "create";
 	$scope.data = {};
@@ -10,9 +23,9 @@ app.controller("demoCityCtrl", function($scope,$http) {
 	$scope.searchCity = '';
 
 	$scope.sort = function(key) {
-        $scope.sortType = key;
-        $scope.sortReverse = !$scope.sortReverse;
-    }
+		$scope.sortType = key;
+		$scope.sortReverse = !$scope.sortReverse;
+	}
 
 	$scope.save = function(){
 		switch($scope.status){
@@ -33,7 +46,9 @@ app.controller("demoCityCtrl", function($scope,$http) {
 		}
 		).then(function(response) {
 			$scope.clearDataInput();
-			$scope.getCites();           
+			$("div.alert-message").fadeIn( 300 ).delay( 1500 ).fadeOut( 400 ).html('<div class="alert-success alert fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Thêm thành công !</div>');           
+			$scope.dataLoading = true;
+			$scope.getCites();
 		},function(response) {
 			alert('fail');
 		});
@@ -46,8 +61,10 @@ app.controller("demoCityCtrl", function($scope,$http) {
 		}
 		).then(function(response) {
 			$scope.clearDataInput();
-			$scope.getCites();
-			$scope.status = "create";           
+			$("div.alert-message").fadeIn( 300 ).delay( 1500 ).fadeOut( 400 ).html('<div class="alert-success alert fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Cập nhật thành công !</div>');
+			$scope.status = "create";
+			$scope.dataLoading = true;
+			$scope.getCites();          
 		},function(response) {
 			alert('fail');
 		});

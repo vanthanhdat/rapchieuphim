@@ -37,8 +37,8 @@ use dosamigos\datepicker\DatePicker;
     }]); ?>
 		<?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
 		 <div class="form-group">
-            <div class="col-lg-11">
-                <?= Html::submitButton('Lưu thay đổi', ['class' => 'btn btn-primary', 'name' => 'update-button','id'=>'btnUpdate']) ?>
+            <div class="col-lg-11" style="bottom: 8px;">
+                <?= Html::submitButton('Lưu thay đổi', ['class' => 'btn btn-danger', 'name' => 'update-button','id'=>'btnUpdate']) ?>
             </div>
             
         </div>

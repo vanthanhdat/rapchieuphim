@@ -12,11 +12,12 @@ echo $this->registerJsFile("@web/js/dirPagination.js");
 
 
 <div class="city-index container">
-    <p>
-        <?php // Html::a('Add', ['create'], ['class' => 'btn btn-success']) ?>
-        <?php // Html::a('Demo download'.' '.'<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>', ['download'], ['class' => 'btn btn-primary']) ?>
-    </p>
+
+    <?php // Html::a('Add', ['create'], ['class' => 'btn btn-success']) ?>
+    <?php // Html::a('Demo download'.' '.'<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>', ['download'], ['class' => 'btn btn-primary']) ?>
     <div ng-app="demoApp" ng-controller="demoCityCtrl">
+        <div class="alert-message">
+        </div>
         <button class="btn btn-sm btn-warning" ng-if="dataLoading"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Vui lòng đợi...</button>
         <fieldset>
             <legend><h2>Danh sách các tỉnh thành</h2></legend>
@@ -47,9 +48,14 @@ echo $this->registerJsFile("@web/js/dirPagination.js");
                     <tr>
                         <td></td>
                         <td></td>
-                        <td><input type="text" ng-model="data.cityname" placeholder="City name" class="form-control" required></td>
                         <td>
-                            <button class="btn btn-success" ng-click="save()">Save</button>
+                            <form name="cityForm" ng-submit="submitForm(cityForm.$valid)" class="form-inline">
+                                <input type="text" ng-model="data.cityname" name="cityname" autocomplete="off" placeholder="City name" class="form-control" required>
+                                <span ng-show="(cityForm.cityname.$invalid && cityForm.cityname.$touched)" class="input-error">Vui lòng điền tên thành phố !</span>
+                                <button class="btn btn-success" type="submit">Save</button>
+                            </form>
+                        </td>
+                        <td>
                         </td>
                     </tr>
                     <tr ng-repeat="city in cities | orderBy:sortType:sortReverse | filter:searchCity">
