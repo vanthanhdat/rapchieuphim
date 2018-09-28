@@ -15,6 +15,7 @@ use app\components\AccessRule;
 use app\models\User;
 use yii\data\ActiveDataProvider;
 use yii\base\Event;
+use  yii\db\Query;
 
 /**
  * CountryController implements the CRUD actions for Country model.
@@ -34,9 +35,9 @@ class CityController extends Controller
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
                 'ruleConfig' => [
-                   'class' => AccessRule::className(),
-               ],
-               'rules' => [
+                 'class' => AccessRule::className(),
+             ],
+             'rules' => [
                 [
                     'allow' => true,
                     'roles' => [
@@ -74,10 +75,10 @@ public function beforeAction($action)
         $searchModel = new CitySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [         
-           'dataProvider' => $dataProvider,
-           'searchModel' => $searchModel,
-           'pagination' => $pagination
-       ]);       
+         'dataProvider' => $dataProvider,
+         'searchModel' => $searchModel,
+         'pagination' => $pagination
+     ]);       
     }
 
 
@@ -126,6 +127,19 @@ public function beforeAction($action)
         echo json_encode(['cities' => $cities]);
     }
 
+    public function actionQueryCity()
+    {
+        $city = new City();
+        $postData = file_get_contents('php://input');
+        if ($postData !== '') {
+            $obj = json_decode($postData);
+            echo $city->queryCities($obj->params->queryParam,$obj->params->page);
+        }
+        else{
+            throw new \yii\web\ForBiddenHttpException('Bạn không được vào đây !');
+        }
+    }
+
     public function actionCreate()
     {   
        // Yii::$app->eventCustom->trigger(EventComponent::EVENT_DEMO1);
@@ -145,15 +159,15 @@ public function beforeAction($action)
     {
         $path = Yii::getAlias('@webroot/files');
         if (!is_file("$path/Hello.txt")) {
-         throw new \yii\web\NotFoundHttpException('Không tìm thấy file !');
-     }
-     return Yii::$app->response->sendFile("$path/Hello.txt");
- }
+           throw new \yii\web\NotFoundHttpException('Không tìm thấy file !');
+       }
+       return Yii::$app->response->sendFile("$path/Hello.txt");
+   }
 
 
 
- public function actionUpdate($id)
- {
+   public function actionUpdate($id)
+   {
     $model = $this->findModel($id);
     if ($model->load(Yii::$app->request->post()) && $model->save()) {
         return $this->redirect(['view', 'id' => $model->id]);
@@ -166,9 +180,9 @@ public function beforeAction($action)
 
 public function actionDelete($id)
 {
- $this->findModel($id)->delete();    
+   $this->findModel($id)->delete();    
 
- return $this->redirect(['index']); 
+   return $this->redirect(['index']); 
 }
 
 

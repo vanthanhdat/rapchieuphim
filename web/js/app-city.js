@@ -1,8 +1,6 @@
 var app = angular.module("demoApp", []);
 
-
-app.controller("demoCityCtrl", function($scope,$http,$timeout) {
-
+app.controller("demoCityCtrl", function($scope,$http) {
 
 	$scope.submitForm = function(formValid){
 		if(formValid) {
@@ -81,9 +79,21 @@ app.controller("demoCityCtrl", function($scope,$http,$timeout) {
 		};
 	};
 
-	$scope.getCitiesAfterCreate = function(city){
-
-	};
+	$scope.query = function() {
+		var page = window.location.href.split('page=')[1];
+		$scope.dataLoading = true;
+		$scope.clearDataInput(); 
+		$http.post('query-city',
+		{
+			params : { queryParam:$scope.searchCity,page: typeof(page) != "undefined" ? page:0 }
+		}
+		).then(function(response) {
+			$scope.cities = response.data.cities;
+			$scope.dataLoading = false;         
+		},function(response) {
+			alert('fail');
+		});
+	}
 
 	$scope.getCites = function(){
 		var page = window.location.href.split('page=')[1];

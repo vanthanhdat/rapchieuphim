@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use  yii\db\Query;
 /**
  * This is the model class for table "city".
  *
@@ -51,5 +51,18 @@ class City extends \yii\db\ActiveRecord
     public function getRaps()
     {
         return $this->hasMany(Rap::className(), ['idcity' => 'id']);
+    }
+
+    public function queryCities($param,$page)
+    {
+        $cities = [];
+        if ($param !== '') {
+            $cities = (new \yii\db\Query())->select(['id', 'cityname'])->from('city')->where(['like', 'cityname', $param])->all();       
+        }else{
+            $pageSize = 5;
+            $query = City::find();
+            $cities = $query->offset(($page-1)*$pageSize)->limit($pageSize)->orderBy(['cityname' => SORT_ASC])->asArray()->all();
+        }
+        return json_encode(['cities' => $cities]);
     }
 }
