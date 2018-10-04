@@ -6,12 +6,10 @@ use yii\bootstrap\ActiveForm;
 use yii\widgets\Pjax;
 $this->title = 'Danh sách các tỉnh thành'; 
 $this->params['breadcrumbs'][] = $this->title;
-echo $this->registerJsFile("@web/js/app-city.js");
-echo $this->registerJsFile("@web/js/dirPagination.js");
+//echo $this->registerJsFile("@web/js/dirPagination.js");
 ?>
 
-
-<div class="city-index container" ng-app="demoApp" ng-controller="demoCityCtrl">
+<div class="city-index container" ng-controller="demoCityCtrl">
     <?php // Html::a('Add', ['create'], ['class' => 'btn btn-success']) ?>
     <?php // Html::a('Demo download'.' '.'<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>', ['download'], ['class' => 'btn btn-primary']) ?>
     <div class="alert-message">
