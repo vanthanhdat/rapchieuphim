@@ -1,6 +1,6 @@
 var app = angular.module("demoApp", []);
 
-app.controller("demoCityCtrl", function($scope,$http) {
+app.controller("demoCityCtrl", function($scope,$http,$location,$timeout) {
 
 	$scope.submitForm = function(formValid){
 		if(formValid) {
@@ -9,10 +9,6 @@ app.controller("demoCityCtrl", function($scope,$http) {
 	};
 
 	$scope.dataLoading = true;
-
-	$scope.alertStatus = {status:false,message:"",doFade:false};
-
-
 
 	$scope.status = "create";
 	$scope.data = {};
@@ -43,8 +39,13 @@ app.controller("demoCityCtrl", function($scope,$http) {
 			data : $scope.data
 		}
 		).then(function(response) {
-			$scope.clearDataInput();
-			$("div.alert-message").fadeIn( 300 ).delay( 1500 ).fadeOut( 400 ).html('<div class="alert-success alert fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Thêm thành công !</div>');           
+			$scope.clearDataInput();          
+			$("div.alert-message").fadeIn(300).html("<div class='alert-success alert fade in'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>Thêm thành công !</div>");
+			$timeout(function () {
+				$("div.alert-message").fadeOut(1000,function() {
+					$("div.alert-message").html('');
+				});
+			}, 3000);
 			$scope.dataLoading = true;
 			$scope.getCites();
 		},function(response) {
@@ -59,7 +60,12 @@ app.controller("demoCityCtrl", function($scope,$http) {
 		}
 		).then(function(response) {
 			$scope.clearDataInput();
-			$("div.alert-message").fadeIn( 300 ).delay( 1500 ).fadeOut( 400 ).html('<div class="alert-success alert fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Cập nhật thành công !</div>');
+			$("div.alert-message").fadeIn(300).html("<div class='alert-success alert fade in'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>Cập nhật thành công !</div>");
+			$timeout(function () {
+				$("div.alert-message").fadeOut(1000,function() {
+					$("div.alert-message").html('');
+				});
+			}, 3000);
 			$scope.status = "create";
 			$scope.dataLoading = true;
 			$scope.getCites();          
@@ -80,7 +86,7 @@ app.controller("demoCityCtrl", function($scope,$http) {
 	};
 
 	$scope.query = function() {
-		var page = window.location.href.split('page=')[1];
+		var page = $location.absUrl().split('page=')[1];
 		$scope.dataLoading = true;
 		$scope.clearDataInput(); 
 		$http.post('query-city',
@@ -96,7 +102,7 @@ app.controller("demoCityCtrl", function($scope,$http) {
 	}
 
 	$scope.getCites = function(){
-		var page = window.location.href.split('page=')[1];
+		var page = $location.absUrl().split('page=')[1];
 		$http.get('get-cities',{
 			params : { page: typeof(page) != "undefined" ? page:0 }
 		}).then(function(response){
