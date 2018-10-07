@@ -15,7 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="alert-message">
     </div>
     <br>
-    <button class="btn btn-sm btn-warning" ng-show="dataLoading"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Vui lòng đợi...</button>
+    <!--<button class="btn btn-sm btn-warning" ng-show="dataLoading"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Vui lòng đợi...</button>-->
+    <div class="lds-spinner" ng-show="dataLoading"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     <fieldset>
         <legend><h2>Danh sách các tỉnh thành</h2></legend>
         <form class="form-inline">
@@ -70,24 +71,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'pagination' => $pagination,
         ]) ?> 
     </fieldset>
-    <!--<div ng-app="demoApp" ng-controller="demoCtrl">
-        <?php Pjax::begin()  ?>
-        <?php echo GridView::widget([
-            'dataProvider' => $dataProvider,
-            'filterModel' =>$searchModel, 
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn','header'=>"Số thứ tự"],
-                'id',
-                'cityname',
-                [
-                    'class' => 'yii\grid\ActionColumn',
-                    'header'=> 'Hành động',
-                ],
-            ],       
-        ]); ?>
-        <?php Pjax::end()  ?>
-    </div>-->
-
 </div>
 
 

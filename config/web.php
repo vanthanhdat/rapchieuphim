@@ -61,8 +61,20 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'ZN28qJQW2gFpBJ53TJwdC7F1om059-Ml',
         ],
-        'cache' => [
+        /*'cache' => [
             'class' => 'yii\caching\FileCache',
+        ],*/
+        'redis' => [
+            'class' => 'yii\redis\Connection',
+            'hostname' => 'localhost',
+            'port' => 6379,
+            'database' => 0,
+        ],
+        'cache' => [
+            'class' => 'yii\redis\Cache',
+        ],
+        'session' => [
+            'class' => 'yii\redis\Session',
         ],
         'user' => [
             'identityClass' => 'app\models\User',
@@ -113,7 +125,7 @@ $config = [
             // phim //
             ['pattern' => 'phim-hot/<slug>','route' => 'phim/index'], 
             ['pattern' => 'dat-ve/<slug>','route' => 'phim/view',], 
-            
+
         ],
     ],
     'assetManager' => [

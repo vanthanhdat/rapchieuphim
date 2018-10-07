@@ -25,7 +25,8 @@
         "dmstr/yii2-adminlte-asset": "2.*",
         "yiidoc/yii2-redactor": "*",
         "mdmsoft/yii2-admin": "~2.0",
-		"kartik-v/yii2-widget-timepicker": "@dev"
+		"kartik-v/yii2-widget-timepicker": "@dev",
+		"yiisoft/yii2-redis": "~2.0.0"
     },
     "require-dev": {
         "yiisoft/yii2-gii": "~2.0.0",

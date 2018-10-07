@@ -67,20 +67,39 @@ public function beforeAction($action)
      */
     public function actionIndex()
     {
+        //test cache
+        /*$attributes = [
+            'name' => 'van thanh dat','age' => 23, 'address' => 'cau chu y, quan 8', 'school' => 'huflit'
+        ];
+        Yii::$app->redis->hset('cache1','attributes',json_encode($attributes));*/
+        /*$attributes1 = [
+            'name' => 'nguyen nhut duy','age' => 21, 'address' => 'can giuoc, long an', 'school' => 'huflit'
+        ];
+        Yii::$app->redis->hset('cache1','attributes1',json_encode($attributes1));*/
+        var_dump(Yii::$app->redis->hget('cache1','attributes'));
+        var_dump(json_decode(Yii::$app->redis->hget('cache1','attributes')));
+
+        var_dump(Yii::$app->redis->hget('cache1','attributes1'));
+        var_dump(json_decode(Yii::$app->redis->hget('cache1','attributes1')));
+        exit;
+        // end test cache
+        
+        // test session
+        
+        // //Yii::$app->session->setFlash('redis1','Test redis coi sao 1 !!');
+        // Yii::$app->session->setFlash('redis2','Test redis coi sao 2 !!');
+
+        // end test session
+        
         $query = City::find();
         $pagination = new Pagination([
             'defaultPageSize' => 5,
             'totalCount' => $query->count(),
         ]);
-        $searchModel = new CitySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [         
-         'dataProvider' => $dataProvider,
-         'searchModel' => $searchModel,
          'pagination' => $pagination
      ]);       
     }
-
 
 
     public function actionView($id)
