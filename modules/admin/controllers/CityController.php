@@ -31,7 +31,6 @@ class CityController extends Controller
     public function behaviors()
     {
         return [
-
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
                 'ruleConfig' => [
@@ -55,9 +54,7 @@ class CityController extends Controller
 
 public function beforeAction($action)
 {
-    //var_dump($this->enableCsrfValidation);
     $this->enableCsrfValidation = false;
-   // var_dump(parent::beforeAction($action));exit;
     return parent::beforeAction($action);
 }
 
@@ -67,15 +64,17 @@ public function beforeAction($action)
      */
     public function actionIndex()
     {
+        //var_dump(Yii::$app->redis->keys('*'));
+
         //test cache
         /*$attributes = [
             'name' => 'van thanh dat','age' => 23, 'address' => 'cau chu y, quan 8', 'school' => 'huflit'
         ];
-        Yii::$app->redis->hset('cache1','attributes',json_encode($attributes));*/
+        Yii::$app->redis->hset('cache1','attributes',json_encode($attributes));
         /*$attributes1 = [
             'name' => 'nguyen nhut duy','age' => 21, 'address' => 'can giuoc, long an', 'school' => 'huflit'
         ];
-        Yii::$app->redis->hset('cache1','attributes1',json_encode($attributes1));*/
+        Yii::$app->redis->hset('cache1','attributes1',json_encode($attributes1));
         var_dump(Yii::$app->redis->hget('cache1','attributes'));
         var_dump(json_decode(Yii::$app->redis->hget('cache1','attributes')));
 
@@ -86,8 +85,17 @@ public function beforeAction($action)
         
         // test session
         
-        // //Yii::$app->session->setFlash('redis1','Test redis coi sao 1 !!');
-        // Yii::$app->session->setFlash('redis2','Test redis coi sao 2 !!');
+        /*
+        $session = Yii::$app->session;
+        var_dump($session['captcha']);exit;
+        $session['captcha'] = [
+            'number' => 5,
+            'lifetime' => 3600,
+            'tao-dat-ne' => 'thành đạt'
+        ];
+        var_dump($session['captcha']);
+        exit;
+         */
 
         // end test session
         
@@ -137,12 +145,28 @@ public function beforeAction($action)
         }
     }
 
+    public function actionTestDelete()
+    {
+        $postData = file_get_contents('php://input');
+        if ($postData !== '') {
+            $dataObj = json_decode($postData);
+            $city = City::findOne($dataObj->data->id);
+            $city->active = City::INACTIVE;
+            if ($city->save()) {
+                echo 'success';
+            }
+        }
+        else{
+            throw new \yii\web\ForBiddenHttpException('Bạn không được vào đây !');
+        }
+    }
+
     public function actionGetCities()
     {   
         $page = $_GET["page"] === 0 ? 1:$_GET["page"];
         $pageSize = 5;
         $query = City::find();
-        $cities = $query->offset(($page-1)*$pageSize)->limit($pageSize)->orderBy(['cityname' => SORT_ASC])->asArray()->all();
+        $cities = $query->offset(($page-1)*$pageSize)->limit($pageSize)->where(['active' => City::ACTIVE])->orderBy(['cityname' => SORT_ASC])->asArray()->all();
         echo json_encode(['cities' => $cities]);
     }
 

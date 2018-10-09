@@ -14,6 +14,8 @@ use  yii\db\Query;
  */
 class City extends \yii\db\ActiveRecord
 {
+    const INACTIVE = 0;
+    const ACTIVE = 1;
     /**
      * {@inheritdoc}
      */
@@ -57,11 +59,11 @@ class City extends \yii\db\ActiveRecord
     {
         $cities = [];
         if ($param !== '') {
-            $cities = (new \yii\db\Query())->select(['id', 'cityname'])->from('city')->where(['like', 'cityname', $param])->all();       
+            $cities = (new \yii\db\Query())->select(['id', 'cityname'])->from('city')->where(['like', 'cityname', $param])->andWhere(['active' => City::ACTIVE])->all();       
         }else{
             $pageSize = 5;
             $query = City::find();
-            $cities = $query->offset(($page-1)*$pageSize)->limit($pageSize)->orderBy(['cityname' => SORT_ASC])->asArray()->all();
+            $cities = $query->offset(($page-1)*$pageSize)->limit($pageSize)->where(['active' => City::ACTIVE])->orderBy(['cityname' => SORT_ASC])->asArray()->all();
         }
         return json_encode(['cities' => $cities]);
     }

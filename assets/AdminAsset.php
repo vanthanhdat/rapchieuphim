@@ -14,7 +14,7 @@ class AdminAsset extends AssetBundle
     ];
     public $js = [
         'js/jquery.seat-charts.js',
-       //'js/app.js',
+       'js/app-admin.js',
     ];
     public $depends = [
         //'yii\web\YiiAsset',

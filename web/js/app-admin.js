@@ -53,6 +53,7 @@ app.controller("demoCityCtrl", function($scope,$http,$location,$timeout) {
 		});
 	};
 
+
 	$scope.update = function(){
 		$http.post('test-update',
 		{
@@ -77,6 +78,30 @@ app.controller("demoCityCtrl", function($scope,$http,$location,$timeout) {
 	$scope.edit = function(city){
 		$scope.data = city;
 		$scope.status = "update";
+	};
+
+
+	$scope.delete = function(city){
+		if (confirm("Bạn có muốn xóa thành phố này!")) {
+			$http.post('test-delete',
+			{
+				data : city
+			}
+			).then(function(response) {
+				$scope.clearDataInput();
+				$("div.alert-message").fadeIn(300).html("<div class='alert-success alert fade in'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>Xóa thành công !</div>");
+				$timeout(function () {
+					$("div.alert-message").fadeOut(1000,function() {
+						$("div.alert-message").html('');
+					});
+				}, 3000);
+				$scope.status = "create";
+				$scope.dataLoading = true;
+				$scope.getCites();          
+			},function(response) {
+				alert('fail');
+			});
+		}
 	};
 
 	$scope.clearDataInput = function(){

@@ -20,7 +20,6 @@ echo $this->render(
         app\assets\AdminAsset::register($this);
     }
     app\assets\AdminLTEAsset::register($this);
-    echo $this->registerJsFile("@web/js/app-admin.js");
     //dmstr\web\AdminLteAsset::register($this);
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
     $name = 'Project của Đạt';
