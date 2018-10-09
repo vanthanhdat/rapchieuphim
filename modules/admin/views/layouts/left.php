@@ -37,7 +37,7 @@
                         'url' => '#',
                         'items' => [
                             ['label' => 'Thể loại', 'icon' => 'file-code-o', 'url' => ['/admin/theloai/index']],
-                            ['label' => 'Phim', 'icon' => 'film', 'url' => ['/gii']]
+                            ['label' => 'Phim', 'icon' => 'film', 'url' => ['/admin/phim/index']]
                         ],
                     ],
                      [

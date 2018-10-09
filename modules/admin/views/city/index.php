@@ -9,9 +9,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //echo $this->registerJsFile("@web/js/dirPagination.js");
 ?>
 
-<div class="city-index container" ng-controller="demoCityCtrl">
-    <?php // Html::a('Add', ['create'], ['class' => 'btn btn-success']) ?>
-    <?php // Html::a('Demo download'.' '.'<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>', ['download'], ['class' => 'btn btn-primary']) ?>
+<div class="container" ng-controller="demoCityCtrl">
     <div class="alert-message">
     </div>
     <br>

@@ -15,7 +15,7 @@ use app\components\AccessRule;
 use app\models\User;
 use yii\data\ActiveDataProvider;
 use yii\base\Event;
-use  yii\db\Query;
+use yii\db\Query;
 
 /**
  * CountryController implements the CRUD actions for Country model.
