@@ -1,12 +1,13 @@
 var app = angular.module("demoApp", []);
 
+// city controller 
 app.controller("demoCityCtrl", function($scope,$http,$location,$timeout) {
 
 	$scope.submitForm = function(formValid){
 		if(formValid) {
 			$scope.save();	
 		}
-	};
+	}
 
 	$scope.dataLoading = true;
 
@@ -137,4 +138,35 @@ app.controller("demoCityCtrl", function($scope,$http,$location,$timeout) {
 		});
 	};
 	$scope.getCites();
+});
+
+// phim controller
+app.controller("demoPhimCtrl", function($scope,$http,$location,$timeout) {
+
+	$scope.sortReverse = false;
+	$scope.sort = function(key) {
+		$scope.sortType = key;
+		$scope.sortReverse = !$scope.sortReverse;
+	}
+	$scope.phims = [];
+	$scope.status = {0:"NGƯNG CHIẾU",1:"SẮP CHIẾU",2:"ĐANG CHIẾU"};
+	$scope.currentStatus = 2;
+	$scope.getPhims = function(status = 2) {
+		$scope.currentStatus = status;
+		if ($scope.phims[$scope.currentStatus] == null) {
+			$scope.dataLoading = true;
+			$http.get('get-phims',{
+				params : {status:status}
+			}).then(function(response){
+				$scope.phims[$scope.currentStatus] = response.data.phims;
+				$scope.dataLoading = false;
+			},function(response) {
+				alert('fail');
+			});
+		}else{
+			$scope.phims[$scope.currentStatus] = $scope.phims[$scope.currentStatus];
+			$scope.dataLoading = false;
+		}
+	};
+	$scope.getPhims(2);
 });
