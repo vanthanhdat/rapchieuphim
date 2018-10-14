@@ -147,9 +147,8 @@ app.controller("demoPhimCtrl", function($scope,$http,$location,$timeout) {
 	$scope.sort = function(key) {
 		$scope.sortType = key;
 		$scope.sortReverse = !$scope.sortReverse;
-	}
+	};
 	$scope.phims = [];
-	$scope.status = {0:"NGƯNG CHIẾU",1:"SẮP CHIẾU",2:"ĐANG CHIẾU"};
 	$scope.currentStatus = 2;
 	$scope.getPhims = function(status = 2) {
 		$scope.currentStatus = status;

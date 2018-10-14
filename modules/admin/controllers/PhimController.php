@@ -45,8 +45,18 @@ class PhimController extends \yii\web\Controller
 	}
 
 	public function actionIndex()
-	{
-		return $this->render('index');
+	{	
+		$statusReturn = [];
+		foreach (Phim::STATUS as $item => $status) {
+			array_push($statusReturn,[
+				'key' => $status['key'],
+				'value' => $status['value'],
+				'css' => $status['css']
+			]);
+		}
+		return $this->render('index',[
+            'status' => json_encode($statusReturn,JSON_UNESCAPED_UNICODE),
+        ]);
 	}
 
 	public function actionGetPhims()
@@ -55,12 +65,7 @@ class PhimController extends \yii\web\Controller
 		$phims = Phim::find()->where(['status' => $status])
 		//->orderBy(['created_at' => SORT_DESC])
 		->all();
-		//var_dump(json_encode(['phims' => $this->returnPhims($phims)]));exit;
 		return json_encode(['phims' => $this->returnPhims($phims)]);
-		//var_dump(json_encode($phims));
-		//var_dump($phims);
-		//var_dump($phimsReturn);exit;
-		//exit;
 	}
 
 	protected function returnPhims($phims)
@@ -78,6 +83,11 @@ class PhimController extends \yii\web\Controller
 				'slug' => $daodien->slug,
 			];
 			$objPhim->id_tl = $theloai->name;
+			foreach (Phim::STATUS as $key => $value) {
+				if ($value['key'] == $objPhim->status) {
+					$objPhim->status = $value['value'];
+				}
+			}
 			array_push($phimsReturn, $objPhim); 
 		}
 		//var_dump($phimsReturn);exit;

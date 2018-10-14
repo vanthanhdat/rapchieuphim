@@ -29,9 +29,9 @@ use yii\db\ActiveRecord;
 class Phim extends ActiveRecord
 {
     const STATUS = [
-        ['key' => 0,'value' => 'Ngưng chiếu'],
-        ['key' => 1,'value' => 'Sắp chiếu','slug' => 'phim-sap-chieu'],
-        ['key' => 2,'value' => 'Đang chiếu','slug' => 'phim-dang-chieu'],
+        ['key' => 0,'value' => 'NGƯNG CHIẾU','css' => ['button'=>'warning','icon'=>'fa fa-ban']],
+        ['key' => 1,'value' => 'SẮP CHIẾU','slug' => 'phim-sap-chieu','css' => ['button'=>'primary','icon'=>'fa-toggle-off']],
+        ['key' => 2,'value' => 'ĐANG CHIẾU','slug' => 'phim-dang-chieu','css' => ['button'=>'success','icon'=>'fa-toggle-on']],
     ];
     /**
      * {@inheritdoc}

@@ -1,9 +1,17 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
+$this->title = 'Danh sách phim'; 
+$this->params['breadcrumbs'][] = $this->title;
+$getStatus = json_decode($status);
+$arr = new stdClass();
+foreach ($getStatus as $key => $value) {
+	$property = $value->key;
+	$arr->$property = $value->value;
+}
 ?>
 
-<div class="container-fluid" ng-controller="demoPhimCtrl">
+<div class="container-fluid" ng-controller="demoPhimCtrl" ng-init = "status=<?= htmlspecialchars(json_encode($arr,JSON_UNESCAPED_UNICODE)) ?>">
 	<div class="alert-message">
 	</div>
 	<br>
@@ -11,9 +19,12 @@ use yii\widgets\LinkPager;
 	<fieldset>
 		<legend>
 			<h4 class="text-uppercase">Danh sách phim: {{status[currentStatus]}}</h4>
-			<button class="btn btn-success" ng-click="getPhims(2)">ĐANG CHIẾU <i class="fa fa-toggle-on"></i></button>
-			<button class="btn btn-primary" ng-click="getPhims(1)">SẮP CHIẾU <i class="fa fa-toggle-off"></i></button>
-			<button class="btn btn-warning" ng-click="getPhims(0)">NGƯNG CHIẾU <i class="fa fa-ban"></i></button>
+			<?php foreach ($getStatus as $key => $value): ?>
+				<button class="btn btn-<?= $value->css->button?>" ng-click="getPhims(<?= $value->key ?>)"><?= $value->value ?> <i class="fa <?= $value->css->icon ?>"></i></button>
+			<?php endforeach ?>
+			<!--<button class="btn btn-success" ng-click="getPhims(<?= $getStatus[2]->key ?>)"><?= $getStatus[2]->value ?> <i class="fa fa-toggle-on"></i></button>
+			<button class="btn btn-primary" ng-click="getPhims(<?= $getStatus[1]->key ?>)"><?= $getStatus[1]->value ?> <i class="fa fa-toggle-off"></i></button>
+			<button class="btn btn-warning" ng-click="getPhims(<?= $getStatus[0]->key ?>)"><?= $getStatus[0]->value ?> <i class="fa fa-ban"></i></button>-->
 		</legend>
 		<form class="form-inline">
 			<div class="form-group">
@@ -23,7 +34,7 @@ use yii\widgets\LinkPager;
 		</form>
 		<table class="table table-striped table-bordered" ng-show="!dataLoading">
 			<thead>
-				<th>#</th>
+				<th><a href="">#</a></th>
 				<th ng-click="sort('id')">
 					<a href="">Id
 						<span ng-if="sortType =='id' && !sortReverse" class="fa fa-caret-down"></span>
@@ -78,6 +89,10 @@ use yii\widgets\LinkPager;
 						<span ng-if="sortType == 'start' && sortReverse" class="fa fa-caret-up"></span>
 					</a>
 				</th>
+				<th>
+					<a href="">Trạng thái
+					</a>
+				</th>
 			</thead>
 			<tbody>
 				<tr ng-repeat="phim in phims[currentStatus] | orderBy:sortType:sortReverse">
@@ -91,6 +106,7 @@ use yii\widgets\LinkPager;
 					<td>{{phim.nhaSanXuat}}</td>
 					<td>{{phim.id_tl}}</td>
 					<td>{{phim.start}}</td>
+					<td>{{phim.status}}</td>
 					<td>
 						<button class="btn btn-primary" ng-click="edit(city)">Edit <i class="fa fa-edit"></i></button>
 					</td>
