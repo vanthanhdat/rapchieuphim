@@ -3,17 +3,17 @@ use yii\helpers\Html;
 use yii\widgets\LinkPager;
 ?>
 
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="demoPhimCtrl">
 	<div class="alert-message">
 	</div>
 	<br>
 	<div class="lds-spinner" ng-show="dataLoading"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 	<fieldset>
 		<legend>
-			<h2>Danh sách phim</h2>
-			<button class="btn btn-success" ng-click="edit(city)">ĐANG CHIẾU</button>
-			<button class="btn btn-primary" ng-click="edit(city)">SẮP CHIẾU</button>
-			<button class="btn btn-warning" ng-click="edit(city)">NGƯNG CHIẾU</button>
+			<h4 class="text-uppercase">Danh sách phim: {{status[currentStatus]}}</h4>
+			<button class="btn btn-success" ng-click="getPhims(2)">ĐANG CHIẾU</button>
+			<button class="btn btn-primary" ng-click="getPhims(1)">SẮP CHIẾU</button>
+			<button class="btn btn-warning" ng-click="getPhims(0)">NGƯNG CHIẾU</button>
 		</legend>
 		<form class="form-inline">
 			<div class="form-group">
@@ -30,23 +30,72 @@ use yii\widgets\LinkPager;
 						<span ng-if="sortType == 'id' && sortReverse" class="fa fa-caret-up"></span>
 					</a>
 				</th>
-				<th ng-click="sort('cityname')">
+				<th ng-click="sort('title')">
 					<a href="" >Tựa phim
-						<span ng-if="sortType == 'cityname' && !sortReverse" class="fa fa-caret-down"></span>
-						<span ng-if="sortType == 'cityname' && sortReverse" class="fa fa-caret-up"></span>
+						<span ng-if="sortType == 'title' && !sortReverse" class="fa fa-caret-down"></span>
+						<span ng-if="sortType == 'title' && sortReverse" class="fa fa-caret-up"></span>
 					</a>
 				</th>
-				<th><a href="">Thời lượng</a></th>
-				<th><a href="">Đạo diễn</a></th>
-				<th><a href="">Diễn viên</a></th>
-				<th><a href="">Quốc gia</a></th>
-				<th><a href="">Nhà sản xuất</a></th>
-				<th><a href="">Thể loại</a></th>
-				<th><a href="">Ngày bắt đầu</a></th>
-				<th><a href="">Hành động</a></th>
+				<th ng-click="sort('thoiLuong')">
+					<a href="">Thời lượng
+						<span ng-if="sortType == 'thoiLuong' && !sortReverse" class="fa fa-caret-down"></span>
+						<span ng-if="sortType == 'thoiLuong' && sortReverse" class="fa fa-caret-up"></span>
+					</a>
+				</th>
+				<th ng-click="sort('daodien.name')">
+					<a href="">Đạo diễn
+						<span ng-if="sortType == 'daodien.name' && !sortReverse" class="fa fa-caret-down"></span>
+						<span ng-if="sortType == 'daodien.name' && sortReverse" class="fa fa-caret-up"></span>
+					</a>
+				</th>
+				<th ng-click="sort('dienVien')">
+					<a href="">Diễn viên
+						<span ng-if="sortType == 'dienVien' && !sortReverse" class="fa fa-caret-down"></span>
+						<span ng-if="sortType == 'dienVien' && sortReverse" class="fa fa-caret-up"></span>
+					</a>
+				</th>
+				<th ng-click="sort('quocGia')">
+					<a href="">Quốc gia
+						<span ng-if="sortType == 'quocGia' && !sortReverse" class="fa fa-caret-down"></span>
+						<span ng-if="sortType == 'quocGia' && sortReverse" class="fa fa-caret-up"></span>
+					</a>
+				</th>
+				<th ng-click="sort('nhaSanXuat')">
+					<a href="">Nhà sản xuất
+						<span ng-if="sortType == 'nhaSanXuat' && !sortReverse" class="fa fa-caret-down"></span>
+						<span ng-if="sortType == 'nhaSanXuat' && sortReverse" class="fa fa-caret-up"></span>
+					</a>
+				</th>
+				<th ng-click="sort('id_tl')">
+					<a href="">Thể loại
+						<span ng-if="sortType == 'id_tl' && !sortReverse" class="fa fa-caret-down"></span>
+						<span ng-if="sortType == 'id_tl' && sortReverse" class="fa fa-caret-up"></span>
+					</a>
+				</th>
+				<th ng-click="sort('start')">
+					<a href="">Ngày bắt đầu
+						<span ng-if="sortType == 'start' && !sortReverse" class="fa fa-caret-down"></span>
+						<span ng-if="sortType == 'start' && sortReverse" class="fa fa-caret-up"></span>
+					</a>
+				</th>
 			</thead>
 			<tbody>
-
+				<tr ng-repeat="phim in phims[currentStatus] | orderBy:sortType:sortReverse">
+					<td>{{$index+1}}</td>
+					<td>{{phim.id}}</td>
+					<td>{{phim.title}}</td>
+					<td>{{phim.thoiLuong}}</td>
+					<td ng-init = "daodien=phim.id_dd">{{daodien.name}}</td>
+					<td>{{phim.dienVien}}</td>
+					<td>{{phim.quocGia}}</td>
+					<td>{{phim.nhaSanXuat}}</td>
+					<td>{{phim.id_tl}}</td>
+					<td>{{phim.start}}</td>
+					<td>
+						<button class="btn btn-primary" ng-click="edit(city)">Edit</button>
+					</td>
+					<td><button class="btn btn-danger" ng-click="delete(city)">Delete</button></td>
+				</tr>
 			</tbody>
 		</table>
 		<?php /* LinkPager::widget([

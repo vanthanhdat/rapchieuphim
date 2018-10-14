@@ -35,22 +35,23 @@ class DaodienController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'ruleConfig' => [
-                       'class' => AccessRule::className(),
-                   ],
+                 'class' => AccessRule::className(),
+             ],
                // 'only' => ['index','create', 'update', 'delete','view'],
-                'rules' => [
-                    [
-                            // Allow full if user is admin
-                           'actions' => ['index','create', 'update', 'delete','view'],
-                           'allow' => true,
-                           'roles' => [
-                               User::ROLE_ADMIN
-                           ],
-                       ],
-                ],   
-            ],
-        ];
-    }
+             'rules' => [
+                [
+                
+                 // Allow full if user is admin
+                 'actions' => ['index','create', 'update', 'delete','view'],
+                 'allow' => true,
+                 'roles' => [
+                     User::ROLE_ADMIN
+                 ],
+             ],
+         ],   
+     ],
+ ];
+}
 
     /**
      * Lists all Daodien models.
@@ -134,23 +135,23 @@ class DaodienController extends Controller
      */
     public function actionDelete($id)
     {   $pathFile = '';
-        $daodien = Daodien::findOne($id);
-        $attributes = json_decode($daodien->attributes);
-        $objDaoDien = new objDaoDien();
-        if($attributes->image !== ''){
-            $pathFile = Yii::getAlias('@img').'/daodien'.'/'.$attributes->image;
-            if ($objDaoDien->deleteFile($pathFile)) {
-                $daodien->delete();   
-            }
+    $daodien = Daodien::findOne($id);
+    $attributes = json_decode($daodien->attributes);
+    $objDaoDien = new objDaoDien();
+    if($attributes->image !== ''){
+        $pathFile = Yii::getAlias('@img').'/daodien'.'/'.$attributes->image;
+        if ($objDaoDien->deleteFile($pathFile)) {
+            $daodien->delete();   
         }
-        else{
-            $daodien->delete();
-        }
-        $session = Yii::$app->session;
-        $session->addFlash('flashMessage');
-        $session->setFlash('flashMessage', 'Đã xóa "'.$attributes->name.'" thành công!');
-        return $this->redirect(['index']);
     }
+    else{
+        $daodien->delete();
+    }
+    $session = Yii::$app->session;
+    $session->addFlash('flashMessage');
+    $session->setFlash('flashMessage', 'Đã xóa "'.$attributes->name.'" thành công!');
+    return $this->redirect(['index']);
+}
 
     /**
      * Finds the Daodien model based on its primary key value.
