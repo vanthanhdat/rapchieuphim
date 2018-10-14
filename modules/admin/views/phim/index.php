@@ -11,9 +11,9 @@ use yii\widgets\LinkPager;
 	<fieldset>
 		<legend>
 			<h4 class="text-uppercase">Danh sách phim: {{status[currentStatus]}}</h4>
-			<button class="btn btn-success" ng-click="getPhims(2)">ĐANG CHIẾU</button>
-			<button class="btn btn-primary" ng-click="getPhims(1)">SẮP CHIẾU</button>
-			<button class="btn btn-warning" ng-click="getPhims(0)">NGƯNG CHIẾU</button>
+			<button class="btn btn-success" ng-click="getPhims(2)">ĐANG CHIẾU <i class="fa fa-toggle-on"></i></button>
+			<button class="btn btn-primary" ng-click="getPhims(1)">SẮP CHIẾU <i class="fa fa-toggle-off"></i></button>
+			<button class="btn btn-warning" ng-click="getPhims(0)">NGƯNG CHIẾU <i class="fa fa-ban"></i></button>
 		</legend>
 		<form class="form-inline">
 			<div class="form-group">
@@ -92,9 +92,9 @@ use yii\widgets\LinkPager;
 					<td>{{phim.id_tl}}</td>
 					<td>{{phim.start}}</td>
 					<td>
-						<button class="btn btn-primary" ng-click="edit(city)">Edit</button>
+						<button class="btn btn-primary" ng-click="edit(city)">Edit <i class="fa fa-edit"></i></button>
 					</td>
-					<td><button class="btn btn-danger" ng-click="delete(city)">Delete</button></td>
+					<td><button class="btn btn-danger" ng-click="delete(city)">Delete <i class="fa fa-trash" aria-hidden="true"></i></button></td>
 				</tr>
 			</tbody>
 		</table>
