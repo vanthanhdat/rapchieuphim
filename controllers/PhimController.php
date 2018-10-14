@@ -59,7 +59,7 @@ class PhimController extends Controller
 	{
 		$param = -1 ;
 		foreach (Phim::STATUS as $key => $value) {
-			if (count($value) > 2) {
+			if (count($value) > 3) {
 				if ($value['slug'] == $slug) {
 					$param = $value['key'];
 				}
