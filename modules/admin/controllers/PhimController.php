@@ -53,7 +53,7 @@ class PhimController extends \yii\web\Controller
 	{
 		$status = $_GET["status"];
 		$phims = Phim::find()->where(['status' => $status])
-		->orderBy(['created_at' => SORT_DESC])
+		//->orderBy(['created_at' => SORT_DESC])
 		->all();
 		//var_dump(json_encode(['phims' => $this->returnPhims($phims)]));exit;
 		return json_encode(['phims' => $this->returnPhims($phims)]);

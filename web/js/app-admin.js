@@ -165,7 +165,6 @@ app.controller("demoPhimCtrl", function($scope,$http,$location,$timeout) {
 			});
 		}else{
 			$scope.phims[$scope.currentStatus] = $scope.phims[$scope.currentStatus];
-			$scope.dataLoading = false;
 		}
 	};
 	$scope.getPhims(2);
