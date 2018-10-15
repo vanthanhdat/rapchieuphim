@@ -30,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
 		<?= $form->field($model, 'gender')->radioList(array(0=>'Nam',1=>'Nữ')); ?>
 		<?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
 		 <div class="form-group">
-            <div class="col-lg-11">
-                <?= Html::submitButton('Đăng ký', ['class' => 'btn btn-primary', 'name' => 'signup-button','id'=>'btnSignup']) ?>
+            <div class="col-lg-11" style="bottom: 8px;">
+                <?= Html::submitButton('Đăng ký', ['class' => 'btn submit-button', 'name' => 'signup-button','id'=>'btnSignup']) ?>
             </div>
             
         </div>
